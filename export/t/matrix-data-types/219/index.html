@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Matrix Data types</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Matrix Data types</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">pterror</div>
+          <div class="post_content">
+<p>I’m new to all of this and I’m having trouble finding out how to combine continuous and discrete data into the same matrix, or if that’s even possible. I’m using Mesquite- is it a problem to insert discrete data into a continous data matrix? I have the continuous data scaled from 0 to 1. Any help would be much appreciated.
+Thanks.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/386_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tsmoreira</div>
+          <div class="post_content">
+<p>Hello</p>
+<p>Yes it is possible, but I do not know how to do it (since I never used continuous characters in my analysis…). As far as I could grasp from the manual you may have to create a separate matrix for those characters and concatenate with the one with the discrete one… but might be easier ways. Mesquite is not very friendly user unfortunately so takes a while to get the grip of it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/377_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rutgeraldo</div>
+          <div class="post_content">
+<p>What you are talking about is ‘mixed’ data, i.e. matrices having multiple different data types in the same NEXUS characters (or data) block. The NEXUS standard does not allow this: characters blocks have a statement <code>format datatype=&lt;type&gt;</code> where <code>&lt;type&gt;</code> should be a single word, which I’ve seen in the wild as one of ‘dna’, ‘standard’, ‘protein’, ‘continuous’, ‘restriction’, ‘rna’ or ‘nucleotide’.</p>
+<p>The only program that tries to circumvent this is MrBayes, which hacks the standard to become something like <code>format datatype=mixed(&lt;type1&gt;:&lt;range1&gt;,&lt;type2&gt;:&lt;range2&gt;,...)</code>, where <code>&lt;type&gt;</code> is again a single word and <code>&lt;range&gt;</code> is a 1-based inclusive pair of start and stop coordinates. This syntax is incomprehensible to basically all other NEXUS readers. Specifically, Mesquite does not support this natively.</p>
+<p>To look for examples of either, here are some illustrative google searches:</p>
+<ul>
+<li>Files with .nex extension that contain the string <code>datatype=mixed</code> (109 files, all for mrbayes): <a href="https://www.google.com/search?q=datatype=mixed+filetype:nex" rel="nofollow noopener">https://www.google.com/search?q=datatype=mixed+filetype:nex</a>
+</li>
+<li>Files with .nex extension that contain the string <code>mesquite</code> (1,770 files): <a href="https://www.google.com/search?q=mesquite+filetype:nex" rel="nofollow noopener">https://www.google.com/search?q=mesquite+filetype:nex</a>
+</li>
+<li>Searching for NEXUS files with both strings, (i.e. Mesquite files with mixed data) returns only spurious results (as a new user I am only allowed to post two links, but I’m sure you can figure out the query).</li>
+</ul>
+<p>In the interest of completeness, it is possible in Mesquite to export a “fused” matrix that supposedly contains the concatenation of two matrices of different types, specifically for the purpose of preparing input for MrBayes. However, I wasn’t able to actually get a data block with mixed data to come out of that, but maybe this functionality has improved in more recent versions?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/386_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tsmoreira</div>
+          <div class="post_content">
+<p><span class="mention">@rutgeraldo</span> I guess what <span class="mention">@pterror</span> was trying to say by “mixed data” was only discrete and continuous characters, but all morphological ones, none molecular.</p>
+<p>You are mistaken when you say that up to now only MrBayes supports mixed data analysis . POY and TNT also do that, but not using ML or Bayesian though…</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/377_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rutgeraldo</div>
+          <div class="post_content">
+<p>I’m not a POY or TNT user - do you have any examples of how “mixed” data is formatted in their NEXUS files?</p>
+<p>I don’t see why it matters whether the data types come from morphological or molecular sources. Mixed is mixed.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/386_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tsmoreira</div>
+          <div class="post_content">
+<p>The total evidence analysis in Arnedo et al 2009 were performed in all three programs (Mr. Bayes, POY and TNT).</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://onlinelibrary.wiley.com/doi/full/10.1111/j.1096-0031.2009.00249.x">
+<header class="source">
+<img class="site-icon" height="48" src="https://onlinelibrary.wiley.com/favicon.ico" width="48"/>
+<a href="https://onlinelibrary.wiley.com/doi/full/10.1111/j.1096-0031.2009.00249.x" rel="noopener nofollow ugc" target="_blank">Wiley Online Library</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:95/125;"><img class="thumbnail" height="125" src="https://www.phylobabble.org/uploads/default/original/1X/18af947814f0b5e36b3f765a30e24688a3eed049.gif" width="95"/></div>
+<h3><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/j.1096-0031.2009.00249.x" rel="noopener nofollow ugc" target="_blank">Higher‐level phylogenetics of linyphiid spiders (Araneae, Linyphiidae) based...</a></h3>
+<p>This study infers the higher-level cladistic relationships of linyphiid spiders from five genes (mitochondrial CO1, 16S; nuclear 28S, 18S, histone H3) and morphological data. In total, the character ...</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>
+I do not have, unfortunatelly the files to show.</p>
+<p>I agree with you, it does not. What I was trying to say is that perhaps the usage of the expression “mixed data” was used out of the regular context we are used, and he just want to know how to use discrete and continuous characters in the same matrix.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

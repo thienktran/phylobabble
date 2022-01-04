@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>iPython Notebook for Phylogenetics</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">iPython Notebook for Phylogenetics</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<p>Firstly - sorry, this is not an announcement but a suggestion/call for a collaborative project. I have been using iPython Notebook for manipulating data and plotting and think it would be a great environment for phylogenetics. For it to work, it would need a coherent library with standardised objects for storing trees, etc., and some visualisation tools for trees, alignments etc. And some embedded tree building/alignment software.</p>
+<p>For the former, the obvious choice (I think) would be to use Dendropy, by <span class="mention">@jeetsukumaran</span> and <span class="mention">@mtholder</span>  but other options may be available. Then a good set of (possibly D3 based, JavaScript) visualisation tools could be built in at the Notebook end (the alternative would be to add plotting routines built on top of  MatPlotLib). Extensions could be added by using standard Python package management.</p>
+<p>Any thoughts on this? My primary motivation is to replace the various software packages I use for teaching and produce a coherent framework.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/376_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mlandis</div>
+          <div class="post_content">
+<p>Between an extensible visualization library and Dendropy, we might finally see more phylogenetics models in Python.</p>
+<p>For visualization, Rick Ree was working on an iPython visualization library called <a href="http://www.reelab.net/ivy/using.html" rel="nofollow noopener">ivy</a>, and demonstrated some compelling use cases, but I haven’t seen any new developments lately.</p>
+<p>You also might find Jake Vanderplas’ work and perspective on integrating d3 and matplotlib interesting:  <a href="http://jakevdp.github.io/blog/2014/01/10/d3-plugins-truly-interactive/" rel="nofollow noopener">http://jakevdp.github.io/blog/2014/01/10/d3-plugins-truly-interactive/</a>. (This link also contains links to other interactive Javascript visualization libraries.)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jhcepas</div>
+          <div class="post_content">
+<p>I recently added <a href="http://etetoolkit.org/ipython_notebook" rel="nofollow noopener">iPython notebook</a> support to the <a href="http://etetoolkit.org" rel="nofollow noopener">ETE toolkit</a>, which is a python library for handling and plotting trees. Although it overlaps with Dendropy in many aspects, the focus of ETE is not on phylogenetic computation but the exploration of trees, their annotation and inline visualization. You could easily combine them.</p>
+<p>There is a comprehensive <a href="https://pythonhosted.org/ete2/tutorial/index.html" rel="nofollow noopener">tutorial</a> and some <a href="http://etetoolkit.org/examples" rel="nofollow noopener">figure examples</a>, in case you want to take a look.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/127_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jeetsukumaran</div>
+          <div class="post_content">
+<p>I think this is a great idea.</p>
+<p>For the parser/container/data model back-end, with full-disclosure of obvious
+biases, I think DendroPy would work well for the phylogenetics domain. We are
+currently working on the 4.x series release (both tree reading and character
+parsing performance are now orders of magnitude better than the 3.x series, and
+scaling is O(1) for the former as opposed to O(n)!!!), and are open to incorporating changes to support playing better
+with other tools in the stack. Let me know if there is anything specific that you need if you do decide to go this route. And abstraction layer between the dendropy data object model and other tools in the stack come time mind …</p>
+<p>While I like and use matplotlib, I am resigned to the fact that installing this
+natively on Macs is going to be a nightmare for a some time to come, even for
+someone with reasonable good sys-admin skills and experience. The task is
+somewhat less painful if you use a package manager such as Homebrew. And by “somewhat
+less painful” I mean <a href="http://jeetworks.org/setting-up-a-python-scientific-environment-numpy-scipy-pandas-statsmodels-etc-in-os-x-10-9-mavericks/" rel="nofollow noopener">a nightmare you eventually wake up from, as opposed to a
+nightmare that never ends</a>). And with every OSX release it seems to get worse. Yosemite’s pending release is already resulting in rumblings in various forums. Of course, one can always use pre-packaged Python distributions such as Enthought etc. But this still places a whole lot of unnecessary burden on the end user.  All of this is a shame: I like matplotlib (In fact, I like the whole numpy + scipy + matplotlib stack. And the first two actually are now pretty straightforward to build and install natively; if only matplotlib was as well …)</p>
+<p>So, what it boils down to is: I like, support, and encourage the use of alternate, non-Python, platforms for visualizations. Java/Ecma-Script seems like a truly <em>excellent</em> choice. It means that we can potentially use the browser as a front-end, not to mention the possibility for visualization over the web or natively on (some) mobile devices with minor enhancements. I know this was was not a declared objective, but I think it is a substantial side-benefit while achieving the primary goal of visualization with the minimum of hassle for the end user <em>and</em> developers.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<p>My attraction to this idea was the very fact that the iPython server can be on a central machine (would need authentication) and access can be through the browser (say, by a room of students). The rendering would be best done in JavaScript but it would be easy to pass a JSON tree as an output of Dendropy to be rendered on the client (there are plenty of JS  tree renderers). This blog post shows how the two can communicate (bidirectional, if needed):</p>
+<p><a class="onebox" href="http://jakevdp.github.io/blog/2013/06/01/ipython-notebook-javascript-python-communication/" rel="nofollow noopener" target="_blank">http://jakevdp.github.io/blog/2013/06/01/ipython-notebook-javascript-python-communication/</a></p>
+<p>Would be good to have some sort of progress indicator/task manager for very long tasks like running trees in an external package.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/117_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">argriffing</div>
+          <div class="post_content">
+<p>I use Python for phylogenetics, with numpy/scipy/networkx for array-based and graph-based algorithms.</p>
+<p>Last I checked, the phylogenetics-specific libraries were insufficient for my purposes, but if they were improved then I would use them.  For example if the beagle library or its pytbeaglehon wrapper were very easy to use with Python then I’d probably use it all the time.  I don’t use visualization as much as I should, but if nice Python visualization libraries for phylogenetics were available then I’d probably use them too.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jhcepas</div>
+          <div class="post_content">
+<p>ETE is already able to produce custom SVG images of trees and algs (this is in fact the method used for the inline IPython visualization). I have been recently playing with javascript + d3 + ETE, and it does not look very difficult to combine them. I uploaded an <a href="http://etetoolkit.org/treeview" rel="nofollow noopener">example here</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>Just wanted to chime in and suggest checking out PyCogent for fitting models to trees in Python <a href="http://pycogent.org/" rel="nofollow noopener">http://pycogent.org/</a></p>
+<p>The documentation is pretty inadequate, but responses on the forum have been pretty quick for me (NB i am in the same timezone as one of the main forum respondents, which most will not be). I should say though that the lack of documentation seems to be partly a symptom of the fact that the package can do a lot.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>This is <em>very</em> nice. Have you ever thought of making a webapp whereby users could upload a tree, and the app would return an obfuscated URL which displays that tree? I think this would be very popular, as installing a tree viewer is a hurdle for non-phylogenetic collaborators to explore trees. One might actually generate the url from a compressed tree format, which would then get decompressed and displayed. Thus there would be no storage associated with it. (Might get long though…)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/389_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tgvaughan</div>
+          <div class="post_content">
+<p>Hi Eric, I had a shot at doing something similar to this with <a href="http://tgvaughan.github.io/icytree" rel="nofollow noopener">IcyTree</a>, which can also render “uploaded” trees in newick/nexus format and networks in extended newick format. (Quotes because IcyTree is entirely client-side javascript.)  However I quickly ran into the ~2000 character limit on URLs, as my URLs need to completely encode the file.  I suppose jhcepas’ nice server-side program wouldn’t necessarily suffer from this problem though.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@jhcepas</span>’ ete2 just blew my socks off:</p>
+<p><img height="500" src="https://www.phylobabble.org/uploads/default/197/fd61764fbc6d1c50.png" width="597"/> </p>
+<p>With little Pandas experience and no ETE experience, that took about 25 minutes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jhcepas</div>
+          <div class="post_content">
+<p>thanks <span class="mention">@ematsen</span>, I hope I can make it more portable soon by getting rid of the Qt4 dependencies.
+I am also working on alternative ways of displaying large alignments and other type of meta data.</p>
+<p>Regarding the website tool: sure, I will try to open a login based system so tree figures can be shared (obfuscated  URLs would be limited by a fixed length)</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>What to do if AU test accepts a hypothesis, while SH test rejects with a p-value of 0</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">What to do if AU test accepts a hypothesis, while SH test rejects with a p-value of 0</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jhcepas</div>
+          <div class="post_content">
+<p>I have a phylogenetic hypothesis that I would like to test statistically. Although the best Bayesian and ML trees support that hypothesis, bootstrap and posterior probabilities are far from great, so I followed the advice given to me in <a href="http://phylobabble.org/t/number-of-bootstrap-replicates-for-short-alignments/353" rel="nofollow noopener">this forum</a> about testing all possible alternatives and see if I could statistically ruled them out.</p>
+<p>For this I used CONSEL to evaluate over a thousand of alternative constraint topologies. All but 10 of the accepted topologies are compatible with my hypothesis using the AU test (pvalue&lt;=0.05), while the rest were reliably rejected. However, and this what surprised me, the 10 particular cases that are not rejected using the AU test and that contradict my hypothesis, produced also a p-value of 0.0 using the SH-test.</p>
+<p>I had the idea that SH tends to be seen as a more conservative method (in fact, I can reject less topologies using SH pvalues than using AU), but I am not sure if I could this particular result to reject the 10 alternatives that are still contradicting my hypothesis.</p>
+<p>Also, how would you explain this contradicting result between the AU and SH tests? Is this something common?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>Forgive me, I am not any expert in statistics, I am just a biologist with some experience in phylogenetics.  My opinion is that nobody can give you a good answer without knowing exactly what data set you are studying here.  For one example, we know a lot about the history of Homo sapiens sapiens, Neanderthal, Denisova, Pan troglodytes troglodytes, Pan troglodytes verus, Pan paniscus, Gorilla gorilla and other great ape and human evolution, and it is very clear that some genes give very good statistical support for humans being closer to gorillas than to chimpanzees ((human gorilla)chimpanzee) while other genes give very good statistical support for ((human chimp) gorilla).  There are many solid explanations for why this can happen, such as introgression and incomplete lineage sorting.  By studying the fossil record, complete genomes of a few individuals or each species, and many genes and mitochondrial genomes from thousands of individuals from these species, we get a more clear picture.</p>
+<p>At the other end of the spectrum of sequence diversity (humans, chimps and gorillas are very similar in DNA sequence, so homoplasies and other problems are infrequent) we can’t use complete mitochodrial genomes to clearly determine the order in which amphibians, snakes, turtles, birds, lizards, alligators, mammals, marsupials and other tetrapods diverged from some lineage of fish, because of too much genetic distance, altered rates of evolution in different lineages and other problems.  But again we have some fossil evidence and other data to suggest how and why we can be certain that some phylogenies are wrong despite very high statistical support using the molecular data.</p>
+<p>When it comes to studying bacteria, jellyfish, insects, viruses, and many other  organisms, we do not have a solid fossil record or other data to support us.  Statistics alone can be a huge help in deciding which hypotheses are more likely to be correct, but even very strong statistical support is not always solid evidence that a hypothesis is correct.  The other tread you link to states that you are using very short sequences, roughly 250 sites.  It does not say what types of distances are involved.  For many types of comparisons, 250 sites is good.  For example we can tell if mitochondrial DNA is from a mammal, marsupial, or bird with just 250 bases, and most likely all 250-bases regions of the mitochondrial genome would show mammals-marsupial closer than bird.  But I would not trust any 250 base region to tell me if birds are closer to mammals than to amphibians, nor whether humans are closer to gorillas than to chimpanzees, no matter what the statistics were for the 250 base region.</p>
+<p>In my opinion, it seems a little silly to argue about methods (neighbor-joining, ML, Bayesian, etc) when the real issue is most likely in the data set.  But without any clue what the data set looks like, we can only guess about that.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

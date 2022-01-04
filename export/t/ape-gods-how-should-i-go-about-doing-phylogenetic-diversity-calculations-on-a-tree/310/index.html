@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>`ape` gods: how should I go about doing phylogenetic diversity calculations on a tree?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">`ape` gods: how should I go about doing phylogenetic diversity calculations on a tree?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Gods of <code>ape</code> and other tree packages in R (I’m looking at you, <span class="mention">@klaus_schliep</span>,  <span class="mention">@tanja_stadler</span>, <span class="mention">@phylorich</span>, etc, etc) –</p>
+<p><span class="mention">@mathmomike</span> and I are noodling about with some new phylogenetic diversity ideas and I’d like to code them up. I’m hoping that there are some really lovely ways for me to code up a new PD by just specifying some functions to use for a recursion. Can you give me some pointers?</p>
+<p>[I suppose I should say more widely that I wouldn’t be opposed to coding these things up in Python, OCaml, etc, but it seems to me that there are lots of wonderful R packages for this sort of thing and I could try to merge my code in there if this goes anywhere.]</p>
+<p>Thank you in advance. Below is my mental image of you, delivering me lots of trees.</p>
+<p><img height="" src="https://www.phylobabble.org/uploads/default/84/23eb34612162ae12.jpg" width=""/></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/2_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">phylorich</div>
+          <div class="post_content">
+<p>It’s <strong>very</strong> early days, but I’m working on a new package “<a href="https://github.com/richfitz/forest" rel="nofollow noopener">forest</a>” to make that easy, based on things I learnt writing diversitree (it’ll be the guts of diversitree2).</p>
+<p>Basically, I’ve wrapped up the <a href="https://code.google.com/p/treetree/" rel="nofollow noopener">treetree</a> library to make it suitable for use with phylogenies.  It’s all C++, and has nice things like iterator pairs for post and pre order traversal that make implementing Felsenstein’s pruning algorithm very easy.</p>
+<p>For example, here’s all the code needed to compute <a href="https://github.com/richfitz/forest/blob/master/inst/include/models/brownian_motion.hpp" rel="nofollow noopener">likelihoods under BM</a>, which gets converted into something useable by simply <a href="https://github.com/richfitz/forest/blob/master/src/models.cpp#L12-L13" rel="nofollow noopener">declaring it a type</a>.</p>
+<p>The package is nominally for R but it’s basically pure C++ that could be wrapped up with something else too.</p>
+<p>However, everything in the package can and will change and it’s still totally experimental.  And it’s being done in my spare time so progress is slow.  I’m currently sidetracked yak shaving a <a href="https://github.com/richfitz/rodeint" rel="nofollow noopener">nicer ODE solver</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Oh, dear. The whole idea here was to avoid yak-shaving, not join in with someone shaving a much bigger yak.</p>
+<p>It is a crying shame that there is no yak-shaving emoticon. I think shaved ice + water buffalo is as close as I can get: <img alt=":shaved_ice:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/shaved_ice.png?v=5" title=":shaved_ice:"/> <img alt=":water_buffalo:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/water_buffalo.png?v=5" title=":water_buffalo:"/>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">koadman</div>
+          <div class="post_content">
+<p>I’ve hacked around inside phylogenetic diversity analyzer (PDA) before and found their code to be reasonably understandable. <a href="http://www.cibiv.at/software/pda/" rel="nofollow noopener">http://www.cibiv.at/software/pda/</a>
+Hard to say whether it’s setup well for your purpose though, and it’s C++ so not on your list of preferred tongues. They also seem to have pulled down the source code from their site, or at least I can’t find it anymore, but I have a GPL copy of v0.5.2 and am happy to share if there’s interest.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/377_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rutgeraldo</div>
+          <div class="post_content">
+<p>There’s a number of tree shape indices in Bio::Phylo already (doi:10.1186/1471-2105-12-63, doi:10.1186/1748-7188-7-6) so if you’re not averse to coding in Perl that might be an option. It has a lot of functionality for recursive traversal using the visitor methods, e.g. <code>with $tree-&gt;visit_depth_first</code> you can pass in code blocks that are executed on the nodes in pre- and/or post-order traversal.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">GrahamJones</div>
+          <div class="post_content">
+<p>I have never done the sort of thing you’re trying to, but I probably will want to one day. I just looked at the source for balance(). (Just load the ape package and type ‘balance’.) It looks to me like the internal function foo() is recursively visiting nodes. Perhaps you can imitate this.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Thank you very much, everyone, for your help.</p>
+<p><span class="mention">@klaus_schliep</span> helped me out via email. Here’s what he showed me:
+<a class="onebox" href="http://rpubs.com/ematsen/ape-traversal-sample" target="_blank">http://rpubs.com/ematsen/ape-traversal-sample</a></p>
+<p>I think that’s quite elegant. Thanks, Klaus!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">david_bryant</div>
+          <div class="post_content">
+<p>Hey Erick,</p>
+<p>Usually there is code to get the additive metric from the tree. Then to get the phylogenetic diversity of a subset a_1,…,a_k you can use</p>
+<p>1/2 [d(a_1,a_2) + d(a_2,a_3) + \cdots + d_(a_{k-1},a_k) + d(a_k,a_1)]</p>
+<p>where the a_i are ordered as in the NEWICK ordering. Easier than faffing around with recursive algorithms.</p>
+<p>-D.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Thanks, David. I should say that I’m not just interested in only doing functions such as PD that have the necessary linearity, but also more general functions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Ah, and I should also say that Klaus pointed me to <a href="http://ape-package.ird.fr/misc/FormatTreeR_24Oct2012.pdf">this PDF</a> describing the way trees are stored in APE after 2006 (and unlike how they are described in the first edition of Paradis’ book).</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

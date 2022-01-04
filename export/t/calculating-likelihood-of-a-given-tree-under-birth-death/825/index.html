@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Calculating likelihood of a given tree under birth/death</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Calculating likelihood of a given tree under birth/death</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>Hi All,</p>
+<p>I have a practical question. Given a phylogenetic tree (i.e. topology plus branch lengths) I’d like to calculate a likelihood of observing that tree shape under a particular generating model, and also find ML estimates of the model parameters.</p>
+<p>I don’t know of any package that can do this, but it doesn’t seem impossible. Does anyone have any pointers, or know of existing methods?</p>
+<p>Cheers,</p>
+<p>Rob</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/109_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">armanbilge</div>
+          <div class="post_content">
+<p>How about <span class="mention">@tanja819</span>’s TreePar?
+<a class="onebox" href="https://cran.r-project.org/web/packages/TreePar/index.html" rel="nofollow noopener" target="_blank">https://cran.r-project.org/web/packages/TreePar/index.html</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>Precisely what I was looking for, thanks.</p>
+<p>I should have known to just look at what <span class="mention">@tanja819</span> had produced! My googling failed me here.</p>
+<p>R</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">afmagee</div>
+          <div class="post_content">
+<p>Though <span class="mention">@armanbilge</span> answered the question, I’d like to add (in no particular order) some other programs I’ve used for calculating likelihoods of trees.</p>
+<ol>
+<li>
+<p><a href="https://cran.r-project.org/web/packages/TESS/index.html" rel="nofollow noopener">TESS</a>: has likelihood functions for constant-rate or any arbitrary time-dependent birth-death process, as well as for multiple regime models (like TreePar has), and a mass extinction model. Offers multiple models of taxon sampling (uniformly at random and oldest possible). Doesn’t come with ML estimation function but it wouldn’t be hard to rig if desired, does come with a handy MCMC function, though.</p>
+</li>
+<li>
+<p><a href="https://github.com/cran/expoTree" rel="nofollow noopener">expoTree</a>: has likelihood function and ML estimator for tree under a serially sampled diversity-dependent model (it’s based on the SIS model, so the likelihood isn’t directly comparable to DDD below).</p>
+</li>
+<li>
+<p><a href="https://cran.r-project.org/web/packages/DDD/index.html" rel="nofollow noopener">DDD</a>: has likelihood functions and ML estimator for diversity- and time-dependent diversification rates, though time-dependency is of a fixed form.</p>
+</li>
+<li>
+<p><a href="https://cran.r-project.org/web/packages/laser/index.html" rel="nofollow noopener">laser</a>: has likelihood functions and ML estimator for constant-rate birth-death process, models with multiple (tree-wide) rate regimes (only under pure-birth), and a diversity-dependent model with no extinction. Also has functions for Monte Carlo assessment of significance, if testing for departure from the constant-rate model.</p>
+</li>
+<li>
+<p><a href="http://revbayes.github.io/" rel="nofollow noopener">RevBayes</a>: you don’t have to do a full phylogenetic analysis in Rev. If you want, you can calculate a likelihood for a fixed tree under one of half a dozen diversification models for a fixed set of parameter values. Obviously you can also calculate the posterior distribution for the diversification parameters.</p>
+</li>
+</ol>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

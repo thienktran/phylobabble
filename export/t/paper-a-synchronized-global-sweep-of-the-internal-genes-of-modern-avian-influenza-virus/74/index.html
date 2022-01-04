@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>[Paper] A synchronized global sweep of the internal genes of modern avian influenza virus</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">[Paper] A synchronized global sweep of the internal genes of modern avian influenza virus</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>By Worobey, Han, and <span class="mention">@arambaut</span>.</p>
+<p><a class="onebox" href="http://www.nature.com/nature/journal/vaop/ncurrent/full/nature13016.html" rel="noopener" target="_blank">http://www.nature.com/nature/journal/vaop/ncurrent/full/nature13016.html</a></p>
+<blockquote>
+<p>Zoonotic infectious diseases such as influenza continue to pose a
+grave threat to human health. However, the factors that mediate the
+emergence of RNA viruses such as influenza A virus (IAV) are still
+incompletely understood. Phylogenetic inference is crucial to
+reconstructing the origins and tracing the flow of IAV within and
+between hosts. <strong>Here we show that explicitly allowing IAV host
+lineages to have independent rates of molecular evolution is necessary
+for reliable phylogenetic inference of IAV and that methods that do
+not do so, including ‘relaxed’ molecular clock models, can be
+positively misleading.</strong> A phylogenomic analysis using a host-specific
+local clock model recovers extremely consistent evolutionary histories
+across all genomic segments and demonstrates that the equine H7N7
+lineage is a sister clade to strains from birds-as well as those from
+humans, swine and the equine H3N8 lineage-sharing an ancestor with
+them in the mid to late 1800s. Moreover, major western and eastern
+hemisphere avian influenza lineages inferred for each gene coalesce in
+the late 1800s. On the basis of these phylogenies and the synchrony of
+these key nodes, we infer that the internal genes of avian influenza
+virus (AIV) underwent a global selective sweep beginning in the late
+1800s, a process that continued throughout the twentieth century and
+up to the present. The resulting western hemispheric AIV lineage
+subsequently contributed most of the genomic segments to the 1918
+pandemic virus and, independently, the 1963 equine H3N8 panzootic
+lineage. This approach provides a clear resolution of evolutionary
+patterns and processes in IAV, including the flow of viral genes and
+genomes within and between host lineages.</p>
+</blockquote>
+<p>The bolding up there is my own. Here is the corresponding figure:</p>
+<p><img height="499" src="https://www.phylobabble.org/uploads/default/21/248f48462402e7a6.png" width="310"/> </p>
+<p>Definitely take a look at Figure 2 from that paper.</p>
+<p>H/T <span class="mention">@trvrb</span>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/121_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">trvrb</div>
+          <div class="post_content">
+<p>The relaxed clock model in BEAST assumes each branch draws its rate independently from a distribution with estimated mean and variance.  Thus, there is no auto-correlation across branches.  Although the host-specific rate estimates are quite cool, Mike and Andrew’s results might suggest that including a relaxed clock model with auto-correlation might perform better.</p>
+<p>I wonder if <a href="http://www.biomedcentral.com/1741-7007/8/114">Alexei and Marc’s random-local-clock model</a> might do better than standard relaxed clock in this case.  I haven’t read the paper closely enough to know if this was one of the models compared.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<p>We are working on a mixture of local clock and relaxed clock and I certainly predict it will fit better. In this case there were only a few, quite obvious, host jumps so a specified local clock is going to work better than a random local clock but I would imagine the latter would probably not do badly (worth a comparison).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/121_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">trvrb</div>
+          <div class="post_content">
+<p>Thanks for clarifying <span class="mention">@arambaut</span>.  I completely agree with using the pre-specified host-clocks for this analysis.  But it was surprising how poorly the standard relaxed clock performed in this case.  It would be good to have a relaxed clock model that is more robust to these sorts of strong lineage effects, which we might think are common.</p>
+<p>I think I’ve asked you about this before, but have you experimented with auto-correlated relaxed clock models?  Each branch samples its rate with mean equal to the mean of its parent branch.  Mixing is obviously going to be an issue, but I wonder if the sort of GMRF operators could help with this?  And I’m not sure how mixing in this case would compare to the random-local-clock model.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@trvrb</span> it seems like one problem with the standard relaxed clocks in this setting is that they are all drawn from a single distribution, where we clearly have three distributions here, with very different means.</p>
+<p><span class="mention">@arambaut</span> I couldn’t tell if the random local clock had the topology constrained such that the viruses in the three animals were each monophyletic, as was the case for the HSLC.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>This makes me wonder to what extent one could estimate the number of clocks and their branch assignments directly from the data, in a categorical version of what <span class="mention">@nicolas_lartill</span> does in a continuous framework here: <a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1558-5646.2011.01558.x/full" rel="nofollow noopener">http://onlinelibrary.wiley.com/doi/10.1111/j.1558-5646.2011.01558.x/full</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/16_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">nicolas_lartill</div>
+          <div class="post_content">
+<p><span class="mention">@arambaut</span>: a nice paper, and an interesting model. One can imagine many extensions here (e.g. by making an explicit model of the switches between hosts based on a metapopulation model).</p>
+<p><span class="mention">@rob_lanfear</span>. yes, there are possible connections here. On my side, I was thinking about modeling the log-rate as an Ornstein Uhlenbeck process with host-dependent mean. But other models would certainly be possible.</p>
+<p>However, in the present case, I wonder if autocorrelated clocks would be much better: I am so surprised by the biased divergence time estimates shown in figure 1.c.</p>
+<p>I could possibly imagine an interaction with the prior on divergence times here: is it something like a standard coalescent or a birth-death? If yes, then is that expected to correctly describe the structured populations represented by these data?</p>
+<p>My idea is this: if the prior on divergence times, for some reason, really wants to push estimates for ancient nodes downwards, then, just because the relaxed clock happens to be more flexible, it will not oppose enough resistance to this bias. Hence what we see in figure 1c.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<p>Autocorrelated relaxed clocks are implemented in BEAST but would make no sense in this case - the number of host switches are few and the AC model would expect a change drawn from the same distribution on all nodes. Perhaps if the changes drawn from an exponential so most changes are small and a few are big.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<blockquote>
+<p>This makes me wonder to what extent one could estimate the number of
+clocks and their branch assignments directly from the data, in a
+categorical version of what <span class="mention">@nicolas_lartill</span> does in a continuous
+framework here:
+<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1558-5646.2011.01558.x/full2" rel="nofollow noopener">http://onlinelibrary.wiley.com/doi/10.1111/j.1558-5646.2011.01558.x/full2</a></p>
+</blockquote>
+<p>Is this not the same as Alexei Drummond and Marc Suchard’s random local clock does?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>Sorry - what I wrote was ambiguous. I meant using the trait data at the tips (in this case, host data) to help the process.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<aside class="quote" data-full="true" data-post="10" data-topic="74">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/rob_lanfear/40/138_1.png" width="20"/> rob_lanfear:</div>
+<blockquote>
+<p>Sorry - what I wrote was ambiguous. I meant using the trait data at the tips (in this case, host data) to help the process</p>
+</blockquote>
+</aside>
+<p>I understand. In this case the major host jumps are few and with 1.0 support but generally yes - if there were lots of jumping you could have a process describing the jumping that controls the rate changes. We have been doing this using the Markov Jumps (a method of efficiently getting realisations and expectations of transitions from a continuous-time Markov model).</p>
+<p>This sort of process was used in the following paper to model rabies virus jumps between bat host species: <a href="http://dx.doi.org/10.1098/rstb.2012.0196" rel="nofollow noopener">http://dx.doi.org/10.1098/rstb.2012.0196</a>
+and this one for foot and mouth virus: <a href="http://mbio.asm.org/content/4/5/e00591-13.full" rel="nofollow noopener">http://mbio.asm.org/content/4/5/e00591-13.full</a>
+These two papers didn’t have host-specific rates but it is being worked on.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Statistical consistency of OTOL methods?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Statistical consistency of OTOL methods?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Hey <span class="mention">@karen_cranston</span> and <span class="mention">@blackrim</span> –</p>
+<p>Are there any efforts to prove statistical consistency of the methods that y’all use to build the OTOL? I’m thinking of analogs of papers like <span class="mention">@mathmomike</span> and <span class="mention">@tandy</span>’s <a href="http://onlinelibrary.wiley.com/doi/10.1002/(SICI)1098-2418(199903)14:2%3C153::AID-RSA3%3E3.0.CO;2-R/abstract">few logs paper</a> and the work of <a href="http://www.sciencedirect.com/science/article/pii/S0169534709000846">Degnan and Rosenberg</a> and many others concerning species tree inference. There are some interesting and perhaps relevant observations in the <a href="http://sysbio.oxfordjournals.org/content/57/2/243.abstract">ML supertrees</a> paper by Steel and Rodrigo.</p>
+<p>You would need some random process that would generate observed trees from the true TOL. Not sure what that would be exactly.</p>
+<p>For those who don’t know about the OTOL methods, here’s <span class="mention">@blackrim</span>’s phyloseminar:</p>
+<div class="lazyYT" data-height="270" data-parameters="feature=oembed&amp;wmode=opaque" data-width="480" data-youtube-id="XYgMz5avFyQ" data-youtube-title="phyloseminar #36: Stephen Smith, University of Michigan"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/141_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">blackrim</div>
+          <div class="post_content">
+<p>I am not sure much of this has been explored. The way the algorithm works as we use it for OTOL it is really not making any decisions that haven’t already been designated by the user. However, built into the system, we can basically search some space and work like a supertree method where there are other decisions being made not by the user. It would be great to explore these more. They certainly aren’t advanced yet though because that really isn’t what is being used for OTOL at the moment. Happy to go into more detail though!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Ah. So if I understand correctly, you make this big graph, and then the user goes through the graph and picks a tree that seems supported by the most edges?</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

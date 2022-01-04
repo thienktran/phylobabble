@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Paper developing a new approach to phylogenetic tree shape</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Paper developing a new approach to phylogenetic tree shape</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>If any of you are interested in phylogenetic tree shape, this paper takes an actually new approach as compared to more formulas:</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/24223766" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/24223766" rel="nofollow noopener" target="_blank">Mapping the shapes of phylogenetic trees from human and zoonotic RNA viruses.</a>
+</h4>
+<div class="date">
+  AF Poon, LW Walker, H Murray, RM McCloskey, PR Harrigan and RH Liang,
+  <i>PloS one</i>, 2013
+</div>
+<p class="pubmed-abstract">
+  A phylogeny is a tree-based model of common ancestry that is an indispensable tool for studying biological variation. Phylogenies play a special role in the study of rapidly evolving populations such as viruses, where the proliferation of lineages is constantly being shaped by the mode of virus transmission, by adaptation to immune systems, and by patterns of human migration and contact. These processes may leave an imprint on the shapes of virus phylogenies that can be extracted for comparative study; however, tree shapes are intrinsically difficult to quantify. Here we present a comprehensive study of phylogenies reconstructed from 38 different RNA viruses from 12 taxonomic families that are associated with human pathologies. To accomplish this, we have developed a new procedure for studying phylogenetic tree shapes based on the 'kernel trick', a technique that maps complex objects into a statistically convenient space. We show that our kernel method outperforms nine different tree balance statistics at correctly classifying phylogenies that were simulated under different evolutionary scenarios. Using the kernel method, we observe patterns in the distribution of RNA virus phylogenies in this space that reflect modes of transmission and pathogenesis. For example, viruses that can establish persistent chronic infections (such as HIV and hepatitis C virus) form a distinct cluster. Although the visibly 'star-like' shape characteristic of trees from these viruses has been well-documented, we show that established methods for quantifying tree shape fail to distinguish these trees from those of other viruses. The kernel approach presented here potentially represents an important new tool for characterizing the evolution and epidemiology of RNA viruses.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>I think it’s pretty neat!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/121_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">trvrb</div>
+          <div class="post_content">
+<p>Indeed.  Pretty neat.  Quantifying tree shape is a good thing.  However, I’m inclined to believe that effective population size already does a pretty good job of this.  Generally, ladder-like trees have low <em>N</em><sub>e</sub> and star-like trees have high <em>N</em><sub>e</sub>.  Quantifying <em>N</em><sub>e</sub> in this fashion corrects for temporal sampling patterns (you’ll get a star-like tree for flu if you just sample one season).  In figure 5, we could go left-to-right from HIV to dengue to flu with decreasing <em>N</em><sub>e</sub>.  Additionally, <em>N</em><sub>e</sub> has an advantage of being more readily interpretable than this kernel measure.</p>
+<p>However, I could be convinced that this kernel metric adds something <em>N</em><sub>e</sub> does not (like clade clustering).  But I think comparing it to tree imbalance statistics is a poor choice.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I like your argument for <em>N<sub>e</sub></em>. However, I was thinking about multivariate collections of tree statistics, which this gives and effective population size does not. This was something I thought about during my PhD.</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/16969941" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/16969941" rel="nofollow noopener" target="_blank">A geometric approach to tree shape statistics.</a>
+</h4>
+<div class="date">
+  FA Matsen,
+  <i>Systematic biology</i>, Aug 2006
+</div>
+<p class="pubmed-abstract">
+  This article presents a new way to quantify the descriptive ability of tree shape statistics. Where before, tree shape statistics were chosen by their ability to distinguish between macroevolutionary models, the resolution presented in this paper quantifies the ability of a statistic to differentiate between similar and different trees. This is termed the geometric approach to differentiate it from the model-based approach previously explored. A distinct advantage of this perspective is that it allows evaluation of multiple tree shape statistics describing different aspects of tree shape. After developing the methodology, it is applied here to make specific recommendations for a suite of three statistics that may prove useful in applications. The article ends with an application of the statistics to clarify the impact of taxa omission on tree shape.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/17666770" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/17666770" rel="nofollow noopener" target="_blank">Optimization over a class of tree shape statistics.</a>
+</h4>
+<div class="date">
+  FA Matsen,
+  <i>IEEE/ACM transactions on computational biology and bioinformatics</i>, Jul-Sep 2007
+</div>
+<p class="pubmed-abstract">
+  Tree shape statistics quantify some aspect of the shape of a phylogenetic tree. They are commonly used to compare reconstructed trees to evolutionary models and to find evidence of tree reconstruction bias. Historically, to find a useful tree shape statistic, formulas have been invented by hand and then evaluated for utility. This article presents the first method which is capable of optimizing over a class of tree shape statistics, called Binary Recursive Tree Shape Statistics (BRTSS). After defining the BRTSS class, a set of algebraic expressions is defined which can be used in the recursions. The tree shape statistics definable using these expressions in the BRTSS is very general, and includes many of the statistics with which phylogenetic researchers are already familiar. We then present a practical genetic algorithm which is capable of performing optimization over BRTSS given any objective function. The chapter concludes with a successful application of the methods to find a new statistic which indicates a significant difference between two distributions on trees which were previously postulated to have similar properties.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/121_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">trvrb</div>
+          <div class="post_content">
+<p>Interesting.  I absolutely agree that <em>N</em><sub>e</sub> doesn’t cover everything.  At the minimum you’d need something like Tajima’s D to quantify departure of intervals from coalescent expectation and tree imbalance.  Probably others as well (maybe clade structure).  The Poon et al. analysis is cool, I just didn’t like <em>N</em><sub>e</sub> being ignored when discussing ladder-like and star-like trees.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>A true population geneticist. Just throw <em>N<sub>e</sub></em> and D into the station wagon and head for the beach!</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Discourse Admin Quick Start Guide</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Discourse Admin Quick Start Guide</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/8c40aa8ec021cd78ff90ae74b1dc81283d016cd3.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">system</div>
+          <div class="post_content">
+<p>You are now the proud owner of your very own Civilized Discourse Construction Kit. Congratulations! As a new forum admin, here’s a quick start guide to get you going:</p>
+<h3>Login as an Admin</h3>
+<p>You can login via the blue “Log in” button in the upper-right hand corner of Discourse.</p>
+<p>Not an admin? If you used the <a href="https://github.com/discourse/discourse/blob/master/docs/INSTALL-ubuntu.md">official install guide</a> you can use the following commands (taken from that guide) to elevate your account privileges:</p>
+<pre><code># Run these commands as the discourse user
+cd ~/discourse
+# ~/discourse or /var/www/discouse depending on where discourse is installed
+RAILS_ENV=production bundle exec rails c
+
+# (in rails console)
+&gt; me = User.find_by_username_or_email('myemailaddress@me.com')
+&gt; me.activate #use this in case you haven't configured your mail server and therefore can't receive the activation mail.
+&gt; me.admin = true
+&gt; me.save
+</code></pre>
+<h3>Access the Admin Console</h3><p>
+</p><p>To access the Discourse admin console, add <code>/admin</code> to the base URL, like so:</p>
+<h3><a href="http://discourse.example.com/admin">http://discourse.example.com/admin</a></h3>
+<p>From here, you’ll be able to access the Admin functions, all of which are very important, so do check each one out.</p>
+<h3>Enable Twitter Logins</h3>
+<ol>
+<li>From the Administrative console above, enter <strong>Site Settings</strong>.</li>
+<li>Scroll down to the two text fields named:</li>
+</ol>
+<p><code>twitter_consumer_key</code><br/>
+<code>twitter_consumer_secret</code></p>
+<ol start="3">
+<li>Enter in your respective <strong>key</strong> and <strong>secret</strong> that is issued to you via <a href="http://dev.twitter.com">dev.twitter.com</a>. If you are unsure of what your key/secret is, or you have yet to obtain one, visit the Twitter Dev API FAQ on <a href="https://dev.twitter.com/docs/faq#7447">how to obtain these keys</a>.</li>
+<li>In the Twitter settings, the callback url must use the path <code>/auth/twitter/callback</code> at your domain. e.g., <code>http://discuss.example.com/auth/twitter/callback</code>
+</li>
+</ol>
+<h3>Enable Facebook Logins</h3>
+<ol>
+<li>From the Administrative console above, enter <strong>Site Settings</strong>.</li>
+<li>Scroll down to the two text fields named:</li>
+</ol>
+<p><code>facebook_app_id</code><br/>
+<code>facebook_app_secret</code></p>
+<ol start="3">
+<li>Enter in your respective <strong>id</strong> and <strong>secret</strong> that is issued to you via <a href="http://developers.facebook.com">developers.facebook.com</a>. If you are unsure of what your id/secret is, or you have yet to obtain one, visit the <a href="https://developers.facebook.com/docs/concepts/login/access-tokens-and-types/">Facebook Developers :: Access Tokens and Types</a> page for more information.</li>
+<li>In the Facebook App settings, you must enable “Website with Facebook Login” under “Select how your app integrates with Facebook” and set the Site URL to use the path <code>/auth/facebook/callback</code> at your site domain. e.g., <code>http://discuss.example.com/auth/facebook/callback</code>.</li>
+</ol>
+<h3>Enable GitHub Logins</h3><p>
+</p><ol>
+<li>From the Administrative console above, enter <strong>Site Settings</strong>.</li>
+<li>Scroll down to the two text fields named:</li>
+</ol>
+<p><code>github_client_id</code><br/>
+<code>github_client_secret</code></p>
+<ol start="3">
+<li>Enter in your respective <strong>id</strong> and <strong>secret</strong> that is issued to you via <a href="https://github.com/settings/applications/new">https://github.com/settings/applications/new</a>. If you are unsure of what your id/secret is, or you have yet to obtain one, visit the <a href="https://github.com/settings/applications/">GitHub Developers :: Applications</a> page for more information.</li>
+<li>Be sure to set the Callback URL to use the path <code>/auth/github/callback</code> at your site domain. e.g., <code>http://discuss.example.com/auth/github/callback</code>.</li>
+</ol>
+<h3>Creating New Categories</h3><p>
+</p><p>You will get one new category by default, meta. <a href="http://meta.discourse.org/category/meta">Check it out! It’s important.</a> But you may want more.</p>
+<p>Categories are the <strong>colored labels</strong> used to organize groups of topics in Discourse, and they are completely customizable:</p>
+<ol>
+<li>Log in to Discourse via an account that has Administrative access.</li>
+<li>Click the “Categories” button in the navigation along the top of the site.</li>
+<li>You should now see a “Create Category” button at the top.</li>
+<li>Select a name and set of colors for the category for it in the dialog that pops up.</li>
+<li>Write a paragraph describing what the category is about in the first post of the Category Definition Topic associated with that category. It’ll be pinned to the top of the category, and used in a bunch of places.</li>
+</ol>
+<h3>File and Image Uploads</h3>
+<p>Image uploads should work fine out of the box, stored locally, though you can configure it so that images users upload go to Amazon S3 by <a href="http://meta.discourse.org/t/how-to-set-up-image-uploads-to-s3/7229?u=codinghorror">following this howto.</a>.</p>
+<p>Attaching other file types is supported too, read <a href="http://meta.discourse.org/t/new-attachments/8609">the announcement</a> for details.</p>
+<h3>Test Email Sending</h3>
+<p>Discourse relies heavily on emails to notify folks about conversations happening on the forum. Visit <a href="/admin/email">the admin email settings</a>, then enter an email address in the “email address to test” field and click <kbd>send test email</kbd>. Did it work? Great! <strong>Read this test email closely</strong>, it has critical email deliverability tips. If you didn’t get the test email, your users may not be getting any email notifications, either.</p>
+<p>Also, achieving proper email deliverability can be hard. We strongly recommend something like <a href="http://mandrill.com">Mandrill</a>, which solves all this for you with virtually no effort, and has a generous free plan that works fine for small forums.</p>
+<h3>Set your Terms of Service and User Content Licensing</h3>
+<p>Make sure you set your company name and domain variables for the <a href="/tos">Terms of Service</a>, which is a creative commons document.</p>
+<p>You’ll also need to make an important legal decision about the content users post on your forum:</p>
+<blockquote>
+<p>Your users will always retain copyright on their posts, and will always grant the forum owner enough rights to include their content on the forum.</p>
+<p>Who is allowed to republish the content posted on this forum?</p>
+<ul>
+<li>Only the author</li>
+<li>Author and the owner of this forum</li>
+<li>Anybody</li>
+</ul>
+</blockquote>
+<p>Please see our <a href="/admin/site_contents/tos_user_content_license">admin User Content Licensing</a> page for a brief form that will let you cut and paste your decision into section <span class="hashtag">#3</span> of the <a href="/tos#3">Terms of Service</a>.</p>
+<h3>Customize CSS / Header Logos</h3><p>
+</p><ol>
+<li>
+<p>Access the Administrative console, and select “Customize”.</p>
+</li>
+<li>
+<p>You’ll see a list of styles down the left-hand column, and two subcategories: “Stylesheet” and “Header”.</p>
+</li>
+</ol>
+<ul>
+<li>Insert your custom CSS styles into the “Stylesheet” section.</li>
+<li>Insert your custom HTML header into the “Header” section.</li>
+</ul>
+<ol start="3">
+<li>
+<p><strong>Enable:</strong> If you wish to have your styles and header take effect on the site, check the “Enable” checkbox, then click “Save”. This is also known as “live reloading”, which will cause your changes to take effect immediately.</p>
+</li>
+<li>
+<p><strong>Preview:</strong> If you wish to preview your changes before saving them, click the “preview” link at the bottom of the screen. Your changes will be applied to the site as they are currently saved in the “Customize” panel. If you aren’t happy with your changes and wish to revert, simply click the “Undo Preview” link.</p>
+</li>
+<li>
+<p><strong>Override:</strong> If you wish to have your styles override the default styles on the site, check the “Override Default” checkbox.</p>
+</li>
+</ol>
+<p>Here is some example HTML that would go into the “Header” section within “Customize”:</p>
+<pre><code class="lang-auto">&lt;div class='myheader' style='text-align:center;background-color:#CDCDCD'&gt;
+&lt;a href="/"&gt;&lt;img src="http://dummyimage.com/1111x90/CDCDCD/000000.jpg&amp;text=Placeholder+Custom+Header" width="1111px" height="90px" border="0" /&gt;&lt;/a&gt;    
+&lt;/div&gt;
+</code></pre>
+<h3>Write a welcome topic and pin it</h3>
+<p>What is this forum for? Who should visit? Write a <strong>brief introductory topic for your forum</strong> that explains what the heck is going on here, so new users who find your forum will have some idea what they’re getting into, and what the purpose of your forum is.</p>
+<ul>
+<li>Don’t write a novel because nobody will read it. What is the “elevator pitch” for your forum? How would you describe this forum to a stranger on an elevator when you have about 1 minute to talk?</li>
+<li>do <em>not</em> give this topic a category!</li>
+<li>after creating the topic, click the wrench icon in the upper right to get the staff menu for the topic</li>
+<li>select Pin Topic</li>
+</ul>
+<p>You should know that pinning topics works a little differently in Discourse than other forums.</p>
+<ul>
+<li>Users can clear pins on topics once they have read them, so they don’t stay pinned forever for everyone</li>
+<li>Pinned topics with a category will only “stick” to the top of their category</li>
+<li>Pinned topics with no category are pinned to the top of all topic lists</li>
+</ul>
+<h3>Ruby and Rails Performance Tweaks</h3><p>
+</p><ul>
+<li>
+<p>Be sure you have at least 2 GB of memory for your Discourse server. You might be able to squeak by with less, but we don’t recommend it, unless you are an expert.</p>
+</li>
+<li>
+<p>We strongly advise setting <code>RUBY_GC_MALLOC_LIMIT</code> to something much higher than the default for optimal performance. See <a href="http://meta.discourse.org/t/tuning-ruby-and-rails-for-discourse/4126">this meta.discourse topic for more details</a>.</p>
+</li>
+</ul>
+<h3>Need more Help?</h3><p>
+</p><p>This guide is a work in progress and we will be continually improving it with your feedback.</p>
+<p>For more assistance on configuring and running your Discourse forum, see <a href="http://meta.discourse.org/category/support">the support category</a> or <a href="http://meta.discourse.org/category/hosting">the hosting category</a> on <a href="http://meta.discourse.org">meta.discourse.org</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Carbon footprints of phylogenetic analyses?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Carbon footprints of phylogenetic analyses?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Fellow phylo-dorks,</p>
+<p>I was wondering if anyone had hard numbers (or a paper reference) for the energy consumption required by large phylogenetic analyses (or comparable computational problems from other fields). Perhaps <span class="mention">@rdmpage</span>, <span class="mention">@ematsen</span>, <span class="mention">@alexei_drummond</span>, <span class="mention">@Alexis_RAxML</span>, <span class="mention">@mtholder</span>, <span class="mention">@phylorich</span>, or <span class="mention">@beerli</span> might be able to help me out?</p>
+<p>Thanks!
+JWB.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/223_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">francois</div>
+          <div class="post_content">
+<p>Hi Joseph,</p>
+<p>In this paper: <a href="http://www.nature.com/nature/journal/v470/n7333/full/nature09676.html" rel="nofollow noopener">http://www.nature.com/nature/journal/v470/n7333/full/nature09676.html</a></p>
+<p>They say: “220,000 central processing unit (CPU)–hours were used producing at least 7 tonnes of CO2” in the acknowledgement section…</p>
+<p>cheers,
+– François</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Thanks <span class="mention">@francois</span>! CPU-hours are sometimes reported, but I do not know the conversion to CO2-tonnes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<p>It seems like the CO2-tonnes should be a function of the wattage of the chips, as well as how long the computations were run.  <a href="http://en.wikipedia.org/wiki/Performance_per_watt#FLOPS_per_watt" rel="nofollow noopener">http://en.wikipedia.org/wiki/Performance_per_watt#FLOPS_per_watt</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/223_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">francois</div>
+          <div class="post_content">
+<p>I guess it also depends on the source of energy that is used to power the computer…</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Thanks <span class="mention">@bredelings</span>; that looks useful.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/363_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">beerli</div>
+          <div class="post_content">
+<p>I have no data on electric consumption for migrate: the easiest way to get a comparison would be to run a  kill-a-watt on a single computer with many cores, consumption on university clusters is very convoluted because these machines are usually run in shared usage and usually also do not do a detailed energy accounting because they are on the University grid. Calculations like this will not really help because FST calculations etc will be much cheaper but do we really want to only use those? I guess that running a computer cluster will be cheap in comparison to any field sampling trip (that involves plane/ship).
+But all that said, it would be an interesting paper to see a comparison.</p>
+<p>cheers,
+Peter</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Hi Joseph,</p>
+<p>I don’t think I ever calculated it explicitly, but there seem to be tools for this, see here:</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://developer.ibm.com/technologies/">
+<header class="source">
+<img class="site-icon" height="128" src="https://www.phylobabble.org/uploads/default/original/1X/284fb128d5c9de520b7456c4c0a5ac4836a8a8aa.png" width="128"/>
+<a href="https://developer.ibm.com/technologies/" rel="noopener nofollow ugc" target="_blank">IBM Developer</a>
+</header>
+<article class="onebox-body">
+<img class="thumbnail onebox-avatar" height="500" src="https://www.phylobabble.org/uploads/default/original/1X/fe79db5108df6ec621636b64bc7c9e8586ceee2b.jpeg" width="500"/>
+<h3><a href="https://developer.ibm.com/technologies/" rel="noopener nofollow ugc" target="_blank">Technologies</a></h3>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>Based on this you can then extrapolate.</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

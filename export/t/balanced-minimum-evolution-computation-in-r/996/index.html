@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Balanced minimum evolution computation in R</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Balanced minimum evolution computation in R</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Hello friends–</p>
+<p>I’m wondering if there is some way to calculate the BME score in an existing R package. By this score, I mean <em>l</em> in the sense of</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/16877499" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/16877499" target="_blank">Neighbor-joining revealed.</a>
+</h4>
+<div class="date">
+  O Gascuel and M Steel,
+  <i>Molecular biology and evolution</i>, Nov 2006
+</div>
+<p class="pubmed-abstract">
+  It is nearly 20 years since the landmark paper (Saitou and Nei 1987) in Molecular Biology and Evolution introducing Neighbor-Joining (NJ). The method has become the most widely used method for building phylogenetic trees from distances, and the original paper has been cited about 13,000 times (Science Citation Index). Yet the question "what does the NJ method seek to do?" has until recently proved somewhat elusive, leading to some imprecise claims and misunderstanding. However, a rigorous answer to this question has recently been provided by further mathematical investigation, and the purpose of this note is to highlight these results and their significance for interpreting NJ. The origins of this story lie in a paper by Pauplin (2000) though its continuation has unfolded in more mathematically inclined literature. Our aim here is to make these findings more widely accessible.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p><div class="lightbox-wrapper"><a class="lightbox" data-download-href="https://www.phylobabble.org/uploads/default/e9d94927e0528761ede77d5ce5568b223e8a5d56" href="https://www.phylobabble.org/uploads/default/original/1X/e9d94927e0528761ede77d5ce5568b223e8a5d56.png" title="02 PM"><img alt="02 PM" data-base62-sha1="xmIMyGTVLWo6MNmbiFzivmaMzMa" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/e9d94927e0528761ede77d5ce5568b223e8a5d56_2_10x10.png" height="314" src="https://www.phylobabble.org/uploads/default/optimized/1X/e9d94927e0528761ede77d5ce5568b223e8a5d56_2_690x314.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/e9d94927e0528761ede77d5ce5568b223e8a5d56_2_690x314.png, https://www.phylobabble.org/uploads/default/optimized/1X/e9d94927e0528761ede77d5ce5568b223e8a5d56_2_1035x471.png 1.5x, https://www.phylobabble.org/uploads/default/original/1X/e9d94927e0528761ede77d5ce5568b223e8a5d56.png 2x" width="690"/><div class="meta">
+<svg aria-hidden="true" class="fa d-icon d-icon-far-image svg-icon"><use xlink:href="#far-image"></use></svg><span class="filename">02 PM</span><span class="informations">1136×518 85.8 KB</span><svg aria-hidden="true" class="fa d-icon d-icon-discourse-expand svg-icon"><use xlink:href="#discourse-expand"></use></svg>
+</div></a></div></p>
+<p><div class="lightbox-wrapper"><a class="lightbox" data-download-href="https://www.phylobabble.org/uploads/default/e5dcfe8e6d66704ea66bd52edfc27b70c2c3ecb1" href="https://www.phylobabble.org/uploads/default/original/1X/e5dcfe8e6d66704ea66bd52edfc27b70c2c3ecb1.png" title="07 PM"><img alt="07 PM" data-base62-sha1="wNsOM6NmS0ECHVk0iWlDtl8cyNb" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/e5dcfe8e6d66704ea66bd52edfc27b70c2c3ecb1_2_10x10.png" height="219" src="https://www.phylobabble.org/uploads/default/optimized/1X/e5dcfe8e6d66704ea66bd52edfc27b70c2c3ecb1_2_689x219.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/e5dcfe8e6d66704ea66bd52edfc27b70c2c3ecb1_2_689x219.png, https://www.phylobabble.org/uploads/default/optimized/1X/e5dcfe8e6d66704ea66bd52edfc27b70c2c3ecb1_2_1033x328.png 1.5x, https://www.phylobabble.org/uploads/default/original/1X/e5dcfe8e6d66704ea66bd52edfc27b70c2c3ecb1.png 2x" width="689"/><div class="meta">
+<svg aria-hidden="true" class="fa d-icon d-icon-far-image svg-icon"><use xlink:href="#far-image"></use></svg><span class="filename">07 PM</span><span class="informations">1148×366 81.4 KB</span><svg aria-hidden="true" class="fa d-icon d-icon-discourse-expand svg-icon"><use xlink:href="#discourse-expand"></use></svg>
+</div></a></div></p>
+<p>There are heaps of functions to infer trees using distance matrices, but here we have a distance matrix and a tree and want to get a number.</p>
+<p><span class="mention">@klaus_schliep</span>?</p>
+<p>Thanks!</p>
+<p>Erick</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">klaus_schliep</div>
+          <div class="post_content">
+<p>Hi <span class="mention">@ematsen</span>,
+if your tree is binary this is trivial, as all the necessary functions exist:</p>
+<pre><code class="lang-auto">library(ape)
+library(phangorn)
+library(magrittr)
+
+# a little function for you
+get_l &lt;- function(tree, dm){
+  # make sure the w and d will be in the same order
+  label &lt;- tree$tip.label  
+  dm &lt;- as.matrix(dm)[label, label]
+  dm &lt;- dm[lower.tri(dm)]
+  tmp &lt;- designTree(tree)
+  w &lt;- 2^(rowSums(tmp)-2)
+  sum(dm / w)
+}
+
+# a little example
+data(yeast)
+dm &lt;- dist.ml(yeast)
+
+fastme_tree &lt;- fastme.bal(dm)
+get_l(fastme_tree, dm)
+
+# compare with brute force
+trees &lt;- allTrees(8, tip.label = names(yeast)) # compute all possible trees
+trees %&lt;&gt;% .uncompressTipLabel() %&gt;% unclass   # this speeds up things a bit
+
+bf_l &lt;- sapply(trees, get_l, dm=dm)
+bf_tree &lt;- trees[[which.min(bf_l)]]
+RF.dist(bf_tree, fastme_tree)
+</code></pre>
+<p>I have no code for the general case with multifurcations (yet).
+Hope this gets you started.</p>
+<p>Cheers,
+Klaus</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Very slick! Thanks <span class="mention">@klaus_schliep</span>! This will do just fine for us.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

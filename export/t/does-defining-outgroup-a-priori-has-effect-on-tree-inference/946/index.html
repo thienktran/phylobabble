@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Does defining outgroup a priori has effect on tree inference?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Does defining outgroup a priori has effect on tree inference?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">MSF</div>
+          <div class="post_content">
+<p>Hello!
+Maybe this is a very basic question but I can’t figure out the answer to it. I’m using genomic alignments to run ML inference with RAxML. Among my alignments, I have several species that I’d like to use as outgroup species. There is the option, on RAxML, to define a priori which species are your outgroup and then generate a rooted tree. I know it is possible to root trees a posteriori (e.g. package ape on R), so I was wondering what is the advantage of defining an outgroup a priori. Will this have any influence on tree inference and/or the ML algorithm?
+Thanks
+Mafalda</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Defining an outgroup is just a drawing option, you can also easily root your tree a posteriori in a tree viewer by placing the root onto the branch leading to the outgroup species. However, the presence of the outgroup sequences in the MSA could have some effects on the tree topology. I have always been in favor of inferring the tree on the ingroup only and then attaching the outgroup via the Evolutionary Placement algorithm or Erick Matsen’s pplacer.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">MSF</div>
+          <div class="post_content">
+<p>Thank you Alexis! I understand it know!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/386_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tsmoreira</div>
+          <div class="post_content">
+<p>Defining a single OTU as outgroup as <span class="mention">@Alexis_RAxML</span> mentioned is meerely a graphic option for the drawing of your tree.</p>
+<p>Constraining more than one though it can impact the tree inference as better fit results may be discarded to satisfy this a priori constrain.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

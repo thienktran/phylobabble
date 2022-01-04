@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Tree comparison using Laplacian spectra</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Tree comparison using Laplacian spectra</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/317_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">max</div>
+          <div class="post_content">
+<p>Dear babblers,</p>
+<p>I stumbled across <a href="http://biorxiv.org/content/early/2015/09/09/026476" rel="nofollow noopener">http://biorxiv.org/content/early/2015/09/09/026476</a> today. This paper attempts yet another method of summarising trees, this time using what the authors call “Spectral Density Profiles”, which are just [if I understood correctly]  a transformation of the eigen values of the patristic distance matrix.</p>
+<p>This seems to me like a principled way of introducing branch lengths in, for example, the [sprspace] (<a href="https://github.com/cwhidden/sprspace" rel="nofollow noopener">https://github.com/cwhidden/sprspace</a>) framework: one could store the set  of spectra for a particular topology in a hashmap and then use those to inform clustering on the SPR graph. The communities in the graph would then be not only a result of their proximity in the topological space, but also on “branch length space”. Their methods are even implemented as an R package, <a href="https://cran.r-project.org/web/packages/RPANDA/index.html" rel="nofollow noopener">RPANDA</a>.</p>
+<p>I’m looking specially at you, <span class="mention">@ematsen</span>, <span class="mention">@cwhidden</span>, <span class="mention">@mathmomike</span> and <span class="mention">@mtholder</span>.</p>
+<p>Cheers,</p>
+<p>Luiz</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>That’s an interesting paper, Max, and thanks for pointing it out.</p>
+<p>It’s worth keeping in mind that any matrix-determinant-based methods are invariant to leaf relabeling, so this is a measure of tree shape rather than labeled topology. This could still be a useful key for a hash map, though I bet that we could cook up something using labels that would be even more informative.</p>
+<p>The following paper does not have branch lengths as part of the definition of the spectra, but it shows some limitations of such an approach. Branch lengths will increase overlap.</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/22613173" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/22613173" rel="nofollow noopener" target="_blank">Ubiquity of synonymity: almost all large binary trees are not uniquely identified by their spectra or their immanantal polynomials.</a>
+</h4>
+<div class="date">
+  FA Matsen and SN Evans,
+  <i>Algorithms for molecular biology : AMB</i>, May 21 2012
+</div>
+<p class="pubmed-abstract">
+  There are several common ways to encode a tree as a matrix, such as the adjacency matrix, the Laplacian matrix (that is, the infinitesimal generator of the natural random walk), and the matrix of pairwise distances between leaves. Such representations involve a specific labeling of the vertices or at least the leaves, and so it is natural to attempt to identify trees by some feature of the associated matrices that is invariant under relabeling. An obvious candidate is the spectrum of eigenvalues (or, equivalently, the characteristic polynomial).We show for any of these choices of matrix that the fraction of binary trees with a unique spectrum goes to zero as the number of leaves goes to infinity. We investigate the rate of convergence of the above fraction to zero using numerical methods. For the adjacency and Laplacian matrices, we show that the a priori more informative immanantal polynomials have no greater power to distinguish between trees.Our results show that a generic large binary tree is highly unlikely to be identified uniquely by common spectral invariants.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/358_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">dwbapst</div>
+          <div class="post_content">
+<p>Its interesting. I think, as a paleontologically-inclined person, one of the more intriguing things about this manuscript is its applications for analyzing diversification patterns on non-ultrametric phylogenies, which (as the paper points out) have been sorely lacking from the macroevolutionary toolbox.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

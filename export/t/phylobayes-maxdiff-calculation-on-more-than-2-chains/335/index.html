@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Phylobayes: maxdiff calculation on more than 2 chains</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Phylobayes: maxdiff calculation on more than 2 chains</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/35_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">eme_laura</div>
+          <div class="post_content">
+<p>Hi,</p>
+<p>I wonder if someone can explain how maxdiff is computed when more than 2 chains are compared?</p>
+<p>I am puzzled by this: I have run 4 chains on a dataset, and if I use ‘bpcomp’ on chains 1, 2 and 3, I get a maxdiff = 0.51, but if I compute it on all four chains, I get a maxdiff = 0.35.
+I don’t understand how that’s possible.</p>
+<p>Many thanks for any answer to my naive question!</p>
+<p>-Laura</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/16_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">nicolas_lartill</div>
+          <div class="post_content">
+<p>Hi,</p>
+<p>do your chains have the same length?</p>
+<p>bpcomp computes the max-diff statistic based on the same number of points for each chain. Which means that, if the chains have different lengths, then all will be read until the size of the shortest one has been reached.</p>
+<p>and I can imagine cases where the maxdiff is small on the first part of the 3 chains, but then increases again.</p>
+<p>in any case, don’t hesitate to send me the files, if you want me to check what happens here</p>
+<p>best</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/35_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">eme_laura</div>
+          <div class="post_content">
+<p>Hi Nicolas,</p>
+<p>You were right, one of the chains was significantly shorter than the others and “biased” the comparison of the maxdiff!</p>
+<p>Just to be clear though, when there are more than 2 chains, is the computation of the maxdiff done for each pair of chains then the largest of them is reported?</p>
+<p>In any case, thank you for your answer!</p>
+<p>Laura</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/16_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">nicolas_lartill</div>
+          <div class="post_content">
+<aside class="quote" data-post="3" data-topic="335">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/eme_laura/40/35_1.png" width="20"/> eme_laura:</div>
+<blockquote>
+<p>Just to be clear though, when there are more than 2 chains, is the computation of the maxdiff done for each pair of chains then the largest of them is reported?</p>
+</blockquote>
+</aside>
+<p>yes, exactly that.</p>
+<p>nicolas</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/35_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">eme_laura</div>
+          <div class="post_content">
+<p>Thank you for your answer!!</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

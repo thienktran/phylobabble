@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>[Paper] Efficient Continuous-Time Markov Chain Estimation (in very large state spaces)</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">[Paper] Efficient Continuous-Time Markov Chain Estimation (in very large state spaces)</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<blockquote>
+<p><strong>Efficient Continuous-Time Markov Chain Estimation</strong></p>
+<p>Monir Hajiaghayi, Bonnie Kirkpatrick, Liangliang Wang, Alexandre
+Bouchard-Côté <a href="http://jmlr.org/proceedings/papers/v32/hajiaghayi14.pdf">http://jmlr.org/proceedings/papers/v32/hajiaghayi14.pdf</a></p>
+<p>Many problems of practical interest rely on Continuous-time Markov
+chains~(CTMCs) defined over combinatorial state spaces, rendering the
+computation of transition probabilities, and hence probabilistic
+inference, difficult or impossible with existing methods. For problems
+with countably infinite states, where classical methods such as matrix
+exponentiation are not applicable, the main alternative has been
+particle Markov chain Monte Carlo methods imputing both the holding
+times and sequences of visited states. We propose a particle-based
+Monte Carlo approach where the holding times are marginalized
+analytically. We demonstrate that in a range of realistic inferential
+setups, our scheme dramatically reduces the variance of the Monte
+Carlo approximation and yields more accurate parameter posterior
+approximations given a fixed computational budget. These experiments
+are performed on both synthetic and real datasets, drawing from two
+important examples of CTMCs having combinatorial state spaces:
+string-valued mutation models in phylogenetics and nucleic acid
+folding pathways.</p>
+</blockquote>
+<p>The first important thing is to figure out how to calculate the transition probability of an <em>x</em> to a <em>y</em> given that some change occurs in the case when the state space is very big. String-valued processes fall in this category, for example. They bias things with a potential:</p>
+<p><img height="500" src="https://www.phylobabble.org/uploads/default/150/f7953babbb1eecff.png" width="484"/> </p>
+<p>Second, one needs to marginalize out the event (i.e. jump) times. This is done by constructing a CTMC such that the difficult part of the marginalization are the transition probabilities of the CTMC:</p>
+<p><img height="255" src="https://www.phylobabble.org/uploads/default/151/f7953babbb1eecff.png" width="642"/> </p>
+<p>Alexandre Bouchard-Côté does fantastic work. H/T <span class="mention">@cmccoy</span>.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

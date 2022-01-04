@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>[Paper] Phycas: Software for Bayesian Phylogenetic Analysis</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">[Paper] Phycas: Software for Bayesian Phylogenetic Analysis</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I had no idea that this was coming down the pipe, but was excited to see a paper come out describing Phycas (<a href="http://www.phycas.org">http://www.phycas.org</a>) from its authors, including <span class="mention">@mtholder</span>. Code is at <a class="inline-onebox" href="https://github.com/plewis/phycas">GitHub - plewis/phycas: Software for Bayesian phylogenetic analysis</a>.</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://pubmed.ncbi.nlm.nih.gov/25577605/">
+<header class="source">
+<img class="site-icon" height="64" src="https://cdn.ncbi.nlm.nih.gov/coreutils/nwds/img/favicons/favicon.ico" width="64"/>
+<a href="https://pubmed.ncbi.nlm.nih.gov/25577605/" rel="noopener" target="_blank">PubMed</a>
+</header>
+<article class="onebox-body">
+<img class="thumbnail onebox-avatar" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_10x10.png" height="500" src="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_500x500.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_500x500.png, https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_750x750.png 1.5x, https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_1000x1000.png 2x" width="500"/>
+<h3><a href="https://pubmed.ncbi.nlm.nih.gov/25577605/" rel="noopener" target="_blank">Phycas: software for Bayesian phylogenetic analysis - PubMed</a></h3>
+<p>Phycas is open source, freely available Bayesian phylogenetics software written primarily in C++ but with a Python interface. Phycas specializes in Bayesian model selection for nucleotide sequence data, particularly the estimation of marginal...</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>I haven’t played with Phycas, but I can describe what I think of as its “killer feature,” which is the ability to use a prior incorporating polytomous trees. That means that the software can return trees that look like this:</p>
+<p><img height="385" src="https://www.phylobabble.org/uploads/default/206/b0409c32d75dcb97.png" width="537"/> </p>
+<p>where I’ve put an arrow pointing at the polytomy. In this case, the polytomy shows three descendants of a given lineage.</p>
+<p>I would argue that such a representation is a more honest one (a “shrunken” estimate for <span class="mention">@nicolas_lartill</span> and friends). That is, if there is not information to resolve an internal node, then an unresolved tree is returned. One often sees such nodes when people collapse nodes in ML trees that have low bootstrap support. However, I think that it’s better than that because it’s rolled into the actual inference, meaning that the overall likelihoods are properly estimated. In a field where we are already in statistically tenuous territory with the number of discrete parameters being on the order of the number of independent data points (to say nothing of the discrete estimation part) having fewer parameters when appropriate is refreshing.</p>
+<p>In the Bayesian phylogenetics world, not allowing such multifurcations can cause some trouble, as was the subject of some research in the mid-2000’s. A good culmination of that work is this paper by Z Yang:</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://pubmed.ncbi.nlm.nih.gov/17488737/">
+<header class="source">
+<img class="site-icon" height="64" src="https://cdn.ncbi.nlm.nih.gov/coreutils/nwds/img/favicons/favicon.ico" width="64"/>
+<a href="https://pubmed.ncbi.nlm.nih.gov/17488737/" rel="noopener" target="_blank">PubMed</a>
+</header>
+<article class="onebox-body">
+<img class="thumbnail onebox-avatar" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_10x10.png" height="500" src="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_500x500.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_500x500.png, https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_750x750.png 1.5x, https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_1000x1000.png 2x" width="500"/>
+<h3><a href="https://pubmed.ncbi.nlm.nih.gov/17488737/" rel="noopener" target="_blank">Fair-balance paradox, star-tree paradox, and Bayesian phylogenetics - PubMed</a></h3>
+<p>The star-tree paradox refers to the conjecture that the posterior probabilities for the three unrooted trees for four species (or the three rooted trees for three species if the molecular clock is assumed) do not approach 1/3 when the data are...</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>The point of this work is that if the data truly doesn’t have any signal concerning an unresolved node, and we use a Bayesian phylogenetic inference package that doesn’t allow multifurcations (every one except for Phycas as far as I know) the data set may (with non-vanishing probability) give very high confidence that one of the resolutions is correct. This is shown in this figure from Yang’s paper (click to expand):</p>
+<p><img height="500" src="https://www.phylobabble.org/uploads/default/207/b0409c32d75dcb97.png" width="586"/> </p>
+<p>See the deep red in the corners? That’s showing that in replicate data sets there is a substantial probability that one of the resolutions will be very highly supported.</p>
+<p>So, I can’t comment on Phycas’ usability, runtimes, etc, and Conditional Predictive Ordinates sound nice, but for me, proper support for polytomies is the headlining feature of Phycas. If anyone tries it out, please post here!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/358_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">dwbapst</div>
+          <div class="post_content">
+<p>I concur regarding polytomies, but I’m coming at this from a morphological/paleontological point of view (well that’s my POV always, unless I’m talking to paleontologists…).</p>
+<p>Because a morphotaxon could persist through multiple branching events with little morphological change (i.e. an ancestor having many descendants) we would expect morphological phylogenetics to be replete with such ‘intrinsically unresolvable’ polytomies, and the situation only gets worse as we add fossils (or have a better sampled fossil record).</p>
+<p>Although I wasn’t the first one to notice this effect, I wrote up some simulations regarding the impact of this phenomenon here:</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0062312">
+<header class="source">
+<img class="site-icon" height="48" src="https://journals.plos.org/resource/img/favicon.ico" width="48"/>
+<a href="https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0062312" rel="noopener nofollow ugc" target="_blank">journals.plos.org</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:320/225;"><img class="thumbnail" height="225" src="https://www.phylobabble.org/uploads/default/original/1X/0763e9fa7dbf61fe01768aef75b5a1125e782c89.png" width="320"/></div>
+<h3><a href="https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0062312" rel="noopener nofollow ugc" target="_blank">When Can Clades Be Potentially Resolved with Morphology?</a></h3>
+<p>Morphology-based phylogenetic analyses are the only option for reconstructing relationships among extinct lineages, but often find support for conflicting hypotheses of relationships. The resulting lack of phylogenetic resolution is generally...</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/121_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">trvrb</div>
+          <div class="post_content">
+<p>Very cool. I was interested in looking at polytomies after reading this paper by Richard Neher and Oskar Hallatschek:</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://pubmed.ncbi.nlm.nih.gov/23269838/">
+<header class="source">
+<img class="site-icon" height="64" src="https://cdn.ncbi.nlm.nih.gov/coreutils/nwds/img/favicons/favicon.ico" width="64"/>
+<a href="https://pubmed.ncbi.nlm.nih.gov/23269838/" rel="noopener" target="_blank">PubMed</a>
+</header>
+<article class="onebox-body">
+<img class="thumbnail onebox-avatar" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_10x10.png" height="500" src="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_500x500.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_500x500.png, https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_750x750.png 1.5x, https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_1000x1000.png 2x" width="500"/>
+<h3><a href="https://pubmed.ncbi.nlm.nih.gov/23269838/" rel="noopener" target="_blank">Genealogies of rapidly adapting populations - PubMed</a></h3>
+<p>The genetic diversity of a species is shaped by its recent evolutionary history and can be used to infer demographic events or selective sweeps. Most inference methods are based on the null hypothesis that natural selection is a weak or infrequent...</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>In it they show that rapidly adapting populations will have an unusual coalescent process in which there are frequent “true” polytomies where one individual in the population spawns multiple progeny that have descendants in the present-day sample, like so:</p>
+<p><img height="369" src="https://www.phylobabble.org/uploads/default/210/3eedd17f27713e5e.jpg" width="579"/> </p>
+<p>They refer to these events as “multiple mergers”.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/358_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">dwbapst</div>
+          <div class="post_content">
+<p>Huh, interesting! In a sense, trvb, its the same ultimate dynamic as what I mentioned with regards to morphology: if branching that produces sampled descendants occurs more quickly than characters are changing, then ‘true’ polytomies are inevitable.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>How to recognize a rearranged tree?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">How to recognize a rearranged tree?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@cwhidden</span> and I had an entertaining discussion about the following question, which apparently came up in the <span class="mention">@Alexis_RAxML</span> lab as well. By tree rearrangement I mean an operation on some class of trees, such as subtree-prune-regraft (SPR) on unrooted trees.</p>
+<p>Given some collection <em>A</em> of trees and a member <em>t</em> of <em>A</em>, how can we decide if a rearranged version of <em>t</em> is a member of <em>A</em>?</p>
+<p>It seems like we’d like some sort of means of serializing trees that is compatible with the class of tree rearrangements. <span class="mention">@armanbilge</span> suggested thinking of a tree as the collection of its clades, and encoding that collection of clades as a binary vector indexed by the power set on the taxa (i.e. the set of all taxon subsets), and then keep track of what clades appear and disappear upon rearrangement. This would work, though the power set gets pretty big.</p>
+<p>Thoughts? cc <span class="mention">@mathmomike</span> <span class="mention">@david_bryant</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/317_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">max</div>
+          <div class="post_content">
+<p>Let C(t) =  {c_1, c2, …,  c_L} be the set of clades of tree t. Now imagine we take our set A ={ t_1,  t2, … t_k} of trees and compute the set U of unique clades in A. That is, we compute c*(t_i) = intersect(c(t_i), c(t_{i-1})), i &gt; 1, thus U = c*(t_k). Now we have a “query” tree t*, which is a re-arrangement of tree t. All we want to know is if t* is in A. A necessary and sufficient condition is that intersect(c(t*), U) = c(t*), meaning that all the clades in t* are in U. In other words, if c(t*) is in U, then “we’ve seen this tree before”.</p>
+<p>I think this bypasses having to deal with power set of clades – one can compare clades directly, “object-wise”, provided there is a unique way of writing them in string form – and also having to compute which clades would disappear upon rearrangement.</p>
+<p>This feels too easy, though. What am I missing?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Hi Max!</p>
+<p>It’s certainly necessary to have intersect(c(t*), U) = c(t*), but I don’t think it’s sufficient. Couldn’t we have the clades of t* appearing in the various trees of A although no single tree has all of them?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/317_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">max</div>
+          <div class="post_content">
+<p>I really don’t know. Let’s think of this in terms of clade “compatibility”. A tree is a set of compatible clades. Could it be the case that U has all the compatible clades that make up t*?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>To expand a little on your previous comment, we might have the following situation. Given A = {t_1, t_2, … t_k}, we might have one clade of t* appear in t_1, another in t_2, etc for all of them, but not have all of the clades appear in any one single tree. Thus we would have c(t*) contained in U without t* appearing in A.</p>
+<p>On the other hand, you definitely have the core of a good idea there. Having a good necessary condition is certainly helpful if we can just check slowly if the tree is in the set. We could think of also keeping track of all of the pairs of clades that appear in trees of our set, and perhaps use that as an additional criterion in a similar way.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/317_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">max</div>
+          <div class="post_content">
+<p>Thanks for the simple counter-example; certainly not a sufficient condition…<br/>
+Having a necessary condition means we can quickly dispatch candidates that do not belong in A. I wonder if we can borrow from the ideas here: <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3236838/pdf/1471-2105-12-S10-S16.pdf" rel="nofollow noopener">http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3236838/pdf/1471-2105-12-S10-S16.pdf</a>
+to get a better sense of what do once said condition is found to hold.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>(Just pasting the pubmed link in on its own line makes a nice little box… <img alt=":smile:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/smile.png?v=5" title=":smile:"/>)</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/22165819" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/22165819" rel="nofollow noopener" target="_blank">An efficient and extensible approach for compressing phylogenetic trees.</a>
+</h4>
+<div class="date">
+  SJ Matthews and TL Williams,
+  <i>BMC bioinformatics</i>, Oct 2011 18
+</div>
+<p class="pubmed-abstract">
+  Biologists require new algorithms to efficiently compress and store their large collections of phylogenetic trees. Our previous work showed that TreeZip is a promising approach for compressing phylogenetic trees. In this paper, we extend our TreeZip algorithm by handling trees with weighted branches. Furthermore, by using the compressed TreeZip file as input, we have designed an extensible decompressor that can extract subcollections of trees, compute majority and strict consensus trees, and merge tree collections using set operations such as union, intersection, and set difference.On unweighted phylogenetic trees, TreeZip is able to compress Newick files in excess of 98%. On weighted phylogenetic trees, TreeZip is able to compress a Newick file by at least 73%. TreeZip can be combined with 7zip with little overhead, allowing space savings in excess of 99% (unweighted) and 92%(weighted). Unlike TreeZip, 7zip is not immune to branch rotations, and performs worse as the level of variability in the Newick string representation increases. Finally, since the TreeZip compressed text (TRZ) file contains all the semantic information in a collection of trees, we can easily filter and decompress a subset of trees of interest (such as the set of unique trees), or build the resulting consensus tree in a matter of seconds. We also show the ease of which set operations can be performed on TRZ files, at speeds quicker than those performed on Newick or 7zip compressed Newick files, and without loss of space savings.TreeZip is an efficient approach for compressing large collections of phylogenetic trees. The semantic and compact nature of the TRZ file allow it to be operated upon directly and quickly, without a need to decompress the original Newick file. We believe that TreeZip will be vital for compressing and archiving trees in the biological community.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/109_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">armanbilge</div>
+          <div class="post_content">
+<p>Is there a good way to represent just the unlabelled tree topology? Perhaps equivalency of the topologies can be checked first before doing more work to verify the labels. Given the same tree topology, maybe checking the labels would be easier as well.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/117_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">argriffing</div>
+          <div class="post_content">
+<blockquote>
+<p>Is there a good way to represent just the unlabelled tree topology?</p>
+</blockquote>
+<p>The last paragraph of the ‘computational complexity’ section of <a href="https://en.wikipedia.org/wiki/Graph_canonization" rel="nofollow noopener">https://en.wikipedia.org/wiki/Graph_canonization</a> describes something that sounds like this.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">GrahamJones</div>
+          <div class="post_content">
+<p>The  <a href="https://en.wikipedia.org/wiki/Pr%C3%BCfer_sequence" rel="nofollow noopener">Prüfer code</a> is a neat way of serialising trees. And to spell out one way a serialisation could be used: serialise A, serialise the set B of rearrangements of t, sort A, use binary search. Time is O( (|A|+|B|) log(|A|) ).</p>
+<p>The following is something I just worked out. If you restrict to unrooted binary trees with labelled tips, but unlabelled internal nodes, then the Prüfer sequences - in essence - are as follows. Suppose there are m internal nodes.  Take two copies each of the numbers 1,2,…m, and make any ordering of these so that a 1 appears first, a 2 is the next to appear and so on, to make a sequence of length 2m. Each one corresponds to a tree. The tip labels do not appear, but they are implied by the ordering of the sequence.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Maybe I should provide some background why we are interested in this:</p>
+<p>If you do tree searches on very large trees (talking about 100,000 taxa or more) and you do SPR moves you might want to maintain a list/population of N good/promising candidate trees that are generated by these SPR moves. Now if you have a new tree generated by a SPR move and it has a good score you’d like to insert it into this list, but need to check if one with an identical topology (but potentially different likelihood) has  already been inserted there. The problem is that for very large trees, this comparison of tree structures, no matter how you do it, will become so time-intensive that it will dominate execution times, that is, it will take more time to compare trees than to calculate likelihoods. Thus, we need a method for systematically applying SPR moves to a tree such that we know that all generated tree topologies to be inserted in this list are unique.</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/433_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">alexG</div>
+          <div class="post_content">
+<p>Is any information about distances (corresponding to the rearrangement) between trees in <em>A</em> available? E.g. if you have clustered <em>A</em> into a number of neighbourhoods of small radius, you might want to check first to what neighbourhood tree <em>t</em> belongs. Also, if computing the distance is feasible, you can reduce your search to only trees at a particular distance (from some `origin’ tree, for example).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>In part inspired by this discussion, <span class="mention">@cwhidden</span> and I have a new manuscript:</p>
+<p>Whidden, C., &amp; Matsen, F. A., IV. (2016). Efficiently Inferring Pairwise Subtree Prune-and-Regraft Adjacencies between Phylogenetic Trees. <a href="http://arxiv.org/abs/1606.08893">http://arxiv.org/abs/1606.08893</a></p>
+<p>Here’s the corresponding <a href="http://matsen.fredhutch.org/general/2016/06/30/sprgraphs.html">blog post</a>.</p>
+<p>It’s really designed for the setting in which we have a collection of trees in advance and want to calculate the corresponding SPR subgraph on those trees, rather than the original formulation of the question, which would be more relevant to tree space exploration. We’re still thinking…</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

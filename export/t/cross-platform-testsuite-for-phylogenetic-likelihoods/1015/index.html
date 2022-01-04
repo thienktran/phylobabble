@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Cross-platform testsuite for phylogenetic likelihoods</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Cross-platform testsuite for phylogenetic likelihoods</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<p>Hi everyone.</p>
+<ol>
+<li>I am working on assembling a collection of (alignment, tree, model, parameters) combinations with known likelihoods to check that phylogeny programs are computing likelihoods correctly.  So far, I have methods to test bali-phy, revbayes, PAUP*, raxml-ng, PhyML and IQ-Tree.</li>
+</ol>
+<p>Hopefully this would also help other projects implement new models by checking that a new implementation obtains the correct likelihood.  At the moment, we don’t check optimization quality, just accuracy for a user-specified set of parameters.</p>
+<ol start="2">
+<li>The gitlab URL is: <a href="https://gitlab.com/testiphy/testiphy.git" rel="nofollow noopener">https://gitlab.com/testiphy/testiphy.git</a>
+</li>
+</ol>
+<p>Here is what the output currently looks like for raxml-ng</p>
+<pre><code>    $ ./testiphy raxml-ng
+    Running tests for 'raxml-ng':
+
+    Running test: tests/likelihood/gtr_inv/1  ... ok
+    Running test: tests/likelihood/gtr_expected_gamma_inv/1 ... ok
+    Running test: tests/likelihood/gtr_expected_gamma_inv/2 ... ok
+    Running test: tests/likelihood/1  ... ok
+    SUCCESS! (0 unexpected failures, 0 expected failures, 4 tests total)
+</code></pre>
+<p>There are about 37 tests total, including for a variety of codon models, but for most of these I have only written control files for bali-phy or revbayes.</p>
+<ol start="3">
+<li>The raxml-ng driver looks like:</li>
+</ol>
+<pre><code class="lang-python">class raxml_ng(Program):
+    def __init__(self, cmd):
+        Program.__init__(self,cmd)
+        self.name = "raxml-ng"
+        self.likelihood_regex = r".*. initial LogLikelihood: ([^ ]+)$"
+        self.extra_args = ['--opt-branches','off','--opt-model','off','--threads','1','--evaluate','--redo']
+</code></pre>
+<ol start="4">
+<li>Other projects should be able to use testiphy in continuous integration tests via .travis.yml, then I’d be happy to help.  This has helped me catch typos/thinkos that affect the likelihood during development.</li>
+</ol>
+<ul>
+<li>see <a href="https://github.com/bredelings/BAli-Phy/blob/master/.travis.yml" rel="nofollow noopener">https://github.com/bredelings/BAli-Phy/blob/master/.travis.yml</a> (uses meson)</li>
+<li>see <a href="https://github.com/bredelings/BAli-Phy/blob/3.0.2/.travis.yml" rel="nofollow noopener">https://github.com/bredelings/BAli-Phy/blob/3.0.2/.travis.yml</a> (uses autotools)</li>
+</ul>
+<ol start="5">
+<li>If anyone is interested in contributing by (i) improving the python code (ii) adding test-cases, (iii) requesting new features to enable practical testing, then please let me know.</li>
+</ol>
+<p>I hope this project will be an opportunity to get people from different phylogenetics software communities communicating more, so if you want to incorporate these tests into your software, please let me know.</p>
+<p>thanks,</p>
+<p>-BenRI</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Thanks for sharing this Ben, we will definitely start experimenting with this <img alt=":slight_smile:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/slight_smile.png?v=5" title=":slight_smile:"/></p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

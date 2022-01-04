@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Reconstructing identity of amino acids that are &lsquo;missing data&rsquo; in extant sequences</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Reconstructing identity of amino acids that are &lsquo;missing data&rsquo; in extant sequences</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Andrew_Roger</div>
+          <div class="post_content">
+<p>Hi,
+I’m wondering if any of the ancestral sequence reconstruction software packages allow the reconstruction of states in extant taxa that are coded as ambiguous/missing data. For example, if I was missing a stretch of sequence in an extant amino acid sequence, is there software that currently will estimate the states for that missing portion of the sequence using joint and/or marginal ancestral sequence reconstruction methods.</p>
+<p>Sincerely
+Andrew Roger</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rneher</div>
+          <div class="post_content">
+<p>Hi Andrew,</p>
+<p>we are working on such a software. We have so far exclusively used nucleotide sequences, but I just added a amino acid/profile map. No amino acid model implemented yet (other than the trivial one), but if you have enough data, it will infer a model for you. The project is here: <a href="https://github.com/neherlab/treetime" rel="nofollow noopener">https://github.com/neherlab/treetime</a></p>
+<p>you can use the script “ancestral_inference.py”, for example like this</p>
+<p>python ancestral_inference,py --aln my_alignment.fasta --tree mytree.newick --marginal --prot</p>
+<p>it will fill in all X in the alignment with the most likely state (N for nucleotides). In fact, all characters not in the alphabet will be treated as such.</p>
+<p>best,
+richard
+ps: the joint ml reconstruction is not quite correct. this is fixed in another branch but hasn’t hit master yet
+pps: let me know if you have questions/comments</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

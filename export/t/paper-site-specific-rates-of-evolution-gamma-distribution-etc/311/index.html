@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>[Paper] Site-specific rates of evolution, gamma distribution etc</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">[Paper] Site-specific rates of evolution, gamma distribution etc</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>James McInerney and coauthors <a href="http://bioinf.nuim.ie/among-site-rate-variation-and-how-to-examine-it/" rel="noopener nofollow ugc">describe a method</a> of determining site-specific rates of evolution.</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://academic.oup.com/sysbio/article/60/6/833/1675972">
+<header class="source">
+<img class="site-icon" height="32" src="https://www.phylobabble.org/uploads/default/original/1X/36b1fc1a081382ce15caafa31522bdc021cf8c4e.png" width="32"/>
+<a href="https://academic.oup.com/sysbio/article/60/6/833/1675972" rel="noopener nofollow ugc" target="_blank">OUP Academic</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:134/175;"><img class="thumbnail" height="175" src="https://www.phylobabble.org/uploads/default/original/1X/8a90ccd10dc9ff431efbc421eb6eccf87e6359ea.gif" width="134"/></div>
+<h3><a href="https://academic.oup.com/sysbio/article/60/6/833/1675972" rel="noopener nofollow ugc" target="_blank">Method for Inferring the Rate of Evolution of Homologous Characters that Can...</a></h3>
+<p>Abstract. Current phylogenetic methods attempt to account for evolutionary rate variation across characters in a matrix. This is generally achieved by the use o</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/21804093" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/21804093" rel="nofollow noopener" target="_blank">A method for inferring the rate of evolution of homologous characters that can potentially improve phylogenetic inference, resolve deep divergence and correct systematic biases.</a>
+</h4>
+<div class="date">
+  CA Cummins and JO McInerney,
+  <i>Systematic biology</i>, Dec 2011
+</div>
+<p class="pubmed-abstract">
+  Current phylogenetic methods attempt to account for evolutionary rate variation across characters in a matrix. This is generally achieved by the use of sophisticated evolutionary models, combined with dense sampling of large numbers of characters. However, systematic biases and superimposed substitutions make this task very difficult. Model adequacy can sometimes be achieved at the cost of adding large numbers of free parameters, with each parameter being optimized according to some criterion, resulting in increased computation times and large variances in the model estimates. In this study, we develop a simple approach that estimates the relative evolutionary rate of each homologous character. The method that we describe uses the similarity between characters as a proxy for evolutionary rate. In this article, we work on the premise that if the character-state distribution of a homologous character is similar to many other characters, then this character is likely to be relatively slowly evolving. If the character-state distribution of a homologous character is not similar to many or any of the rest of the characters in a data set, then it is likely to be the result of rapid evolution. We show that in some test cases, at least, the premise can hold and the inferences are robust. Importantly, the method does not use a "starting tree" to make the inference and therefore is tree independent. We demonstrate that this approach can work as well as a maximum likelihood (ML) approach, though the ML method needs to have a known phylogeny, or at least a very good estimate of that phylogeny. We then demonstrate some uses for this method of analysis, including the improvement in phylogeny reconstruction for both deep-level and recent relationships and overcoming systematic biases such as base composition bias. Furthermore, we compare this approach to two well-established methods for reweighting or removing characters. These other methods are tree-based and we show that they can be systematically biased. We feel this method can be useful for phylogeny reconstruction, understanding evolutionary rate variation, and for understanding selection variation on different characters.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>The <a href="http://www.cibiv.at/software/iqtree/" rel="nofollow noopener">IQ-tree</a> maximum likelihood phylogenetic tree tool includes an
+option -wsr (write site rate), that writes a .rate file, which looks like this:</p>
+<p>Site    Rate    Category        Categorized_rate</p>
+<p>1       0.53955 2       0.45293</p>
+<p>2       0.46690 2       0.45293</p>
+<p>3       0.52875 2       0.45293</p>
+<p>4       0.93489 3       0.98634</p>
+<p>5       0.70399 2       0.45293</p>
+<p>….</p>
+<p>For each site, it prints the posterior-mean rate (2nd column), the category with highest probability that this site belongs to (3rd column) and the rate for that highest category (4th column).</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

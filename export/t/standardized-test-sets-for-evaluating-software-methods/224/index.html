@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Standardized Test Sets for evaluating Software/Methods</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Standardized Test Sets for evaluating Software/Methods</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>A <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2989560/" rel="nofollow noopener">2010 PLOS publication</a> by Linder et al provides <a href="http://www.cs.utexas.edu/users/phylo/datasets/" rel="nofollow noopener">test data sets</a> for phylogenetics and metagenomics.</p>
+<p>At the HIV Databses we have gathered and organized <a href="http://www.hiv.lanl.gov/content/sequence/HIV/SI_alignments/datasets.html" rel="nofollow noopener">several data sets</a> which are useful for comparing analysis methods or developing new methods.  The <a href="http://www.kuleuven.be/aidslab/phylogenybook/home.html" rel="nofollow noopener">Phylogenetic Handbook</a> contains <a href="http://www.kuleuven.be/aidslab/phylogenybook/Data_sets.html" rel="nofollow noopener">sample data sets</a> for each chapter along with the tutorials of how to use the phylogenetic software.   Neither of these sites were specifically set up for providing test data sets, but they could be useful.</p>
+<p>I am sure there are other such sets available, and it would be nice to list some of the better ones here in the PhyloBabble site.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>This paper:</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/18278678/" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/18278678/" rel="nofollow noopener" target="_blank">Efficiency of Markov chain Monte Carlo tree proposals in Bayesian phylogenetics.</a>
+</h4>
+<div class="date">
+  C Lakner, P van der Mark, JP Huelsenbeck, B Larget and F Ronquist,
+  <i>Systematic biology</i>, Feb 2008
+</div>
+<p class="pubmed-abstract">
+  The main limiting factor in Bayesian MCMC analysis of phylogeny is typically the efficiency with which topology proposals sample tree space. Here we evaluate the performance of seven different proposal mechanisms, including most of those used in current Bayesian phylogenetics software. We sampled 12 empirical nucleotide data sets--ranging in size from 27 to 71 taxa and from 378 to 2,520 sites--under difficult conditions: short runs, no Metropolis-coupling, and an oversimplified substitution model producing difficult tree spaces (Jukes Cantor with equal site rates). Convergence was assessed by comparison to reference samples obtained from multiple Metropolis-coupled runs. We find that proposals producing topology changes as a side effect of branch length changes (LOCAL and Continuous Change) consistently perform worse than those involving stochastic branch rearrangements (nearest neighbor interchange, subtree pruning and regrafting, tree bisection and reconnection, or subtree swapping). Among the latter, moves that use an extension mechanism to mix local with more distant rearrangements show better overall performance than those involving only local or only random rearrangements. Moves with only local rearrangements tend to mix well but have long burn-in periods, whereas moves with random rearrangements often show the reverse pattern. Combinations of moves tend to perform better than single moves. The time to convergence can be shortened considerably by starting with a good tree, but this comes at the cost of compromising convergence diagnostics based on overdispersed starting points. Our results have important implications for developers of Bayesian MCMC implementations and for the large group of users of Bayesian phylogenetics software.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>uses a data set (available on TreeBase) that seems to have become the designated test data set for Bayesian analyses (e.g. Hohna and Drummond, Larget 2013, etc).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>The Lakner paper discusses several data sets, but in TreeBase it is only easy to find one data matrix; <a href="http://treebase.org/treebase-web/search/study/matrices.html?id=1915" rel="nofollow noopener">that of the wingless gene</a>, 378 bases long.  The table 1 in the paper lists several other matrices such as rDNA, internal transcribed spacer (ITS) M767 of 1082 bases, but I don’t see how to download that alignment matrix in TreeBase.  Am I missing something here?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p><img height="500" src="https://www.phylobabble.org/uploads/default/74/74480c44af797733.jpg" width="391"/> </p>
+<p>In my opinion, the long and short branch lengths in this tree built from the 398 bases in the wingless matrix, is due to the sequences being too short, rather than true differences in rates of evolution.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I believe that there’s been a change in the TreeBASE numbering scheme. Here are I believe the latest numbers, courtesy of <span class="mention">@cwhidden</span>:</p>
+<pre><code>|  Data | Sp | Nt   | Type of data                           | TreeBASE |
+|-------+----+------+----------------------------------------+----------|
+|  DS1  | 27 | 1949 | rRNA; 18s                              | M2017    |
+|  DS2  | 29 | 2520 | rDNA; 18s                              | M2131    |
+|  DS3  | 36 | 1812 | mtDNA; COII (1–678); cytb (679-1812)   | M127     |
+|  DS4  | 41 | 1137 | rDNA; 18s                              | M487     |
+|  DS5  | 50 | 378  | Nuclear protein coding; wingless       | M2907    |
+|  DS6  | 50 | 1133 | rDNA; 18s                              | M220     |
+|  DS7  | 59 | 1824 | mtDNA; COII; and cytb                  | M2449    |
+|  DS8  | 64 | 1008 | rDNA; 28s                              | M2261    |
+|  DS9  | 67 | 955  | Plastid ribosomal protein; s16 (rps16) | M2389    |
+|  DS10 | 67 | 1098 | rDNA; 18s                              | M2152    |
+|  DS11 | 71 | 1082 | rDNA; internal transcribed spacer      | M2274    |
+</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/384_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">cwhidden</div>
+          <div class="post_content">
+<p><span class="mention">@ematsen</span> <span class="mention">@BrianFoley</span>  Yes, those are the new numbers. Note that I followed the data set numbering from Hohna and Drummond (2012). The Lakner et al. paper had one more dataset with 43 taxa as DS5 so DS5-DS11 in this table are DS6-DS12 in Lakner et al.</p>
+<p>TreeBASE actually maintains the old IDs in a “description” field but you cannot search this field with the regular search bar. There is an advanced search option with a query language that might work, but I actually matched these up by searching for the number of taxa and characters and then verified with the description field. Dataset 5 from Lakner et al appears to have changed from M932 to M2359.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>I poked around this set a bit more, and I am not sure why it would be considered a good set for testing software.  In my opinion, a good test set would have a phylogeny that was known by other criteria, such as the fossil record, morphology (in a type of organism where morphology can be well used to follow evolution), etc.  I don’t see this set of insect data being ideal.  The insects have shared a common ancestor some 400 million years ago, so even in conserved genes encoded in the nucleus there are many issues with molecular evolution. The butterflies are just a subset of insects and their most recent common ancestor was closer to 280 million years ago.</p>
+<p>Many researchers who are using this type of data, with protein-coding genes which have been under hundreds of millions of years of selection pressures, are being careful to use only subsets of the data such as first and second position of each codon, and thus throwing away the sites which contribute more noise and misinformation (due to base composition bias, codon use bias, etc) than true phylogenetic signal.</p>
+<p>Surely there must be good data sets which present particular types of problems, such as known shifts in codon use bias (GC:AT ratio has been shown to change rather rapidly as species adapt to high and low temperature environments), or a “long branches attract” problem (human, gorilla, mouse, rat, dozens of carnivors and ungulates), sets where there are well documented changes in rates of evolution between lineages, etc.</p>
+<p>Each data set might be appropriate for only a small range of phylogenetic analyses.  The set that tests how well a given program can resist the “long branches attract” problem will not be the same set that can test population genetics questions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>Weighing in late here. I have been assembling a collection of datasets here:</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://github.com/roblanf/BenchmarkAlignments">
+<header class="source">
+<img class="site-icon" height="32" src="https://github.githubassets.com/favicons/favicon.svg" width="32"/>
+<a href="https://github.com/roblanf/BenchmarkAlignments" rel="noopener nofollow ugc" target="_blank">GitHub</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:690/345;"><img class="thumbnail" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/1e53f2d377ea1c598ef248b019aa26a1b58da32c_2_10x10.png" height="345" src="https://www.phylobabble.org/uploads/default/optimized/1X/1e53f2d377ea1c598ef248b019aa26a1b58da32c_2_690x345.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/1e53f2d377ea1c598ef248b019aa26a1b58da32c_2_690x345.png, https://www.phylobabble.org/uploads/default/optimized/1X/1e53f2d377ea1c598ef248b019aa26a1b58da32c_2_1035x517.png 1.5x, https://www.phylobabble.org/uploads/default/original/1X/1e53f2d377ea1c598ef248b019aa26a1b58da32c.png 2x" width="690"/></div>
+<h3><a href="https://github.com/roblanf/BenchmarkAlignments" rel="noopener nofollow ugc" target="_blank">roblanf/BenchmarkAlignments</a></h3>
+<p>Benchmark empirical datasets for phylogenetic method development - roblanf/BenchmarkAlignments</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>Happy to take suggestions of new datasets, corrections, suggestions for changes to format etc. (NB: if you have a dataset you’d like on there, send it along. Only requirement is that it’s published and you’re happy to make the dataset open access).</p>
+<p>Please don’t email me directly about the collection, instead raise all suggestions/corrections as issues on the repo itself, so that I can keep track:</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://github.com/roblanf/BenchmarkAlignments/issues">
+<header class="source">
+<img class="site-icon" height="32" src="https://github.githubassets.com/favicons/favicon.svg" width="32"/>
+<a href="https://github.com/roblanf/BenchmarkAlignments/issues" rel="noopener nofollow ugc" target="_blank">GitHub</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:690/345;"><img class="thumbnail" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/1e53f2d377ea1c598ef248b019aa26a1b58da32c_2_10x10.png" height="345" src="https://www.phylobabble.org/uploads/default/optimized/1X/1e53f2d377ea1c598ef248b019aa26a1b58da32c_2_690x345.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/1e53f2d377ea1c598ef248b019aa26a1b58da32c_2_690x345.png, https://www.phylobabble.org/uploads/default/optimized/1X/1e53f2d377ea1c598ef248b019aa26a1b58da32c_2_1035x517.png 1.5x, https://www.phylobabble.org/uploads/default/original/1X/1e53f2d377ea1c598ef248b019aa26a1b58da32c.png 2x" width="690"/></div>
+<h3><a href="https://github.com/roblanf/BenchmarkAlignments/issues" rel="noopener nofollow ugc" target="_blank">roblanf/BenchmarkAlignments</a></h3>
+<p>Benchmark empirical datasets for phylogenetic method development - roblanf/BenchmarkAlignments</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>Cheers,</p>
+<p>Rob</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>The github repository by Rob Lanfear currently seems to list the data sets by author_year.  I only recognize one or two of the authors.  It would be very nice if I  could find data sets for “mammals”, or “primates” or “vertebrates”.  Or  maybe find sets with at least 3,000 bases of DNA and not more than 40  taxa.</p>
+<p>For purposes of “test driving” various phylogenetic methods to compare one to another, it seems the ideal data set(s) would be one that is backed up by a solid fossil record and/or other data.  For example a set of mammal mitochiondrial genomes plus some marsupials for outgroup.  Or if that is “too easy” so all methods produce the “correct tree”, maybe something tougher like a few dozen tetrapod mitochondrial genomes with fish for the outgroup.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>Hi Brian,</p>
+<p>There’s a summary.csv file in the repo that will allow you to do what you want, i.e. select datasets based on any attribute or combination of attributes.</p>
+<p>Rob</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>Nice!   The .csv file was very helpful indeed.  I found the Kjer2007 complete mitochondrial genomes of mammals, plus marsupial outgroup was exactly what I was looking for.   I used the data to illustrate what the use of partitions does for the trees, <a href="https://www.researchgate.net/post/How_do_you_establish_the_number_of_discrete_gamma_categories_in_ML_tree_construction#54ac83fed3df3ee1608b457d" rel="noopener nofollow ugc">here</a>.</p>
+<p><img height="393" src="https://www.phylobabble.org/uploads/default/200/3158653691610d11.jpg" width="690"/> </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>Another great data set for your archive:</p>
+<p>A molecular phylogeny of living primates.
+Perelman P, Johnson WE, Roos C, Seuánez HN, Horvath JE, Moreira MA, Kessing B, Pontius J, Roelke M, Rumpler Y, Schneider MP, Silva A, O’Brien SJ, Pecon-Slattery J.
+PLoS Genet. 2011 Mar;7(3):e1001342. doi: 10.1371/journal.pgen.1001342. Epub 2011 Mar 17.
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/21436896" rel="noopener nofollow ugc">PMID:  21436896</a></p>
+<p>The final, post-GBLOCK, edited, annotated
+PAUP* nexus alignment of the 54 concatenated genes used for
+this study is <a href="http://lgdfm3.ncifcrf.gov/190Taxa_Rabbit_PAUP.zip" rel="noopener nofollow ugc">publicly available</a> .</p>
+<p>The file is a compressed zip file that can be viewed in either a
+generic text editor, PAUP*, or alignment programs that read large
+nexus format files.</p>
+<p>My “quick and dirty” neighbor-joing tree from the data:
+<img height="500" src="https://www.phylobabble.org/uploads/default/202/45687be329c9da66.jpg" width="262"/></p>
+<p>Transitions and transversions vs F84 distances for the data set:</p>
+<p><img height="460" src="https://www.phylobabble.org/uploads/default/203/34c59f74551fe64a.jpg" width="690"/> </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>The nuclear gene data stands in nice contrast to complete mitochondrial genomes from primates, such as the set from
+Kistler et al.  Mitochondria evolve roughly ten-fold faster than nuclear DNA so the mitochondria are reaching saturation with mutations within the primates.
+<img height="423" src="https://www.phylobabble.org/uploads/default/233/46e6a7e503861a6f.jpg" width="690"/></p>
+<p>Also, note the extreme transition:transversion bias in mitochondrial evolution, relative to nuclear genes.  The Ts rate is more than 10-fold faster than Tv in the primate mitochondria.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>Ciccarelli FD, Doerks T, von Mering C, Creevey CJ, Snel B, Bork P.
+Toward automatic reconstruction of a highly resolved tree of life.
+Science. 2006 Mar 3;311(5765):1283-7.
+Erratum in: Science. 2006 May 5;312(5774):697.
+PubMed PMID: 16513982.</p>
+<p>The supplementary information includes the complete data matrix (Amino acid sequences) and a table for converting the taxon names from short numbers (they used the NCBI taxonomy table code for each species) to “Genus species” names.
+<a class="attachment" href="https://www.phylobabble.org/uploads/default/original/1X/4048bf4ddb37169618a4c250effa683d7e0c2033.pdf">TreeOfLife2006ScienceSupplTreePDF.pdf</a> (17.6 KB)</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

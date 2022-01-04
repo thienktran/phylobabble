@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>How to handle duplicate sequences efficiently in a phylo-demographic analysis?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">How to handle duplicate sequences efficiently in a phylo-demographic analysis?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Dear Babblers,</p>
+<p>I’m working on a project in which we are trying to infer infection time using viral sequence data. Some samples are from multiple time points and others have only one. We are using a tree height estimate from BEAST for our timing inference.</p>
+<p>Sometimes the data sets have quite a number of duplicate sequences. Because these sequences are barcoded, we believe them to come from different template sequences, rather than just be PCR replicates.</p>
+<p>Including duplicates, it’s not uncommon for us to have &gt; 2,000 sequences. This is too many for BEAST to run on happily. When we deduplicate, we get down to about 200. However, this destroys our demographic assumptions by sampling sequences in a biased way. Namely, it will appear that our virus has diversified more rapidly than if we hadn’t deduplicated.</p>
+<p>What do you suggest? It seems like this is a question that others might have encountered, and perhaps a fertile place for new methods.</p>
+<p>Thanks!</p>
+<p>cc <span class="mention">@arambaut</span> <span class="mention">@tanja819</span> <span class="mention">@artpoon</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tanja819</div>
+          <div class="post_content">
+<p>Hey there - analyzing datasets with many duplicate sequences within BEAST is in fact the topic of Veronika Boskova, PhD student in my group. Our strategy is to input the unique sequences together with their frequencies into BEAST. Then we would sample trees on the unique sequences, but their likelihoods depend on the frequencies. Thus the resulting estimates of evolution/demography are aimed to be equivalent to inputting all duplicate sequences and run BEAST, our advantage being that we’re much faster by not sampling trees explicitly on subtrees with unique sequences. We have the data structure and operators implemented, and now doing a lot of testing. Our plan is to release our method as a BEAST2 add-on.
+It would be great to apply our method to your data as one of the first test cases once all our checks on simulated datasets are ok!
+So far we are still using the most simple demographic models, but incorporating extensions would be another cool thing to discuss in Banff <img alt=":slight_smile:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/slight_smile.png?v=5" title=":slight_smile:"/></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">stephaneguindon</div>
+          <div class="post_content">
+<p>Hi Erick,</p>
+<p>The probability of the deduplicated data, dD, given the genealogy T (i.e., Felsenstein’s likelihood) is the same as that of the full data set D given T.  So, as a first step in your analysis, you can let BEAST sample from Pr(dD|T).p(dD|m), where  p(dD|m) is  your demographic density.   The second  step would consist in using  an importance sampling approach  to re-weight BEAST posterior  sample, i.e., sample uniformly from the posterior output of BEAST and use Pr(dD|T)/p(dD|m).p(D|m), where p(D|m) is the demographic density  for the full  data, to  work out the  acceptance probability*. If  p(dD|m) and p(D|m) look alike for all m, then that re-sampling technique should work ok I guess.</p>
+<p>Tanja’s solution is also valid of course, but it seems that you then need to know what the frequency of each sequence in dD is (not sure you have them here).  Hope that makes sense.</p>
+<p>Regards,</p>
+<p>-Stephane-</p>
+<ul>
+<li>If {T,m} is the current state, propose a new state {T’,m’} by sampling uniformly in the output of BEAST and accept it with probability [Pr(dD|T’)/Pr(dD|T)].[p(D|m’)/p(D|m)].[p(dD|m)/p(dD|m’)].</li>
+</ul>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

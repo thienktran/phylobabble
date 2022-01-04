@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Phylogenetic placement of marker gene amplicons as operational taxonomic units</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Phylogenetic placement of marker gene amplicons as operational taxonomic units</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/153_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">cnelson</div>
+          <div class="post_content">
+<p>This is as much a moral rumination as a call for opinions and guidance. How can we better practically resolve taxa as amplicon surveys grow out of control? Can placement algorithms replace identity binning? Should they?</p>
+<p>Sequence reads derived from environmental surveys of phylogenetic marker gene amplicons, such as 16S rRNA, CO1, etc. are typically “clustered” (Uclust, CD-Hit, mothur) to form operational taxonomic units (OTUs) after alignment to a reference database and before subsequent phylogenetic analysis or classification. In the widespread application of these genes (molecular “clocks”), this creates problems of cohesion across studies and sequencing platforms (and even run-to-run) because OTUs are internally defined by local neighbors.</p>
+<p>Because ecology is important (right?), identifying ecologically and evolutionarily meaningful OTUs has become important, in the microbial world now often described as finding “Ecotypes” of broad clades of microbes. This is impossible with databases, where huge diverse groups are often lumped with a code derived from a single clone picked decades ago. Nonetheless, many marker genes have robust, curated databases, and the problem becomes one of annotation. Comparing organisms across studies has become a real problem in my field of aquatic microbiology. We have lots of groups independently “naming” clades, and lots of reference libraries for marker genes (especially 16S), but read binning by identity is dataset dependent and it can be hard to maintain continuity through time or quickly determine if two groups are talking about the same organism.</p>
+<p>I am particularly interested in stabilizing this trajectory in time-series work by using placement to assign reads to nodes of a reference tree. Frankly in practice this is now practical computationally because binning can be so slow as datasets grow. I’d guess a ref should be robustly calculated (ML) with backbone constraints from a curated MSA database and possibly initially expanded using existing sequence libraries from previous work in the ecosystem in question (or analogues) to establish un-curated clades relevant locally. Subsequent amplicon surveys could then “classify” reads according to placements (using pplacer, for example <span class="mention">@ematsen</span> )    and nodes could serve as stable, reference-able, visualizable, (expandable?), classifiable taxonomic units.</p>
+<p>I’ve been working for the last year to derive a robust reference alignment from databases and structure a classified, constrained tree and workflow for curation of marker gene survey outputs within the pplacer ecosystem (pplacer/guppy/rppr/ and especially taxtastic). Importantly, we wouldn’t be progressively adding sequences to a tree. We would just be allowing for stable nodal annotation of reads as a short-term way of detecting ecologically meaningful differential placements. In essence our goal is to “classify” to node rather than database annotations.</p>
+<p>One topic of discussion would be nodal “Assignment”. In the context of pplacer, it would be nice to get an alternate “unambiguous” placement for a given pquery which is the most derived node for which likelihood weight is above some threshold (say 70%). This seems like a reasonable option to incorporate into pplacer: if pquery has an unacceptably low pointmass likelihood weight, reassign to a basal node monophyletic for the placement using an LCA-like algorithm (already in use for your classification algorithms). Giovannoni’s group at OSU has taken an approach to this by modifying pplacer placements with the BioPerl script LCA, which basically re-attaches pqueries to common basal nodes when placements are unacceptably “Fuzzy” as a single pointmass (their group calls this pipeline “Phylotyper” Vergin et al. 2013 (ISME Journal).</p>
+<p>Another discussion point that would be really useful is some criteria for determining if pqueries are likely to belong to a “new clade” that isn’t well-represented in the tree. Said differently, it would be nice if post-hoc analyses on a placement mass can suggest if the tree needs to be expanded with additional reference sequences to resolve/accommodate new subclades in specific regions
+Are any of the existing metrics (adcl, edpl) useful for quantifying this likelihood? Would there be a way to make a “new node” in a refpkg during the placement process if some critical mass of sequences was attaching to a basal node in a clade with better likelihood than more derived nodes?</p>
+<p>Thoughts?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Thanks for the interesting questions, <span class="mention">@cnelson</span>. That’s quite a post! A little clarification: “pquery” is pplacer-speak for “placed query sequence”, i.e. the result of placing that query sequence in a way that expresses uncertainty as to the placement location. Functionally, it’s a list of placement location along with some indication of how good those placements are. A similar output comes from <span class="mention">@Alexis_RAxML</span>’s EPA program.</p>
+<p>Perhaps I can pull out some of the strands from your post to open them to broader discussion.</p>
+<ol>
+<li>How to define species-like units from sequence data only, especially when that data may consist of short and non-overlapping sequence reads?</li>
+<li>How can these definitions be annotated in a way that both incorporates future data and remains stable enough to compare results of previous experiments?</li>
+<li>How can sequences be binned according to these categories efficiently?</li>
+</ol>
+<p>One way to do this is to use placement positions on a phylogenetic tree. Is this a good idea?</p>
+<p><strong>For 1,</strong> at least in principle we are in good shape. We can place fragmentary sequences on a tree, and if there is good signal in those fragments we should get a good estimate of where they belong on the tree. Thus fragments from a single sequence should end up in the same place and we can look for places in the tree where lots of different fragments group. This is the approach taken by the <a href="http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1001061">phylotu</a> folks.</p>
+<p>In practice, <span class="mention">@koadman</span> and I did some computational experiments of taking a single sequence and splitting it up and seeing if we could re-assemble it using placements and the results were mixed (Aaron, happy to have you pipe up here.) In any case with longer reads coming down the pipe, as well as technology such as Hi-C to find linkage between gene segments, as in</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/24918035" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/24918035" rel="nofollow noopener" target="_blank">Strain- and plasmid-level deconvolution of a synthetic metagenome by sequencing proximity ligation products.</a>
+</h4>
+<div class="date">
+  CW Beitel, L Froenicke, JM Lang, IF Korf, RW Michelmore, JA Eisen and AE Darling,
+  <i>PeerJ</i>, 2014
+</div>
+<p class="pubmed-abstract">
+  Metagenomics is a valuable tool for the study of microbial communities but has been limited by the difficulty of "binning" the resulting sequences into groups corresponding to the individual species and strains that constitute the community. Moreover, there are presently no methods to track the flow of mobile DNA elements such as plasmids through communities or to determine which of these are co-localized within the same cell. We address these limitations by applying Hi-C, a technology originally designed for the study of three-dimensional genome structure in eukaryotes, to measure the cellular co-localization of DNA sequences. We leveraged Hi-C data generated from a simple synthetic metagenome sample to accurately cluster metagenome assembly contigs into groups that contain nearly complete genomes of each species. The Hi-C data also reliably associated plasmids with the chromosomes of their host and with each other. We further demonstrated that Hi-C data provides a long-range signal of strain-specific genotypes, indicating such data may be useful for high-resolution genotyping of microbial populations. Our work demonstrates that Hi-C sequencing data provide valuable information for metagenome analyses that are not currently obtainable by other methods. This metagenomic Hi-C method could facilitate future studies of the fine-scale population structure of microbes, as well as studies of how antibiotic resistance plasmids (or other genetic elements) mobilize in microbial communities. The method is not limited to microbiology; the genetic architecture of other heterogeneous populations of cells could also be studied with this technique.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>we thought it would be better to head off to other things.</p>
+<p>I should also mention that we tried aggregating 16s survey data from the vaginal microbiome that was from V1-V2 and V5. The data was from two different cohorts, but even then we got rather strange and discordant results.</p>
+<p><strong>For 2,</strong> I guess it seems to me that a sequences from a single organism are the only logical foundation for something that will persist.  If we are getting lots of reads that are mapping to a certain place in a phylogenetic tree, then there is a full sequence lurking out there somewhere, and that eventually we will get that full sequence. With pplacer and EPA it is possible to compare between experiments, which is nice, but it just seems like things are going to change too much as we accrue more reference sequences to fix anything in stone.</p>
+<p><strong>For 3,</strong> I really do like the fact that when doing phylogenetic placement you are not restricted to mapping your sequences to one bin or another, but rather you can occupy the whole evolutionary space between sequences. So our focus with edge PCA and the Kantorovich-Rubinstein distance has been to use that structure and that flexibility in a statistical framework.</p>
+<p>This point is a little more pplacer/EPA-specific:</p>
+<aside class="quote" data-post="1" data-topic="394">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/cnelson/40/153_1.png" width="20"/> cnelson:</div>
+<blockquote>
+<p>Another discussion point that would be really useful is some criteria for determining if pqueries are likely to belong to a “new clade” that isn’t well-represented in the tree. Said differently, it would be nice if post-hoc analyses on a placement mass can suggest if the tree needs to be expanded with additional reference sequences to resolve/accommodate new subclades in specific regions
+Are any of the existing metrics (adcl, edpl) useful for quantifying this likelihood? Would there be a way to make a “new node” in a refpkg during the placement process if some critical mass of sequences was attaching to a basal node in a clade with better likelihood than more derived nodes?</p>
+</blockquote>
+</aside>
+<p>Well, the intent of EDPL is to quantify when an additional reference sequence is needed. We found that iterative adding of reference sequences was less productive than just starting from scratch (I know this isn’t your favorite scheme); for that see our <a href="http://github.com/fhcrc/deenurp">deenurp</a> project driven forward by Noah Hoffman and <span class="mention">@cmccoy</span>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Regarding point 1 as Erick has reformulated it:</p>
+<ol>
+<li>How to define species-like units from sequence data only, especially when that data may consist of short and non-overlapping sequence reads?</li>
+</ol>
+<p>When the data is non-overlapping it’s very hard, we had the same idea, that is, assembling sequences using placements, but never tried it because we thought it was too difficult. With respect to deriving something like OTU counts using phylogenetic placements, we have developed a simple, but fast method for delimiting OTUs in a statistical framework using placements: <a href="http://bioinformatics.oxfordjournals.org/content/29/22/2869.short" rel="nofollow noopener">http://bioinformatics.oxfordjournals.org/content/29/22/2869.short</a></p>
+<p>Cheers,</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/158_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tjsharpton</div>
+          <div class="post_content">
+<p>Great discussion! I’d like to build on <span class="mention">@ematsen</span>’s first question.</p>
+<p><strong>How to define species-like units from sequence data only, especially when that data may consist of short and non-overlapping sequence reads?</strong></p>
+<p>As noted, there is a fair bit of movement towards using phylogenies in the resolution and annotation of OTUs. Giovannoni’s Phyloassigner is a great example. PhyloSift (from Aaron Darling <a href="http://peerj.com/articles/243/" rel="nofollow noopener">peerj.com/articles/243/</a>) and TreeOTU (from Eisen’s lab <a href="http://arxiv.org/abs/1308.6333" rel="nofollow noopener">http://arxiv.org/abs/1308.6333</a>) also advance this idea. One could even make the argument that widely-used methods like QIIME’s closed reference OTU picking fits into this category: though no tree is constructed, amplicon sequences are binned into reference OTUs that are known to be linked through a reference phylogeny.</p>
+<p>Moving towards phylogenies seems like a good idea for at least three reasons. First, they should ultimately improve the consistency of data structure over time and across independent analyses, at least as compared to <em>de novo</em> OTU clustering and assuming that the reference tree doesn’t dramatically alter over time (though I agree with <span class="mention">@ematsen</span>’s point above that this may not be realistic for most cases in the near future). Second, phylogenies allow us to include incorporation of additional data structure into our analyses. Using phylogenetic relationships to weight the quantification of community distance ala UniFrac is an obvious example. Likewise, we can use phylogenetic structure to partition sets of sequences into taxonomic groups (as advocated by the TreeOTU authors), which may produce annotations/OTUs that are more evolutionarily uniform than methods that apply a single sequence identify threshold across to all OTUs. Third, trees provide the potential to group non-overlapping sets of sequences into a single bin, as <span class="mention">@ematsen</span> discussed. I’m sure there are additional advantages that I haven’t considered here (as well as disadvantages).</p>
+<p>Regarding the third advantage listed above, I think there is room for substantial innovation. In our analysis of PhylOTU, we found that randomly fragmented (i.e., shotgun metagenomic) subsequences of the 16S locus could be clustered based on their phylogenetic distance into groups whose composition resembles full-length 16S sequence <em>de novo</em> OTU compositions with reasonable accuracy, at least for relatively similar sequences. Importantly, this is different than saying that the tree we obtained from PhylOTU was accurate (note: a follow-up manuscript from the Pollard lab dove more deeply into the topic of accurate construction of phylogenies from metagenomic data. See: <a href="http://www.biomedcentral.com/1471-2164/14/419" rel="nofollow noopener">http://www.biomedcentral.com/1471-2164/14/419</a>). In our explorations of tree-based OTU clustering, we found that sequence length and the ratio of full-length reference sequences had a large impact on accuracy. I don’t know how well PhylOTU would work when the data isn’t randomly subsampled (e.g., incorporation of V2 and V4 sequences into the same tree), when applied to other markers - especially those that are not particularly well explored - or when applied in a supertree context. I keep meaning to find time to look into this, but figure that smarter people than me (ahem, <span class="mention">@ematsen</span>) and technological advances (i.e., longer read lengths) may solve most of these problems first.</p>
+<p>The advancement of fast tree and phylogenetic placement algorithms have made phylogenetic consideration of OTUs possible and their innovators (e.g., <span class="mention">@ematsen</span>, <span class="mention">@Alexis_RAxML</span>, Morgan Price) deserve accolades for their great work.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>(Parenthetically I note that Morgan Price is here as <span class="mention">@funwithwords26</span>)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/153_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">cnelson</div>
+          <div class="post_content">
+<p>Thanks <span class="mention">@ematsen</span>, <span class="mention">@Alexis_RAxML</span>, and <span class="mention">@tjsharpton</span> for the input</p>
+<p>First, this discussion opened my eyes to the diversity of recently published approaches to deriving OTUs. This is what you get when you come to the source I guess. For my own good, I tried to develop a natural history of these below as a point of summary. Skip the next paragraph if you are well-read, or critique if I am misrepresenting in my effort to distill and simplify.</p>
+<p>The standard approaches to de novo OTU construction coalesced to clustering using pairwise sequence identity distance calculations, with OTUs clustered at some identity level from unaligned reads (UPARSE, CROP, QIIME/UCLUST) or after alignment to a curated multiple sequence alignment (mothur, QIIME open/closed referenced). The movement to using phylogenetic distance (PD) has led to multiple advances in OTU building. PhylOTU <span class="mention">@tjsharpton</span> took the first step, effectively swapping sequence identity distances for phylogenetic distances (derived from building a de novo tree of aligned reads and references) with subsequent OTUs built via hierarchical clustering at a specified PD level. Importantly, this allowed distances to be accurately calculated among non-overlapping sequences, permitting shotgun-based OTUs without contig construction of marker genes. TreeOTU (<a href="http://arxiv.org/abs/1308.6333" rel="nofollow noopener">Wu et al 2013</a>) similarly takes an alternative to hierarchical clustering by inferring OTUs on a de novo tree based on nodal position relative to the root, effectively applying a relative nodal distance cutoff to define OTUs. Phylogenetic placement algorithms such as pplacer and RAxML-EPA further opened possibilities by eliminating the need for de novo tree construction; reads were “placed” to calculate PD, improving classification by incorporating phylogenetic structure of both reference and query sequences. The first package to capitalize on this, Phyloassigner (Vergin et al. 2013), modifies pplacer modified with the BioPerl LCA script to assign sequences to nodes of a reference tree; the nodes are stable OTUs, but are in some sense a regression to taxonomy-dependent OTU construction, conservatively assigning potential new taxa to basal nodes. The new RAxML EPA-PTP (<span class="mention">@Alexis_RAxML</span> Zhang et al. 2013) infers OTUs based on a speciation-as-substitution model of molecular evolution, identifying likely transition points between inter- and intra-taxon branching to delineate OTUs in sets of placed sequence read queries. Importantly, queries placed by EPA on a branch of the reference tree are subjected to a sub-tree PTP analysis such that query sequences are identified as new taxa. This last method has three key advantages: 1) no arbitrary cutoff is assigned to delineate OTUs (inherent in UPARSE, QIIME, mothur, PhylOTU and TreeOTU), 2) phylogenetic placement is used rather than de novo tree construction, simplifying classification, stabilizing comparative datasets and speeding calculation, and 3) the “open-reference” approach allows for the evaluation and detection of new OTUs not represented in the reference tree.</p>
+<p>Second, I’d appreciate input on moving forward as I look to building new time-series projects specifically guided by the need to begin developing more robust ecologically-relevant OTUs from metagenomic data. From the conversation here, it sounds like there is some agreement on the following:</p>
+<ol>
+<li>
+<p>Phylogenetic placement is a reasonable way to constrain “OTUs”. To distill <span class="mention">@tjsharpton</span>, these approaches can improve the consistency of data structure over time and across independent analyses, provide inherent ability to use phylogenetic distances and diversity metrics, provide potential for more phylogenetically realistic OTU structure, and accommodate non-overlapping binning, a critical feature for currency as shotgun sequencing improves in read length and cost. In my summary above I feel that EPA-PTP <span class="mention">@Alexis_RAxML</span> and emerging methods along these lines show great promise in moving this forward. Perhaps most importantly, at some level de novo clustering is not really a computational advantage over placement, especially given the great tools we have with the EPA and ExaML <span class="mention">@Alexis_RAxML</span> and FastTree <span class="mention">@funwithwords26</span>.</p>
+</li>
+<li>
+<p>Non-overlapping reads remain a problem. For the time being, amplicon approaches may be well-served by phylogenetic distance and placement approaches to constructing OTUs, but shotgun approaches may have things to work out.</p>
+</li>
+<li>
+<p>“Persistance” of a reference tree is a tricky and unlikely thing, and while placements are better than clustering for maintaining stability and comparability across studies eventually trees will be rebuilt (albeit more efficiently with approaches like deenurp <span class="mention">@ematsen</span>). At the very least we can guide when we need new reference sequences as indicated by metrics like edpl which estimate the need for a new leaf/edge/branch in a reference phylogeny.</p>
+</li>
+</ol>
+<p>What I take from this is that from the perspective of overlapping amplicon marker-gene surveys phylogenetic placement has promise as an approach to defining ecologically-relevant OTUs (aka Ecotypes) or species to the extent that reference packages can be stabilized or expanded in a reasonable way (some might say this is how ARB was/is used for single/few reads in a parsimony framework).</p>
+<p>While I think that looking forward to assigning non-overlapping sequences via placement is useful to discuss because shotgun metagenomics will hopefully usurp amplicon surveys (Phylosift, PhylOTU), in the present tense microbial ecology is being swamped with 16S amplicon studies and “macrobial” ecology will soon be swimming in other marker gene amplicon surveys as well. Improving the comparability of the vast reams of 16S and other marker gene amplicon studies that we have to review and deal with from various corners of our discipline is a key goal, and in my case setting out on a long-term survey project I’d like to tackle this in advance.</p>
+<p>In practical terms, when I go to meetings and see 20% of the talks have 16S data that can’t be compared because of unreferenced de novo clustering OTU definitions, I see we need to move the field forward in new ways. If everyone were identifying their sequences by placement on the same tree there would be a natural tendency to collectively observe the formation of ecological OTUs, particularly if masses could aggregate and new reference sequences could be added…</p>
+<p>thanks again to all.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Craig, thanks for your continued interest and enthusiasm. My overall response is that yes, most all of what you said is how we would <em>like</em> for things to be, but your mileage may vary seriously. For example:</p>
+<aside class="quote" data-post="6" data-topic="394">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/cnelson/40/153_1.png" width="20"/> cnelson:</div>
+<blockquote>
+<p>effectively swapping sequence identity distances for phylogenetic distances (derived from building a de novo tree of aligned reads and references) with subsequent OTUs built via hierarchical clustering at a specified PD level. Importantly, this allowed distances to be accurately calculated among non-overlapping sequences</p>
+</blockquote>
+</aside>
+<p>In my experience saying that this distance estimation is accurate would be an exaggeration.</p>
+<p>I once thought that using regions of a tree to define organismal boundaries was a good idea, but I really think that persistence is the deal-breaker here. DNA sequences are known quantities. The reads will get longer and more accurate, etc, etc, but in the end we will be able to compare old sequences to new sequences. There are too many strange artifacts that come up when we use phylogenetics to have tree position be a reliable place to store our knowledge for the long term. That’s not to say that we can’t use trees to do useful things to learn about our sequences, and to define exemplar “cluster center” sequences, but in the end we should be saving those sequences rather than the abstraction.</p>
+<p>With respect to using phylogenetic methods to define OTUs, I really suggest that you test these things (with simulated or otherwise known data) before committing to a method based on it seeming like it’s doing the right thing.</p>
+<p>I would also check out <a href="http://www.biomedcentral.com/1471-2105/14/43">M-Pick</a>.</p>
+<aside class="quote" data-post="6" data-topic="394">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/cnelson/40/153_1.png" width="20"/> cnelson:</div>
+<blockquote>
+<p>In practical terms, when I go to meetings and see 20% of the talks have 16S data that can’t be compared because of unreferenced de novo clustering OTU definitions, I see we need to move the field forward in new ways. If everyone were identifying their sequences by placement on the same tree there would be a natural tendency to collectively observe the formation of ecological OTUs, particularly if masses could aggregate and new reference sequences could be added…</p>
+</blockquote>
+</aside>
+<p>I feel your pain, but this is a problem because people are too lazy to make things consistent, not with the underlying data abstraction. Bringing in trees isn’t going to help with this specific problem. I would get in touch with Greg Caporaso, as I know at one point he grabbed data from a large number of studies and was interested in defining the “once and for all” OTU representative sequences.</p>
+<p>Also, BTW:</p>
+<aside class="quote" data-post="6" data-topic="394">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/cnelson/40/153_1.png" width="20"/> cnelson:</div>
+<blockquote>
+<p>The movement to using phylogenetic distance (PD)</p>
+</blockquote>
+</aside>
+<p>PD always means in my experience “phylogenetic diversity”, which is the total subtended tree length of a set of taxa.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

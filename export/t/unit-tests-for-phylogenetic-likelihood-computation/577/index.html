@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Unit tests for phylogenetic likelihood computation?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Unit tests for phylogenetic likelihood computation?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@Alexis_RAxML</span>  recently gave a talk which ended with an interesting editorial about software quality. In it, he described the results of his investigation into the quality of existing phylogenetics software. I think he’s preparing that for publication, so I’m not going to describe his results, but IIRC he looked at things such as comment density and <a href="http://valgrind.org/">Valgrind</a> results.</p>
+<p>That is an excellent first step, but I’d like to think a little about function. There have been very many implementations of the core phylogenetic likelihood computation, but to my knowledge there haven’t been any with a comprehensive suite of <a href="https://en.wikipedia.org/wiki/Unit_testing">unit tests</a> for the core calculations. Does anyone know of one? (There are tests built into some packages, such as <a href="https://github.com/revbayes/revbayes/tree/master/tests">RevBayes</a>, but these are scripts testing the broad-scale functioning of the package, and so aren’t what I’m talking about here.)</p>
+<p>I am very glad that we are seeing the development of libraries such as <a href="http://biopp.univ-montp2.fr/wiki/index.php/Main_Page">Bio++</a> and <a href="http://www.libpll.org/">pll</a>, signaling a possibile shift from monolithic codebases to ones in which the core likelihood computation is isolated from the tree exploration part. I think/hope that this will lead to more creative developments on each side.</p>
+<p>Having a phylogenetic likelihood computation library with 100% unit test coverage, and a collection of mini-examples with agreed-upon results, would seem very helpful for the field. Major bugs continue to appear, even in major inference packages implementing standard models.</p>
+<p>Thoughts?</p>
+<hr/>
+<p>I note that this is related to, but different from, <a href="http://phylobabble.org/t/standardized-test-sets-for-evaluating-software-methods/224">the topic of test data sets</a>.</p>
+<p>(cc <span class="mention">@mlandis</span>, <span class="mention">@hoehna</span>, <span class="mention">@mtholder</span>)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Hi Erick,</p>
+<p>Thanks for mentioning this <img alt=":slight_smile:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/slight_smile.png?v=5" title=":slight_smile:"/> That’s essentially the next step after fixing all the SW quality issues. The problem is how to get hold of the numerics, since some explicit round-off analysis will be required to specify tolerances. In addition for more complex models the parameter optimization can really be tricky, I believe most of the problems are caused by the optimizers for ML and not the implementations themselves. With the IQ-Tree team in Vienna, we have been struggling hard to find an appropriate optimizer for the LG4X model that requires nested parameter optimization. There is no single best optimizier available yet. In terms of correctness, we have an internal mailing list with the IQ-Tree team over which we share numerically challenging datasets we obtain from users to make sure that our codes yield similar results for those tough cases.</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/117_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">argriffing</div>
+          <div class="post_content">
+<blockquote>
+<p>Does anyone know of one?</p>
+</blockquote>
+<p>Would this be like <a href="http://www.itl.nist.gov/div898/strd/index.html" rel="nofollow noopener">http://www.itl.nist.gov/div898/strd/index.html</a> but with phylogenetic models?</p>
+<blockquote>
+<p>In addition for more complex models the parameter optimization can really be tricky, I believe most of the problems are caused by the optimizers</p>
+</blockquote>
+<p>Although eventually it would be nice to have unit tests for parameter estimates, a first step could add unit tests for only lower-level calculations such as likelihoods or conditional summaries, to avoid having to worry about problems caused by optimizers.  For example given parameter values and a tree shape and branch lengths and sequence data, you could maybe want to compute</p>
+<ul>
+<li> log likelihood
+</li>
+<li> first and second derivatives of log likelihood with respect to branch length parameters
+</li>
+<li> conditional distributions over states at the root or other nodes or points on the tree
+</li>
+<li> conditional distribution over state occupancy on each branch
+</li>
+<li> conditional expectation of linear combinations of labeled transition counts on each branch
+</li>
+</ul>
+These calculations should be relatively straightforward in the sense that they should not require black-box optimization or proving new theorems about convexity or unimodality or whatever, and I think they are still nontrivial enough that a collection of mini-examples with agreed-upon results would be helpful.
+<blockquote>
+<p>The problem is how to get hold of the numerics, since some explicit round-off analysis will be required to specify tolerances.</p>
+</blockquote>
+<p>Could projects like <a href="http://fredrikj.net/arb/" rel="nofollow noopener">http://fredrikj.net/arb/</a> help with this? This should enable ‘getting hold of the numerics’ of calculations like the ones mentioned above. In particular I think you should be able to get bounds on errors for matrix power series.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@argriffing</span>, that is exactly what I was thinking, but written much better than I would have.</p>
+<aside class="quote" data-post="3" data-topic="577">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/argriffing/40/117_1.png" width="20"/> argriffing:</div>
+<blockquote>
+<p>Could projects like <a href="http://fredrikj.net/arb/">http://fredrikj.net/arb/</a> help with this? This should enable ‘getting hold of the numerics’ of calculations like the ones mentioned above. In particular I think you should be able to get bounds on errors for matrix power series.</p>
+</blockquote>
+</aside>
+<p>That’s interesting. Were you thinking that we could do exact calculation which would give a “gold standard” to which everyone could be compared, rounding error and all?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/117_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">argriffing</div>
+          <div class="post_content">
+<blockquote>
+<p>Were you thinking that we could do exact calculation which would give a “gold standard” to which everyone could be compared, rounding error and all?</p>
+</blockquote>
+<p>NIST does it like this:</p>
+<blockquote>
+<p>For all datasets, multiple precision calculations (accurate to 500 digits) were made using the preprocessor and FORTRAN subroutine package of Bailey (1995, available from NETLIB). Data were read in exactly as multiple precision numbers and all calculations were made with this very high precision. The results were output in multiple precision, and only then rounded to fifteen significant digits. These multiple precision results are an idealization. They represent what would be achieved if calculations were made without roundoff or other errors. Any typical numerical algorithm (i.e., not implemented in multiple precision) will introduce computational inaccuracies, and will produce results which differ slightly from these certified values.</p>
+</blockquote>
+<p>But that is really dry… Did you know that avocados have huge seeds because they are meant to be eaten by extinct megafauna, or that pronghorns are far faster than necessary to outrun any extant north american predator?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>One could think of implementing such a multi-precision implementation using the GNU scientific library. The problem of course would be that we would need to implement mechanisms for being confident that this reference implementation as well as the GNU GSL arbitrary precision stuff is correct.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>That’s absolutely true, though for the former I would feel quite happy given a reference implementation with comprehensive unit tests and inline mathematical documentation. The Bio++ team does a fantastic job with such documentation, e.g. see their <a href="http://biopp.univ-montp2.fr/Documents/ClassDocumentation/bpp-phyl/html/classbpp_1_1GTR.html">description of the GTR model</a> (you have to scroll down to get through the boilerplate to the math).</p>
+<p>For the latter, well, that’s a risk I’m willing to take. The arb library <span class="mention">@argriffing</span> pointed out is actually better than the GNU MPL in that you don’t need to specify the precision ahead of time and hope that your operations don’t have too many rounding errors.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<p>I’m just starting to assemble a testsuite that would test both the likelihood calculator of bali-phy, and also whether software correctly sets up the model and rate matrices.</p>
+<ol>
+<li>
+<p>It would be nice to do this in a way that many different projects can use it, although that might be difficult.</p>
+</li>
+<li>
+<p>Initial tests are at <a href="https://github.com/bredelings/BAli-Phy/tree/master/tests" rel="nofollow noopener">https://github.com/bredelings/BAli-Phy/tree/master/tests</a>, though not all tests are for likelihoods or are cross-platform.</p>
+</li>
+<li>
+<p>The basic test-harness for running under ‘make check’ here: <a href="https://github.com/bredelings/BAli-Phy/tree/master/tests/run-tests.py" rel="nofollow noopener">https://github.com/bredelings/BAli-Phy/tree/master/tests/run-tests.py</a> .</p>
+</li>
+</ol>
+<ul>
+<li>The run_tests.py script takes commands in files called ‘command.txt’, and optionally compares with expected stdout, stderr, exit code, and likelihood (copying Mark Holder).</li>
+<li>My command files currently look like this (on git master):
+<code>--test &lt;DATA&gt;/5d-muscle.fasta --tree=&lt;DATA&gt;/1.tree --model=HKY[kappa=2]+F[pi=Freq[A=0.1,C=0.2,T=0.3,G=0.4]]</code>
+</li>
+<li>Test output looks like:</li>
+</ul>
+<pre><code class="lang-auto">...
+Running test: optimizer/10  ... ok
+Running test: likelihood/two-sequences/1  ... ok
+Running test: likelihood/1  ... ok
+Running test: likelihood/one-sequence/1  ... ok
+Running test: likelihood/2  ... ok
+Running test: parse/7  ... ok
+...
+Running test: mcmc/two-sequences/1 ... ok
+Performed 41 tests, 1 failures```
+
+4. An additional test harness for revbayes is here: https://github.com/bredelings/BAli-Phy/blob/master/tests/test-rb.py
+
+5.  Alex Griffing wrote some code to compute likelihoods to an arbitrary (pre-specified) precision:
+    https://github.com/argriffing/phyly
+    This could check if we are suffering from roundoff errors.  (Perhaps on larger data sets.)
+
+6.  I have some preliminary test cases, including some code to test revbayes, but
+  * revbayes doesn't print enough significant digits.  
+  * I'm not sure how to make PAML print out the likelihood for a given set of parameters.</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<p>Alexey Kozlov, who is working on libpll, mentioned that there might be a problem determining what level of error in the log likelihood is acceptable to pass a unit test.  Here’s my response…</p>
+<p>Hi Alexey,</p>
+<p>Interesting – yeah, I think there are a lot of issues to address to make this work.  Here’s my attempt at working out a philosophical answer.</p>
+<ol>
+<li>Before we know what’s acceptable, I think we want to know what’s true.  So, if the AVX &amp; SSE kernels differ from each other, can we find out which one is closer to the truth?</li>
+</ol>
+<p>(Alex’s phyly code could, in theory, help us figure out the true value, but it doesn’t define what’s acceptable.  But I think we have to write some boring code to convert FASTA into a JSON representation of the CLVs)</p>
+<ol start="2">
+<li>We also want to know if differences in the ratios of likelihoods are right.  I also want to know what Pr(data|parameters) is, but if we can get C*Pr(data|parameters) for some unknown C, then we can get Pr(data|parameters1)/Pr(data|parameters2), and that is what is used in practice.</li>
+</ol>
+<p>In terms of what we should expect:</p>
+<p>(a) I hope that for large data sets, we can still get accurate log-likelihood DIFFERENCES (<span class="hashtag">#2</span>).</p>
+<p>(b) For small data sets, we should be able to get accurate log-likelihoods.  I once found a bug that changed a log-likelihood of a dynamic programming problem from something like 12345.123456789 to 12345.123451234.  So small differences can be significant.</p>
+<p>© In practice, I wrote the test harness so that if you specify the likelihood is 12345.6 then it will expect the error to be &lt; 10^-1, but if you specify the likelihood as 12345.678 then it will expect the error to be 10^-3.</p>
+<p>(d) I still don’t know what kind of error is ultimately “acceptable”.  There will probably be a subjective component there. Different projects might consider different degrees of error to be a failure.  But ultimately, it would be interesting just to know how accurate different methods are.</p>
+<p>What do you think?  I don’t have any tests that compute log-likelihood differences yet…</p>
+<p>Also, what do you think of using git submodules to include the test suite into the test infrastructure for specific projects?  It would be nice to be able to run ‘make check’ and have the tests run even though they are in a separate repo.</p>
+<p>-BenRI</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Dear Ben,</p>
+<p>I believe the key point here is some formal round-off error analysis, I would say it’s not about what is acceptable but what deviations could be caused by different ways of ordering the mathematical operations. Even just taking one code (e.g., RAxML or RAxML-NG) there will be deviations in likelihood scores depending on compiler used, SSE3 or AVX being used, or, even, if the same compiler and instructions set (AVX) is being used deviations in parallel runs for different numbers of threads when using parallel reduction operations. I have observed ALL of this happening in practice.
+ML programs are naturally more sensitive to this because, in the worst case (has happened as well) the SSE3 and the AVX versions of the code might, due to very slight differences select a different tree at some point during the search process and yield a distinct final tree topology.</p>
+<p>Then, there are also problems or issues that might arise due do de-normalized floating point values. What we need is some sort of worst case scenario, that is, what is the largest possible round-off error that could occur for calculating the likelihood on a given dataset assuming, e.g., double precision floats. What I do not know is if this is feasible, given that there might be a very large number of possibilities to re-order the arithmetic operations for likelihood calculations, especially when vector instructions come into play. So I guess would should contact somebody who has been working on such issues for many years. One or two names from the CS and FPGA communities come to my mind that I could ask.</p>
+<p>Anyway, just my thoughts and experiences on this.</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Speeding up Felsenstein&rsquo;s pruning algorithm</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Speeding up Felsenstein&rsquo;s pruning algorithm</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/325_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Bui_Quang_Minh</div>
+          <div class="post_content">
+<p>Dear All,</p>
+<p>A simple trick to speedup the pruning algorithm to compute tree likelihood exploiting the time-reversible property of Markov models is described in the supplementary material of this paper in MBE: <a href="https://doi.org/10.1093/molbev/msx281" rel="nofollow noopener">https://doi.org/10.1093/molbev/msx281</a>. This trick was implemented in RAxML and IQ-TREE. The gist is to speed up branch length estimation, which dominates the runtime. The runtime reduction is 4, 20 and 61 times for DNA, protein and codon models, respectively.</p>
+<p>Regards,
+Minh</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/302_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">felsenst</div>
+          <div class="post_content">
+<p>So this is a speedup of the pruning algorithm itself, not a speedup of the bootstrap method?  It would greatly speed up the computation of the likelihood of a single tree when there was no bootstrapping occurring?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">klaus_schliep</div>
+          <div class="post_content">
+<p>As I understand it is a speed-up of the edge length optimisation, e.g. inside the Newton-Raphson, not of the pruning algorithm. By the way I do the same inside phangorn.</p>
+<p>Regards,
+Klaus</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/302_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">felsenst</div>
+          <div class="post_content">
+<p>A quick reading of the manuscript suggests that the speedup is by using trees encountered during the search for the ML tree on the full data, saving them, and evaluating their likelihoods with the bootstrapped data.  Since the likelihoods for individual sites would have been computed for those trees when first encountered, their likelihood on the bootstrapped data would be quick to compute.  If my reading is right, this is a good speedup, but most emphatically <em>not</em> “A simple trick to speedup the pruning algorithm to compute tree likelihood exploiting the time-reversible property of Markov models”.  Unless I am misunderstanding what is proposed.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/302_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">felsenst</div>
+          <div class="post_content">
+<p>I retract what I said.  I read the Supplementary materials for his paper (they are accessible even if you can’t get the body of the paper).  A very nice spectral-decomposition method that speeds up likelihood computations by a factor of the number of states in the character (4 for nucleotide sequences, 20 for amino acids, 61 for codon models).  The coefficients of the spectral decomposition are then what is pruned.  Cool!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/325_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Bui_Quang_Minh</div>
+          <div class="post_content">
+<p>Dear Joe, Yes that’s exactly whole point under this trick. It looks simple once you write all the equations down and has a substantial speedup for state-rich models like protein or codon. I’m just surprised that this approach was never documented anywhere.
+Minh</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/325_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Bui_Quang_Minh</div>
+          <div class="post_content">
+<p>Yes that’s right. However, the pruning algorithm in turn needs the branch lengths to have the right ML scores. So in the end it boosts the pruning algorithm.</p>
+<p>Minh</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Troubleshooting RPANDA code</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Troubleshooting RPANDA code</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Anurag_Mishra</div>
+          <div class="post_content">
+<p>I’m trying to test maximum likelihood fit of environmental birth death model specified in Helen Morlone’s paper.</p>
+<p>Using the code given in the manual:</p>
+<pre><code>data(a)
+tot_time&lt;-max(node.age(a)$ages)
+data(InfTemp)
+dof&lt;-smooth.spline(InfTemp[,1], InfTemp[,2])$df
+
+f.lamb &lt;-function(t,x,y){y[1] * exp(y[2] * x)}
+f.mu&lt;-function(t,x,y){0}
+lamb_par&lt;-c(0.10, 0.01)
+mu_par&lt;-c()
+result_exp &lt;-fit_env(Cetacea,InfTemp,tot_time,f.lamb,f.mu,lamb_par,mu_par, f=21/40,fix.mu=TRUE,df=dof,dt=1e-3)
+</code></pre>
+<p>This code gives me the following error.</p>
+<p>Error in optim(init, optimLH, method = meth) : function cannot be evaluated at initial parameters.</p>
+<p>What should I modify in my code to troubleshoot this?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>It is hard to troubleshoot this without a working example. What is <code>a</code> above? Does it correspond with the <code>Cetacea</code> data? If not, that would explain the failure.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Building a tree for all DNA barcodes (&gt; 1 million taxa)</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Building a tree for all DNA barcodes (&gt; 1 million taxa)</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p>Imagine that I want to build a phylogeny for all DNA barcodes (for this purpose, let’s restrict it to animal barcodes, i.e. COI). So, we have over a million barcode sequences <a href="http://www.boldsystems.org/index.php/datarelease" rel="nofollow noopener">http://www.boldsystems.org/index.php/datarelease</a> , how do we get a tree for this number of sequences? Why do I want a tree? Well, imagine that instead of measuring biodiversity by counting species I want to compute phylogenetic diversity for an arbitrary region of the planet. So, I’d like a tree for all COI sequences, then be able to extract the subtree for taxa within a geographic bounding box, then get the length of that tree. Presumably I’d need a divide and conquer approach that relied on the fact that the barcode sequences are already cluster dingo BINs, and we have information on higher-level taxonomy, but do we have tools in place that could tackle something on this scale?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jhcepas</div>
+          <div class="post_content">
+<p>It is only remotely related, but we have explored a divide and conquer strategy for phylogenetic reconstruction using concatenated alignments (<a href="https://peerj.com/preprints/223/" rel="nofollow noopener">https://peerj.com/preprints/223/</a>) that goes in that direction. The idea is implemented as a python package for species and gene family tree reconstruction. Not yet released, but available at <a href="https://github.com/jhcepas/npr" rel="nofollow noopener">https://github.com/jhcepas/npr</a></p>
+<p>In principle it would allow to run nested reconstructions in which faster methods are used for basal (large) nodes and more exhaustive approaches for the tips. Although I never tried anything larger than 8000 seqs…</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jheled</div>
+          <div class="post_content">
+<p>I have been working on building such large trees for a while. I think that with more memory and parallelizing some of the code I can build a tree for the BOLD database, or at least come close.</p>
+<p>Obviously, there are many caveats. I use a “primitive” phylogenetic method (UPGMA-like). UPGMA is statistically consistent under the assumption of a strict molecular clock, but no one could justify a strict clock for those time scales. Still, I think those trees are very useful for analysing NGS data. if nothing else, some trees I build from BOLD data indicate we can out some inconsistencies in the data (I assume either human errors or contaminations). To fully utilize the BOLD database we need to wait a few more years until they release the full taxonomic classifications (up to species level).</p>
+<p>I put a copy of the relevant parts of a manuscript we just submitted here <a href="https://dl.dropboxusercontent.com/u/5675908/NGStree.pdf" rel="nofollow noopener">https://dl.dropboxusercontent.com/u/5675908/NGStree.pdf</a> .</p>
+<p>Joseph Heled</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p><span class="mention">@jheled</span> Thanks for the link. I also came across this paper which looks potentially useful if going down the UPGMA route:</p>
+<p>Loewenstein, Y., Portugaly, E., Fromer, M., &amp; Linial, M. (2008, July 1). Efficient algorithms for accurate hierarchical clustering of huge datasets: tackling the entire protein space. Bioinformatics. Oxford University Press (OUP). <a href="http://dx.doi.org/10.1093/bioinformatics/btn174" rel="nofollow noopener">http://dx.doi.org/10.1093/bioinformatics/btn174</a></p>
+<p>The BOLD dataset is pre-clustered into BINs, so I guess we could be clever and use that to help constrain the search space. While BOLD’s failure to release full taxonomic identifications is a pain (and the reason the NCBI dumped a lot of their sequences from GenBank) it is still useful, especially if we just want a measure of sequence diversity at a site).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/377_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rutgeraldo</div>
+          <div class="post_content">
+<p>We are trying to make this possible using the SUPERSMART pipeline (<a href="http://www.supersmart-project.org" rel="nofollow noopener">http://www.supersmart-project.org</a>) using a recursive divide-and-conquer approach, though we are going through PhyLoTA to get more loci than just the barcoding ones. Work in progress, obviously.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p><span class="mention">@rutgeraldo</span> Nice. PhyLoTA is a greatly under appreciated resource. I harvested the phylogenies, added geography and publications from EBI records for sequences, and dumped it into <a href="http://bionames.org" rel="nofollow noopener">http://bionames.org</a>. The phylogenies are full of useful info, particularly at lower taxonomic levels.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>DIstance-based methods and incomplete sequence matrix</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">DIstance-based methods and incomplete sequence matrix</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Sergei</div>
+          <div class="post_content">
+<p>There is a problem (at least for me).</p>
+<p>I analyse an incomplete sequence matrix when sequences for some genes have not been obtained for all the samples in analysis. For example,  I’ve got Co-1 gene but failed to obtain CytB gene for a given sample. As a result, there are some sequences in my matrix that have no matches in nucleotides at all.</p>
+<p>So my questions are:</p>
+<p>If there any algorithms to calculate the distance between two sequences without matches and to reconstruct distance-based phylogeny using (for instance) availible information about distance between other sequences in the matrix?</p>
+<p>If so, is it possible to evaluate the branch support for a given phylogeny?</p>
+<p>Thank you!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/15_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mathmomike</div>
+          <div class="post_content">
+<p>This paper might be useful “On the extension of a partial metric to a tree metric” Discr. Appl. Math. 276 (2004), 229–248 by Guenoche, Leclerc and Markarenkov.  The idea is that if the distances do fit a tree but you only know distances between some pairs of leaves (taxa) then you can apply an iterative rule to fill in some missing entries (if you are lucky the entire table - there are known sufficient conditions for when that will be the case - e.g. if the present entries form a ‘shellable lasso’ for a tree (as defined in a recent paper by Dress, Huber and me)).  The fill-in just relies on the 4-point condition. In general though, there’s no guarantee such an iterative rule will fill in the table, and in any case  it assumes the present distances do fit some tree.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Sergei</div>
+          <div class="post_content">
+<p>Thank you so much for taking the time! This is very helpful information.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">klaus_schliep</div>
+          <div class="post_content">
+<p>Andrei Popescu has implemented some methods in R as part of the ape package.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

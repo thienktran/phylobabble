@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Viewing a Lagrange tree</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Viewing a Lagrange tree</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/374_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">migar07</div>
+          <div class="post_content">
+<p>I’m really new to all of this and learning as I go. I’m hoping a group like this will make all the difference, so I’m glad I found you! I am using Lagrange and am just wondering how to view the tree from the output file. I tried opening it in FigTree, but it only shows me the ML tree without any geographic range data.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>I have never used Lagrange.  Most programs which add data to a treefile attach the data to the nodes or
+branches.   Figtree has check boxes for whether or not to display node data and branch data if it exists.
+They are turned off by default.</p>
+<p>I am not sure if you should post your treefile here, but maybe you could upload it to dropbox, figshare,
+or some other site and post a link to it here.   If it is a reasonable size, not too huge, I see no reason not to just post it here so we could take a look and help you with it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/374_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">migar07</div>
+          <div class="post_content">
+<p>Thank you! I truly appreciate any help. Here is a link to the output file of the demo: <a href="https://www.dropbox.com/s/8pl3wocbdypmkkb/psychotria_demo.results.txt" rel="nofollow noopener">https://www.dropbox.com/s/8pl3wocbdypmkkb/psychotria_demo.results.txt</a></p>
+<p>It’s a much smaller file than my own and should potentially work the same way and is giving me the same problem. While it does attach data to the nodes, the only thing I see is that it adds node numbers. Fig tree also splits it into five trees, although the first tree is the only one that is an actual tree.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/386_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tsmoreira</div>
+          <div class="post_content">
+<p>Notice this part of your text file</p>
+<p>“Newick tree with interior nodes labeled:
+((((((((P_hawaiiensis_WaikamoiL1:0.965685049879,P_mauiensis_Eke:0.965685049879)N2:0.708625793535,(P_fauriei2:1.23021851098,P_hathewayi_1:1.23021851098)N5:0.444092332438)N6:0.176711555244,(P_kaduana_PuuKukuiAS:1.85102239866,P_mauiensis_PepeAS:1.85102239866)N9:0.00088978628018)N10:0.334737598604,P_kaduana_HawaiiLoa:2.18575999726)N12:0.302349378005,(P_greenwelliae07:1.13136325525,P_greenwelliae907:1.13136325525)N15:1.35674612002)N16:1.68917027429,((((P_mariniana_MauiNui:1.99401105388,P_hawaiiensis_Makaopuhi:1.99401105388)N19:0.732827980356,P_mariniana_Oahu:2.72683903424)N21:0.257415170856,P_mariniana_Kokee2:2.9842542051)N23:0.460108485481,P_wawraeDL7428:3.44436269058)N25:0.732916958984)N26:0.734518574289,(P_grandiflora_Kal2:2.47930049109,P_hobdyi_Kuia:2.47930049109)N29:2.43249773276)N30:0.28731198987,((P_hexandra_K1:2.36398418918,P_hexandra_M:2.36398418918)N33:0.463044780206,P_hexandra_Oahu:2.82693999076)N35:2.37208124433)N36:0.0;”</p>
+<p>Just copy everything (but the first phrase) in FigTree and Voilá! This parentical string is a tree in Newic format and the numbers inside are the values you calculated</p>
+<p>hope It helps. Best!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/374_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">migar07</div>
+          <div class="post_content">
+<p>Thank you for replying to me. I am not sure that is the part of the data I am trying to get onto the tree. I think that this part may be what I’m looking for:</p>
+<p>At node N36:
+split   lnL     Rel.Prob
+[K|KO]  -35.93  0.487<br/>
+[K|K]   -36.22  0.3648<br/>
+[K|O]   -38.28  0.04659
+[KO|K]  -38.59  0.03422
+[KO|O]  -38.85  0.02622</p>
+<p>At node N30:
+split   lnL     Rel.Prob
+[K|K]   -35.31  0.9098<br/>
+[KO|K]  -37.98  0.06262</p>
+<p>At node N26:
+split   lnL     Rel.Prob
+[K|K]   -35.42  0.8129<br/>
+[KO|K]  -37.51  0.1<br/>
+[O|KO]  -39.39  0.01531
+[K|KO]  -39.45  0.01447
+[KM|K]  -39.51  0.01357</p>
+<p>At node N16:
+split   lnL     Rel.Prob
+[O|K]   -35.49  0.7563<br/>
+[M|K]   -37.32  0.121<br/>
+[O|KO]  -38     0.0613<br/>
+[KO|K]  -39.02  0.02209</p>
+<p>At node N12:
+split   lnL     Rel.Prob
+[O|O]   -35.55  0.7158<br/>
+[OM|O]  -36.74  0.2177<br/>
+[O|KO]  -39.07  0.02114</p>
+<p>At node N10:
+split   lnL     Rel.Prob
+[OM|M]  -35.26  0.9533</p>
+<p>At node N6:
+split   lnL     Rel.Prob
+[M|O]   -35.31  0.9066<br/>
+[OM|O]  -38.37  0.04261
+[M|OM]  -38.55  0.03558</p>
+<p>At node N2:
+split  lnL     Rel.Prob
+[M|M]  -35.23  0.982</p>
+<p>At node N5:
+split  lnL     Rel.Prob
+[O|O]  -35.24  0.9742</p>
+<p>At node N9:
+split  lnL     Rel.Prob
+[M|M]  -35.21  0.9991</p>
+<p>At node N15:
+split  lnL     Rel.Prob
+[K|K]  -35.23  0.977</p>
+<p>At node N25:
+split   lnL     Rel.Prob
+[K|K]   -35.44  0.7974<br/>
+[KO|K]  -37.75  0.07905
+[KM|K]  -38.15  0.05268
+[KH|K]  -38.21  0.05</p>
+<p>At node N23:
+split   lnL     Rel.Prob
+[K|K]   -36.27  0.3456<br/>
+[O|K]   -36.87  0.1895<br/>
+[M|K]   -37.1   0.1519<br/>
+[H|K]   -37.11  0.1498<br/>
+[KO|K]  -38.76  0.02883
+[O|KO]  -38.81  0.02729
+[KM|K]  -38.88  0.02554
+[KH|K]  -38.89  0.02518
+[M|KM]  -39.03  0.02187</p>
+<p>At node N21:
+split   lnL     Rel.Prob
+[K|K]   -37     0.1679<br/>
+[O|O]   -37.2   0.1367<br/>
+[M|M]   -37.26  0.1291<br/>
+[H|H]   -37.27  0.1272<br/>
+[M|O]   -37.89  0.06848
+[H|O]   -37.9   0.06798
+[M|K]   -37.98  0.06297
+[H|K]   -37.98  0.06271
+[K|O]   -37.98  0.06256
+[MH|H]  -39.85  0.009683
+[MH|M]  -39.85  0.009683
+[M|OM]  -39.93  0.008932
+[H|OH]  -39.94  0.008866
+[O|KO]  -40.02  0.008159
+[K|KO]  -40.02  0.008159
+[KO|O]  -40.12  0.007395
+[OM|O]  -40.15  0.00719</p>
+<p>At node N19:
+split   lnL     Rel.Prob
+[M|H]   -36.37  0.3153<br/>
+[M|M]   -37.37  0.1156<br/>
+[H|H]   -37.38  0.1146<br/>
+[M|K]   -37.77  0.07746
+[K|H]   -37.77  0.07741
+[K|K]   -38.22  0.04924
+[M|O]   -38.27  0.04686
+[O|H]   -38.27  0.04682
+[O|O]   -38.72  0.03006
+[M|MH]  -38.74  0.0293<br/>
+[MH|H]  -38.74  0.0293<br/>
+[KM|M]  -40.14  0.007198
+[KM|K]  -40.14  0.007198
+[H|KH]  -40.15  0.007194</p>
+<p>At node N29:
+split  lnL     Rel.Prob
+[K|K]  -35.23  0.9824</p>
+<p>At node N35:
+split   lnL     Rel.Prob
+[K|O]   -35.53  0.7261<br/>
+[K|K]   -37.39  0.1132<br/>
+[K|KO]  -37.53  0.09851
+[KO|O]  -38.33  0.04429</p>
+<p>At node N33:
+split  lnL     Rel.Prob
+[K|K]  -35.25  0.9638</p>
+<p>I should get something resembling this:
+<img height="500" src="https://www.phylobabble.org/uploads/default/146/ec901c8bb4660cc9.png" width="684"/></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/374_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">migar07</div>
+          <div class="post_content">
+<p>Here is a link to that same tree photo.
+          <a class="onebox" href="https://dl.dropboxusercontent.com/s/slvixk4cs6z0zby/LagrangeTree.png" rel="noopener nofollow ugc" target="_blank">
+<span class="broken-image" title="This image is broken"><svg aria-hidden="true" class="fa d-icon d-icon-unlink svg-icon"><use xlink:href="#unlink"></use></svg></span>
+</a>
+</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/374_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">migar07</div>
+          <div class="post_content">
+<p>In case anyone else comes across this problem, it turns out that RASP can run a Lagrange DEC analysis has it’s own tree viewer. It appears that my problem has been solved. Thanks for the input!</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

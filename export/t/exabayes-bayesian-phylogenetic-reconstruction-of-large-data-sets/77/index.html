@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>ExaBayes: Bayesian phylogenetic reconstruction of large data sets</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">ExaBayes: Bayesian phylogenetic reconstruction of large data sets</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Stamatakis group just released the program <a href="http://sco.h-its.org/exelixis/web/software/exabayes/index.html" rel="nofollow noopener">ExaBayes</a> for large-scale Bayesian phylogenetic analyses. No associated paper yet, but a <a href="http://sco.h-its.org/exelixis/web/software/exabayes/manual/index.html" rel="nofollow noopener">manual</a> is available. We are playing around with speed tests.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/121_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">trvrb</div>
+          <div class="post_content">
+<p>This is awesome.  Although it looks like the parallelism is set up in terms of partitioning a large alignment, rather than partitioning a large number of taxa.  I could be wrong though.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p><img alt=":slight_smile:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/slight_smile.png?v=5" title=":slight_smile:"/></p>
+<p>We are indeed partitioning/parallelizing over the alignment, doing so over the taxa is very difficult.</p>
+<p>The paper will be submitted in the next 10 days or so.</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@Alexis_RAxML</span> are we to understand that functionally this is going to be very similar to MrBayes? Did you follow the MB code at all during development?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/39_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">aberer</div>
+          <div class="post_content">
+<p><span class="mention">@ematsen</span>
+yes, it implements a similar set of proposals as MrBayes (e.g., the excellent parsimony-guided SPR move from Lakner2009). It uses the RAxML likelihood implementation and adds three levels of parallelism (MPI), such that several computing nodes can be used to carry out large-scale analyses.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Criteria for deciding if concatenation of dna alignments to a supermatrix is &ldquo;allowed&rdquo;</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Criteria for deciding if concatenation of dna alignments to a supermatrix is &ldquo;allowed&rdquo;</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">boronian</div>
+          <div class="post_content">
+<p>Dear babblers,
+in the past I followed the “total evidence” approach quite doubtlessly, especially when only DNA regions of one genome type (cp, n, mt) were involed. I merely checked if the (good supported) backbone nodes in all trees from individual markers agreed. They mostly did, so I didn’t bother any further and created the supermatrix with respective partitioning.</p>
+<p>My question is: Is there any standard procedure or common practice I missed, to decide on a quantitative basis if one is allowed to combine the data sets?</p>
+<p>I found hints to a couple of tools that should provide such tests [e.g. concaterpillar - couldn’t make it run with recent RAxML and is only for amino acid data(?); arn - a package from Farris (yes, THE Farris), which I couldn’t locate], but none of them seemed to be working for me.</p>
+<p>I then calculated Robinson Foulds distances between the individual trees and the tree from the supermatrix, but I am unsure what distance value should be considered as a threshold (if this is at all a good way to go for my aim).</p>
+<p>Please let me know if you have hints in this respect, especially some automizable thing (in R?) would be nice.</p>
+<p>Cheers</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Concaterpillar 1.4 says that it supports nucleotides…</p>
+<p><img height="" src="https://www.phylobabble.org/uploads/default/73/413aa8a55179c5ae.png" width=""/></p>
+<p>I’d suggest using an older RAxML.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">boronian</div>
+          <div class="post_content">
+<p>Thanks for the hint concaterpillar works also with DNA alignments, the program itself just talks about amino acid. I couldn’t find an old version of RAxML, but I was able to modify the code a bit to make it now run with a recent RAxML version. Cheers!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Might be worth pushing your changes upstream to <span class="mention">@aroger</span>?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">aroger</div>
+          <div class="post_content">
+<p>Well, Concaterpillar is being maintained by Jessica Leigh (<a href="http://leigh.geek.nz/software.shtml" rel="nofollow noopener">http://leigh.geek.nz/software.shtml</a>). I have sent her a message to find out whether the latest versions deal with nucleotides or not.  But she is the one to talk to about the program.  With respect to the original question, if you do calculate RF distances between trees of two genes, you could imagine a parametric bootstrap approach that create a null distribution of RF distances (under the null of congruence) from the simulating datasets from the tree of one of the genes.  Just simulate dataset 1* (with length of  dataset 1 from tree 1) and dataset 2* (with length of dataset 2 from tree 1) with the right fitted model parameters and then estimate trees from each of your simulations and calculate RF distances from pairs to form the null distribution.  My guess is that for datasets of &gt;100 sites you will probably get fully resolved trees that are identical to the generating tree and so the distribution will be mostly RFs of 0 with only a few 2’s and 4’s etc.  The other (probably better) option is to do some kind of non-parametric bootstrap equivalent of what I said above. This will allow some of the weirdness of the original datasets (i.e. lack of model fit) to persist in the null distributions.  Still, I think Concaterpillar is probably a better approach than this.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/130_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">noah_reid</div>
+          <div class="post_content">
+<p>I might look into bucky which quantifies topological heterogeneity among markers. <a href="http://www.stat.wisc.edu/~ane/bucky/" rel="nofollow noopener">http://www.stat.wisc.edu/~ane/bucky/</a></p>
+<p>You may also be able to calculate Bayes Factors in BEAST to compare a model in which all genes are forced to fit a single topology vs each being allowed to have an independent topology.</p>
+<p>You could also use posterior predictive simulation approaches to evaluate the fit of those models (e.g. some papers recently out in Systematic Biology by me and others). Those approaches would give you some idea of which loci might be problematic. The method I worked on is geared toward the multispecies coalescent, but it is implemented in R and with a little bit of tweaking it could be appropriated for this.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">aroger</div>
+          <div class="post_content">
+<p>In this case how would BEAST be approximating the Bayes factors?  If its harmonic mean estimation then I doubt it will be reliable.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/130_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">noah_reid</div>
+          <div class="post_content">
+<p>I believe BEAST implements a couple methods that are supposed to be more accurate than the HME, but I haven’t used them so I don’t know if they’re available to calculate for any arbitrary model specified in the program. See Baele et al. 2012.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rainbowgoblin</div>
+          <div class="post_content">
+<p>I can say with authority that Concaterpillar continues to support nucleotides. It should work with RAxML 7.3. I haven’t gotten around to looking at RAxML 8, so it won’t work with that yet, but I’ll look into it if people send me enough requests.</p>
+<p>If you’re having trouble getting it to run with RAxML 7.3 or earlier, please send me an email, I’m generally pretty good about tech support (with apologies to people who’ve contacted me in the last 6 months, I’ve been on maternity leave).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">boronian</div>
+          <div class="post_content">
+<p>Dear all, thanks for your thoughts! As I said before, with small code modifications I was able to run concaterpillar with a recent RAxML (on a mac): I compiled a RAxML executable pretending it is version 7.3 and added a “-p 123” flag (optimally the latter would be a random seed) to the RAxML command in the concaterpillar python code.</p>
+<p>Cheers!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">benjap700</div>
+          <div class="post_content">
+<p>Dear Jessica
+Could you please tell me how to run Concaterpillar for nucleotide alignments? I tryed and it worked
+normally… But I saw it employed aminoacid models of evolution.
+Thanks !!!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">benjap700</div>
+          <div class="post_content">
+<p>I forget to
+say I’m using concaterpillar 1.8a</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/441_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Chahrazed_Rahmouni</div>
+          <div class="post_content">
+<p>Dear boronian</p>
+<p>could you please provide me more details on how to run concaterpillar (step by step for beginners is most welcome as I’m not that good in using python (I’ve used it once in my life) so I’m really lost. I’m not able to start with at allllllllllllllllllllllllllllllll and need to perform analysis with. Thank you in advance</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

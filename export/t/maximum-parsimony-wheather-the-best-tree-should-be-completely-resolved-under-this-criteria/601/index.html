@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Maximum parsimony. Wheather the best tree should be completely resolved under this criteria?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Maximum parsimony. Wheather the best tree should be completely resolved under this criteria?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Sergei</div>
+          <div class="post_content">
+<p>I’ve got some relults on the phylogeny of some living creatures based on 850 bp fragment of 28S RNA subunit.</p>
+<p>Built a standard set of trees based on NJ, ML, MP and BI methods.</p>
+<p>BI was constructed in MrBayes. And all the rest in R with “ape” and “phangorn” packages wherein MP topology obtained with “pratchet” function in phangorn.</p>
+<p>MP has provided me with completely resolved phylogeny, whereas NJ, ML and BI shown polytomies in some terminal branches. I have never met with such results and realize this could be evidence of incorrect tree search strategy with other methods.</p>
+<p>But still my questions are:</p>
+<ol>
+<li>Wheather MP method (especially parsimony ratchet) in some cases can reasonably produce more reliable results than others? (I remember about long-branch-attraction and homoplasy)</li>
+<li>In addition to minimization of the number of “steps” wheather MP algorithms seek for fully resolved phylogenies and discard topologies with polytomy?</li>
+</ol>
+<p>Thank you!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Sergei, the discussion about parsimony versus likelihood methods is a big one.</p>
+<p>Personally, I think that Felsenstein does a nice job of discussing this in his book, and he also gives some historical background. Parsimony has been consistently losing ground to likelihood methods, though just recently the parsimony crowd has <a href="http://onlinelibrary.wiley.com/doi/10.1111/cla.12148/full">drawn a hard line</a>. There has been quite a <a href="https://twitter.com/search?q=%23ParsimonyGate">response on Twitter</a>.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

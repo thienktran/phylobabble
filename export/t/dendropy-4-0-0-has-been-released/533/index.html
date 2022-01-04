@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>DendroPy 4.0.0 has been released</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">DendroPy 4.0.0 has been released</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/127_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jeetsukumaran</div>
+          <div class="post_content">
+<p>The fourth major version series of the DendroPy Phylogenetic Computing Library has been released!</p>
+<pre><code>http://dendropy.org
+</code></pre>
+<p>Get it now with:</p>
+<pre><code>$ sudo pip install -U dendropy
+</code></pre>
+<ul>
+<li>DendroPy 4 runs under Python 2.7 and Python 3.x</li>
+<li>Re-architectured and re-engineered from the ground up, yet preserving (as much as possible, though certainly not all) the public API of DendroPy 3.x.</li>
+<li>MAJOR, MAJOR, MAJOR performance improvements in data file reading and processing! Newick and Nexus tree file parsing crazily optimized, with performance scaling at O(1) rather than O(N) or O(n^2) (i.e., in practical terms, you will see better performance improvements with bigger trees when comparing DendroPy 4 vs. DendroPy 3). A thousand-tip tree can be parsed in 0.1 seconds with DendroPy 4 vs. 0.2 seconds with DendroPy 3, while a one million-tip tree can be parsed in under two minutes with DendroPy 4, vs. over 4 days with DendroPy 3. These performance improvements will percolate down to all applications based on DendroPy, including, for example, SumTrees.</li>
+<li>Tests, tests, tests, tests, and more tests! The core library has a stupendous amount of new tests added, and with each one the ability to zero in and identify, isolate, and deal with bugs is improved.</li>
+<li>Related to above: dozens of nasty bugs have been dealt with. No, not killed, because we are not that kind of organization. Rather, they have been taken to the big testing farm in the quarantine zone where they can lead healthy lives munching on mock constructs and helping us test the the library to ensure that it works as advertised so that <em>your</em> code works as advertised.</li>
+<li>Documentation, documentation, documentation! The goal is to have <em>every</em> public method, function, or class fully-documented.</li>
+<li>Many, many, many, many new features: e.g., a high-performance TreeArray class, calculation of MCCT topologies, new simulation models, new tree statistics, new tree manipulation routines.</li>
+<li>SumTrees works faster than ever before thanks to the above improvements, and also allows for many new operations such as rerooting the target tree, using an MCCT tree as the target topology, extensive extra information summarized, auto-detection of number of parallel processors etc.: <a href="http://dendropy.org/programs/sumtrees.html" rel="nofollow noopener">http://dendropy.org/programs/sumtrees.html</a> .</li>
+<li>The newly rewritten DendroPy primer is just full of information to get you started: <a href="http://dendropy.org/primer/index.html" rel="nofollow noopener">http://dendropy.org/primer/index.html</a> .</li>
+<li>The “work-in-progress” migration primer will help ease the transition from 3 to 4: <a href="http://dendropy.org/migration.html" rel="nofollow noopener">http://dendropy.org/migration.html</a> .</li>
+<li>Comprehensive documentation of all the data formats supported, plus all the keyword arguments you can use to control and customize reading and writing in all these different formats: <a href="http://dendropy.org/schemas/index.html" rel="nofollow noopener">http://dendropy.org/schemas/index.html</a> .</li>
+<li>A glossary of terms, to clarify the simultaneously redundant and oversubscribed/conflicting terminological soup that characterizes a lot of phylogenetics: <a href="http://dendropy.org/glossary.html" rel="nofollow noopener">http://dendropy.org/glossary.html</a> .</li>
+</ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ericmjl</div>
+          <div class="post_content">
+<p>Love it! I would like to do a <code>binstar</code> upload too. Would you allow that?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/127_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jeetsukumaran</div>
+          <div class="post_content">
+<p>It’s released under a BSD-style license, so as long as those conditions are met … <img alt=":smile:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/smile.png?v=5" title=":smile:"/></p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

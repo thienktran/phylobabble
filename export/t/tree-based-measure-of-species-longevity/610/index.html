@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Tree-based measure of species longevity?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Tree-based measure of species longevity?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/377_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rutgeraldo</div>
+          <div class="post_content">
+<p>Hi all,</p>
+<p>does anyone know of a reasonable way to come up with estimates of species longevity within clades? By which I mean, how long a species / lineage sticks around before it either goes extinct or speciates?</p>
+<p>The general idea is that one might have a (near?) complete, dated phylogeny with a bunch of genera in it and that the method I’m after would get me an estimate for average species longevity for each genus.</p>
+<p>I guess you could say, crudely, that average species longevity is more or less proportional to average interior branch length (if we pretend that a species is an internode) but when extinction rates are high we’d overestimate, especially for the older internodes.</p>
+<p>Isn’t there some clever R package for this?</p>
+<p>Thanks,</p>
+<p>Rutger</p>
+<p>p.s. apologies for the ill thought-out question. Equally ill thought-out answers and opinions are very welcome.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>A lot of this has been done in virology, in order to measure aspects of the epidemiology over time, for viruses.  How a “species” of virus is defined is very fuzzy, but likewise it is also a lot more fuzzy than most people realize even for mammals and other vertebrates.  But anyway, the big problem with all of this is that the methods require good sampling over time, and the actual sampling is usually not good, in terms of such things as random sampling and “well mixed populations” from which to sample, and so on.</p>
+<p>With most organisms there is also the problem that gene trees do not equate to species trees, and if you use many genes for the species tree recombination, introgression and other problems soon make you wonder what you are measuring.  For one example, if we take a very solidly worked out phylogeny such as Human-Chimpanzee-Gorilla, and we include Neanderthal genomes, and one Denisova man genome, plus two species of Chimpanzee (Pan Troglodytes and Pan paniscus) how do we decide how many lineages of Chimpanzees have gone extinct the way Neanderthal and Denisova man did?  Humans are interested in humans, so we worked very hard to get the Neanderthal and Denisova genomes, we did not work so hard to find extinct Chimpanzee or Gorilla lineages.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/377_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rutgeraldo</div>
+          <div class="post_content">
+<p>Hi Brian,</p>
+<p>thanks for the response and for thinking along!</p>
+<blockquote>
+<p>How a “species” of virus is defined is very fuzzy, but likewise it is also a lot more fuzzy than most people realize even for mammals and other vertebrates.</p>
+</blockquote>
+<p>Absolutely. Thinking this through you pretty quickly end up having to consider how speciation might have happened (e.g. by budding off versus by a split where both descendants diverge).</p>
+<blockquote>
+<p>Humans are interested in humans, so we worked very hard to get the Neanderthal and Denisova genomes, we did not work so hard to find extinct Chimpanzee or Gorilla lineages.</p>
+</blockquote>
+<p>Indeed. And we’ve worked even less hard to find species that aren’t so much like us.</p>
+<p>Returning to the crude idea of looking at internodes, the problem you’re pointing out is essentially that there are biases in taxon sampling, right? With higher sampling you’re going to split up the internodes more and therefore end up with lower estimates of “species longevity” (whatever that really is).</p>
+<p>Rutger</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>Yes, it is the bias in taxon sampling more than the density of overall sampling, that throws things off.  I was thinking this morning about studies of the amphibians, which have been very extensively sampled with a high motivation for identifying new species.  The explosion in the number of different species pretty much coincides with the flowering plants and insects if I recall right, and this makes sense if most salamanders and frogs eat insects.  The amphibians predated the dinosaurs and I suspect many went extinct at the KT boundary event, not because of lack of “fitness” but just bad luck to have lived in environments most devastated at that time.</p>
+<p>With mammals, speciation of squirrels and mice is more frequent than speciation of wolves and horses because the small animals don’t have as much motivation to travel hundreds of miles and swim rivers and all.  Birds travel a lot but tend to get picky about mate choices with songs and fancy feathers and all, so different lineages of birds have different reasons for speciating (causes of speciation) than the mammals do, on average.</p>
+<p>The DNA/protein sequence analysis methods used in recent years to study this type of thing are call “<a href="https://web.stanford.edu/group/rosenberglab/papers/coalnrg.pdf" rel="nofollow noopener">coalescent analyses</a>”.  A good paper on amphibians is
+“<a href="http://www.pnas.org/content/104/3/887.full.pdf" rel="nofollow noopener">Global patterns of diversification in the history of modern amphibians</a>” by Kim Roelants et al.</p>
+<p>I get the impression that a lot of molecular biologists, and even more computer scientists who do bioinformatics, think that because they can “see” patterns of evolutionary history in the genes, the genes are directly involved in the “fitness” of the organisms.  But usually the real story is about habitats, climates, catastrophes and other things and not the new loop in the 16S rRNA or whatever we see in the gene we have picked to look at.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/358_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">dwbapst</div>
+          <div class="post_content">
+<p>So, I’m going to come at this from the paleo-end (because I’m a paleontologist), and I think the what-about-budding issue is particularly critical. With really great fossil records, we estimate species duration just by, well, measuring morpho-species duration in the fossil record. Like this recent piece, on my favorite group, which are far too extinct for us to have any species concept other than the morphological:</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/26811471" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/26811471" rel="nofollow noopener" target="_blank">Greenhouse-icehouse transition in the Late Ordovician marks a step change in extinction regime in the marine plankton.</a>
+</h4>
+<div class="date">
+  JS Crampton, RA Cooper, PM Sadler and M Foote,
+  <i>Proceedings of the National Academy of Sciences of the United States of America</i>, Feb 2016 09
+</div>
+<p class="pubmed-abstract">
+  Two distinct regimes of extinction dynamic are present in the major marine zooplankton group, the graptolites, during the Ordovician and Silurian periods (486-418 Ma). In conditions of "background" extinction, which dominated in the Ordovician, taxonomic evolutionary rates were relatively low and the probability of extinction was highest among newly evolved species ("background extinction mode"). A sharp change in extinction regime in the Late Ordovician marked the onset of repeated severe spikes in the extinction rate curve; evolutionary turnover increased greatly in the Silurian, and the extinction mode changed to include extinction that was independent of species age ("high-extinction mode"). This change coincides with a change in global climate, from greenhouse to icehouse conditions. During the most extreme episode of extinction, the Late Ordovician Mass Extinction, old species were selectively removed ("mass extinction mode"). Our analysis indicates that selective regimes in the Paleozoic ocean plankton switched rapidly (generally in &lt;0.5 My) from one mode to another in response to environmental change, even when restoration of the full ecosystem was much slower (several million years). The patterns observed are not a simple consequence of geographic range effects or of taxonomic changes from Ordovician to Silurian. Our results suggest that the dominant primary controls on extinction throughout the lifespan of this clade were abiotic (environmental), probably mediated by the microphytoplankton.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>Or this piece, about durations of fossil mammals:</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/25236413" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/25236413" rel="nofollow noopener" target="_blank">Species longevity in North American fossil mammals.</a>
+</h4>
+<div class="date">
+  DR Prothero,
+  <i>Integrative zoology</i>, Aug 2014
+</div>
+<p class="pubmed-abstract">
+  Species longevity in the fossil record is related to many paleoecological variables and is important to macroevolutionary studies, yet there are very few reliable data on average species durations in Cenozoic fossil mammals. Many of the online databases (such as the Paleobiology Database) use only genera of North American Cenozoic mammals and there are severe problems because key groups (e.g. camels, oreodonts, pronghorns and proboscideans) have no reliable updated taxonomy, with many invalid genera and species and/or many undescribed genera and species. Most of the published datasets yield species duration estimates of approximately 2.3-4.3 Myr for larger mammals, with small mammals tending to have shorter species durations. My own compilation of all the valid species durations in families with updated taxonomy (39 families, containing 431 genera and 998 species, averaging 2.3 species per genus) yields a mean duration of 3.21 Myr for larger mammals. This breaks down to 4.10-4.39 Myr for artiodactyls, 3.14-3.31 Myr for perissodactyls and 2.63-2.95 Myr for carnivorous mammals (carnivorans plus creodonts). These averages are based on a much larger, more robust dataset than most previous estimates, so they should be more reliable for any studies that need species longevity to be accurately estimated.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>But I’m really weary about reconstructing species duration down-tree, at least with current methods. For what its worth, Wagner and Erwin (1995; <a href="https://books.google.com/books?id=Mx20KDWnPVEC&amp;lpg=PA119&amp;vq=phylogenetic&amp;dq=wagner%20erwin%20speciation&amp;pg=PA87#v=onepage&amp;q&amp;f=false" rel="nofollow noopener">https://books.google.com/books?id=Mx20KDWnPVEC&amp;lpg=PA119&amp;vq=phylogenetic&amp;dq=wagner%20erwin%20speciation&amp;pg=PA87#v=onepage&amp;q&amp;f=false</a>) tried estimating how morphological ‘speciation’ in the fossil record is due to budding, bifurcation, etc, and found mainly support for budding.</p>
+<p>And this whole budding versus bifurcation, its a big headache, too. One issue I became involved in, is that if you have morphologically-static ancestors with descendant species via budding, you should expect your morphological cladograms are going to be full of polytomies:</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/23638034" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/23638034" rel="nofollow noopener" target="_blank">When can clades be potentially resolved with morphology?</a>
+</h4>
+<div class="date">
+  DW Bapst,
+  <i>PloS one</i>, 2013
+</div>
+<p class="pubmed-abstract">
+  Morphology-based phylogenetic analyses are the only option for reconstructing relationships among extinct lineages, but often find support for conflicting hypotheses of relationships. The resulting lack of phylogenetic resolution is generally explained in terms of data quality and methodological issues, such as character selection. A previous suggestion is that sampling ancestral morphotaxa or sampling multiple taxa descended from a long-lived, unchanging lineage can also yield clades which have no opportunity to share synapomorphies. This lack of character information leads to a lack of 'intrinsic' resolution, an issue that cannot be solved with additional morphological data. It is unclear how often we should expect clades to be intrinsically resolvable in realistic circumstances, as intrinsic resolution must increase as taxonomic sampling decreases. Using branching simulations, I quantify intrinsic resolution across several models of morphological differentiation and taxonomic sampling. Intrinsically unresolvable clades are found to be relatively frequent in simulations of both extinct and living taxa under realistic sampling scenarios, implying that intrinsic resolution is an issue for morphology-based analyses of phylogeny. Simulations which vary the rates of sampling and differentiation were tested for their agreement to observed distributions of durations from well-sampled fossil records and also having high intrinsic resolution. This combination only occurs in those datasets when differentiation and sampling rates are both unrealistically high relative to branching and extinction rates. Thus, the poor phylogenetic resolution occasionally observed in morphological phylogenetics may result from a lack of intrinsic resolvability within groups.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>Plus, if you have some morphologically unchanging taxon, how do you code that for phylogenetic analysis, like tip-dating with fossils? Do you treat every single find of some morpho-species that has ‘persisted’ since the Paleozoic (and there are some! <em>plays horror music</em>) as independent OTUs with the same morphological characters? Sounds like a nice way to break the Markov model badly.</p>
+<p>For what its worth, I’ve written some simulation code for dealing with this mess, where species are treated as these persistent units with possible buddings, or branchings or ‘anagenesis’ between them (because it turns out the inferences we’d make about the fossil record might be pretty different if we think a different pattern of differentiation is involved). You can find it in function <code>simFossilRecord</code>, in R package <code>paleotree</code>. Perhaps simulations of such patterns might be useful to your situation?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/377_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rutgeraldo</div>
+          <div class="post_content">
+<p>Excellent responses, thanks so much! This will take me a while to digest. I had come across some of the fossil papers already and they are definitely something I also want to look at, if anything at least as a way to validate tree-based longevity estimates. Thanks!</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

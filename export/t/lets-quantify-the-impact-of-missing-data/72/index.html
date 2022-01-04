@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Let&rsquo;s quantify the impact of missing data</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Let&rsquo;s quantify the impact of missing data</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Whenever I see an acrimonious debate about something where the evidence offered by either side consists of a collection of data sets along with simulations it makes me wonder <em>where are those theoreticians?</em></p>
+<p>I think that there is such a debate concerning the impact of missing data in phylogenetics
+(<a href="http://sysbio.oxfordjournals.org/content/52/4/528.short">Wiens 2003</a>, <a href="http://sysbio.oxfordjournals.org/content/58/1/130.short">Lemmon <em>et al</em> 2009</a>, <a href="http://sysbio.oxfordjournals.org/content/60/5/719.full">Wiens and Morrill, 2011</a>, <a href="http://www.sciencedirect.com/science/article/pii/S1055790311004490">Simmons 2012</a>, <a href="http://mbe.oxfordjournals.org/content/30/1/197">Roure <em>et al</em> 2012</a>).  With pplacer, I have <a href="http://matsen.github.io/pplacer/generated_rst/pplacer.html#pre-masking-and-masking">noticed</a>
+that masking non-informative columns can have surprising effects on the relative likelihoods in cases when data is weak.</p>
+<p>I think that the overall effect in the case of standard phylogenetic analysis is probably weak when the gaps are uniformly distributed, but when they are not I don’t think that it is.
+And because of primer bias, there is an interesting joint distribution on amplification probability by sequence identity for cases like <a href="https://en.wikipedia.org/wiki/Restriction_site_associated_DNA_markers">RAD-seq</a>.</p>
+<p>It’s not uncommon to see people running trees on alignments that have a very high proportion of gap. Sanderson, McMahon, <span class="mention">@mathmomike</span> and  did some interesting related work in their <a href="https://www.sciencemag.org/content/333/6041/448.abstract">phylogenetic terraces</a> paper, but for me this doesn’t quite do what I would like. I would just like to know the contribution to the phylogenetic likelihood is of adding a column with various patterns of gap given various phylogenetic trees.</p>
+<p>In principle I think I have all of the skills to do this on my own, but it would be more fun to have others involved, especially someone that would be willing to do some computer work. Anyone want to play? We could do the work as an open Massively Multiplayer Online Research Project, with phylobabblers kibitzing from the sidelines.</p>
+<p>Or is this a bad idea? Much ado about nothing?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p><span class="mention">@ematsen</span> I enjoy playing. What computer work do you have in mind?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Just calculating likelihoods of single-column and multiple-column alignments on various trees with various models to consider their contribution to an overall likelihood. We’ve had good success using Bio++ for things like this in the past.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Hi Erick,</p>
+<p>We could maybe use that phylogenetic likelihood library we are developing for this, it might be fairly easy to implement this.</p>
+<p>We are also playing around with a very simple method for predicting the missing sequences and trying to quantify its accuracy right now.</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@Alexis_RAxML</span> sure, that would be great. Should I go ahead and start an (open) GitHub repository?</p>
+<p>But first, I was hoping to get more <strong>negative</strong> feedback from everyone. Don’t be shy! Is this a bad idea? I will send anyone a box of girl scout cookies, or a smoked salmon, or whatever such thing you want if you convince me that it would not be a useful project.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>regarding the repository: Let me see first I have the resources (in terms of man-hours) to do this.</p>
+<p>If you want some rant: the key problem might be that we need to somehow sample appropriate trees for this in an intelligent way. It might be difficult to quantify the effect of missing data and the respective impact on the tree topology simultaneously.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<aside class="quote" data-post="6" data-topic="72">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/alexis_raxml/40/136_1.png" width="20"/> Alexis_RAxML:</div>
+<blockquote>
+<p>If you want some rant: the key problem might be that we need to somehow sample appropriate trees for this in an intelligent way. It might be difficult to quantify the effect of missing data and the respective impact on the tree topology simultaneously.</p>
+</blockquote>
+</aside>
+<p>The idea would be to assume that other parts of the alignment have determined the primary structure of the tree, and so we fix the tree except for several taxa. We would then have different patterns of base and gap, and see how those determined the positioning of those few taxa. Seem reasonable?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>You seem to be discussing columns in an alignment where a large percentage of taxa have insertions or deletions.   Another type of missing data is when researchers build trees with long sequences such as complete mitochondrial genomes, but include many species for which they have only one or two mitochondrial genes and the rest of the sequence for the missing data is either filled with ----, or NNNN, or ??? characters.  This type or missing data in rows, can have impacts on the results, also.  I have many examples from the published literature.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>I think that Erick wants to address both issues. Erick, I am still a little bit skeptical as to what the criterion would be to select the taxa that need to be re-positioned. One may just chose those that have missing data above some threshold, but then, the absence of data might also have effects on the underlying tree structure that you want to keep fixed.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/33_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">FBoteroC</div>
+          <div class="post_content">
+<p>A recent paper on this subject:
+<a href="http://www.sciencedirect.com/science/article/pii/S1055790314000517" rel="nofollow noopener">http://www.sciencedirect.com/science/article/pii/S1055790314000517</a>.</p>
+<p>Personally, I’ve experienced the trouble of having some taxa represented by some markers only while others are so by complete mitochondrial genomes. Misplacement and node instability are among the main consequences I’ve observed this far.</p>
+<p>Cheers,</p>
+<p>Fidel</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>It looks like the figure captions for Figures 1 &amp; 2 are mixed up for that paper. I’m contacting Simmons to get it fixed.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">dambexia</div>
+          <div class="post_content">
+<p>I just drafted a manuscript on missing data with the title and abstract below, and should be happy to send you the manuscript for comments and suggestions:</p>
+<p>Title: Phylogenetic bias in the likelihood method caused by missing data coupled with among-site rate variation: an analytical approach</p>
+<p>ABSTRACT
+More and more researchers in phylogenetics are concatenating gene sequences to produce supermatrices in the hope that larger data sets will lead to better phylogenetic resolution. Almost all of these supermatrices contain a high proportion of missing data which could potentially cause phylogenetic bias. Previous studies aiming to identify the missing-data-mediated bias in the maximum likelihood method have noted a bias associated with among-site rate variation. However, this finding is by sequence simulation and has been challenged by other simulation studies, with the controversy still unresolved. Here I illustrate analytically this bias caused by missing data coupled with among-site rate variation. This approach allows one to see how much the bias can contribute to likelihood differences among different topologies. The study highlights the point that, while supermatrices may lead to “robust” trees, such “robust” trees may be purchased with illegal phylogenetic currency.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>This is so fantastic! I’m glad to know that you are thinking about this. Rather than sending around a preprint, it’s safer to post your paper at <a href="http://biorxiv.org/">http://biorxiv.org/</a> or <a href="http://arxiv.org/">http://arxiv.org/</a> because you establish ownership of your ideas. That way more people can see it too.</p>
+<p>I’m looking forward to reading your work.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p><a class="onebox" href="http://dx.doi.org/10.5061/dryad.vh49j" rel="nofollow noopener" target="_blank">http://dx.doi.org/10.5061/dryad.vh49j</a></p>
+<pre><code>   In this data set, I again [find a lot of missing data][1].  The DNA alignment is a 32,767 columns long, but after stripping sites where one or more sequences is represented by a gap, there are only 885 columns remaining.
+</code></pre>
+<p>In addition to this, I find that many sites are invariant, so no phylogenetic signal in them, and then there are a few “odd” places in the alignment where I am not sure if there was sequencing error, or replacement of a small region of a gene such that this region is not truly “homologous”, or some type of data error.   I could attach a JPG image of a small region of the alignment that is rather typical of the whole data set and illustrates these points, but I am a new user here not allowed yet to upload.</p>
+<p>With such a huge data set, I cannot fault anyone (or any machine) for making a few errors, missing a few misaligned sites or whatever.  But my main interest in all of this is:  What is the relative importance of having a very good data set, in comparison to doing the very best analysis of a “run of the mill” data set?   The whole focus of this publication, was claiming that using a very sophisticated model of evolution and phylogenetic reconstruction based on that model, would produce the “right” tree.    But they have apparently taken only protein coding regions, for which models of the selection pressure are not well developed, and they are not treating first, second and third codon positions separately (unless I am missing something in my understanding of their methods).    I am not thinking that the tree they created is “wrong” or “bad”, but I am questioning whether it is “the best we can do” with this type of genomic data.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/62_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">martinkova</div>
+          <div class="post_content">
+<p>Maybe to take a dataset where all genes are available for all taxa and the tree is reasonably resolved. The testing could be done on subsets of this dataset.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<aside class="quote" data-post="9" data-topic="72">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/alexis_raxml/40/136_1.png" width="20"/> Alexis_RAxML:</div>
+<blockquote>
+<p>Erick, I am still a little bit skeptical as to what the criterion would be to select the taxa that need to be re-positioned. One may just chose those that have missing data above some threshold, but then, the absence of data might also have effects on the underlying tree structure that you want to keep fixed.</p>
+</blockquote>
+</aside>
+<p><span class="mention">@Alexis_RAxML</span> The in/out taxa are chosen ahead of time. The idea is that we have lots of data for <em>n</em> taxa, and we have mostly missing data for the <em>n+1</em>st taxon <em>X</em>. We assume that the columns that informative for <em>X</em> do not have enough information to change the topology for the first <span class="math">n</span> taxa. Thus we leave the tree on the first <em>n</em> taxa fixed and we want to see how the pattern of missing data determines its position.</p>
+<p>I realize of course that this is a bizarre set-up, but it is one that distills the effects of the missing data in a way that I think would be comprehensible, and perhaps even amenable to a mathematical approach.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>I am not sure if the missing data link worked.  Here it is again:
+</p><aside class="onebox allowlistedgeneric" data-onebox-src="https://figshare.com/articles/figure/Missing_Data_in_Phylogenetics_Analyses/967921">
+<header class="source">
+<img class="site-icon" height="16" src="https://www.phylobabble.org/uploads/default/original/1X/902e2ba19460d7cad13671050c7af0c505272894.png" width="16"/>
+<a href="https://figshare.com/articles/figure/Missing_Data_in_Phylogenetics_Analyses/967921" rel="noopener nofollow ugc" target="_blank">figshare</a>
+</header>
+<article class="onebox-body">
+<img class="thumbnail onebox-avatar" height="250" src="https://www.phylobabble.org/uploads/default/original/1X/9976bfb88b64bbf1e48b1891d47b03c61a7484f2.png" width="250"/>
+<h3><a href="https://figshare.com/articles/figure/Missing_Data_in_Phylogenetics_Analyses/967921" rel="noopener nofollow ugc" target="_blank">Missing Data in Phylogenetics Analyses</a></h3>
+<p>There is a discussion in the PhyloBabble phylogenetic methods discsuion group about the effects of missing data in sets used for phylogenetic reconstuctions.  I found this data set is rather typical of the problem, when researchers attempt to...</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Hi Erick, that makes sense, so essentially you’d do some sort of leave-one-out test using pplacer or the EPA and then try to quantify how the taxon X moves around the tree or how the distribution of likelihood weights changes as a function of the fraction of missing data.</p>
+<p>alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I think that we are talking about the same thing. I wouldn’t call it a leave-one out analysis because we fix our original <em>n</em> sequences making the background tree and then the sequence for <em>X</em> can be whatever we like it to be.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

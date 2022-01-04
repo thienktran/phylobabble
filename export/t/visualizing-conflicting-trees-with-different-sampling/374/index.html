@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Visualizing conflicting trees with different sampling?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Visualizing conflicting trees with different sampling?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Anyone know the best way to visualize conflicting tree toopologies with incomplete overlap in taxon sampling?</p>
+<p>What we got: a complete tree (say, species tree), and a whack of gene trees which may or may not have complete taxon sampling. We want a figure with single set of taxon labels that all trees map to. Ignoring edge lengths, as things get messy very quickly. If a gene tree does not contain taxa in the basal split of the species tree, don’t want it’s root to start at the species tree root, but instead more tipward; otherwise, relationships get obscured.</p>
+<p><a href="https://www.cs.auckland.ac.nz/~remco/DensiTree/release/" rel="nofollow noopener">DensiTree</a> is something we have explored, but it doesn’t seem to work well with uneven sampling across trees. We’ve also been playing with R code graciously provided by <span class="mention">@liamjrevell</span>, and we may be able to get this to do what we want, but I thought I would check with with the phylo-timaliids to see if something already exists.</p>
+<p>Thanks!
+JWB.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jhcepas</div>
+          <div class="post_content">
+<p>I recently added to the <a href="http://etetoolkit.org" rel="nofollow noopener">ETE toolkit</a> the option to calculate the robinson-foulds distance between trees with different sampling. These improvements are still part of a pre-release version of ETE <a href="http://etetoolkit.org/download/#standalone" rel="nofollow noopener">available here</a> (usable, but not heavily tested and documented yet). You may want to take a look at the <code>tree.robinson_foulds()</code> function.</p>
+<p>Also, as part of the pre-release version, several scripts are included that allow to compare trees:</p>
+<ol>
+<li>
+<strong>ete diff</strong>: command line tool that shows the differences between two topologies I am still working in possible improvement on how differences are detected. Currently it uses euclidean distance between the content of two clades. At some point, I would like to join the output to the ETE tree visualization features, so differences can be nicely displayed.</li>
+<li>
+<strong>ete dist</strong>: calculate RF distance between trees</li>
+<li>
+<strong>ete maptrees:</strong> calculate distances between a bunch of genetrees and a reference species tree. It allows missing species and decomposition of duplicated gene families.</li>
+</ol>
+<p>As I said, all programs should be functional but they are still a work in progress…</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">brhollan</div>
+          <div class="post_content">
+<p>I know of two approaches to this. The Z-closure method</p>
+<p>Huson, Daniel H., et al. “Phylogenetic super-networks from partial trees.” IEEE/ACM Transactions on Computational Biology and Bioinformatics (TCBB) 1.4 (2004): 151-158.</p>
+<p>which is implemented in SplitsTree4. It starts with partial splits and uses a closure rule to build up a set of complete splits which are then displayed as a splitsgraph.</p>
+<p>The second is Quartet-Imputation</p>
+<p>Holland, B., Conner, G., Huber, K., &amp; Moulton, V. (2007). Imputing supertrees and supernetworks from quartets. Systematic biology, 56(1), 57-67.</p>
+<p>It begins by filling in the taxa that are missing in each tree in such a way as to try and maximise the number of quartets that agree with other trees in the input set. Then you can do what you like with the resulting set of trees, usually a consensus tree or consensus network, but no doubt you could also feed them into Densitree.</p>
+<p>Cheers,
+B</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Thanks <span class="mention">@jhcepas</span>. I think I poorly worded my request. I am not looking to perform analyses on the various trees, I just want to display them on a common plot. Bascially: DensiTree, but with incompletely-sampled trees.</p>
+<p>But the tree metrics you mention sound very useful. Good to know these are available.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Thanks <span class="mention">@brhollan</span>. Have thought about networks, but it just isn’t what we are looking for.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/51_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">taxonbytes</div>
+          <div class="post_content">
+<p><img height="500" src="https://www.phylobabble.org/uploads/default/159/7572dbbfb30e234d.jpg" width="582"/> </p>
+<p>Here’s an output of Euler/X for two conflicting/differently sampled trees of the lemur clade Cheirogaleoidae (1993 / 2005 analyses). However it uses all input names.
+<a href="http://taxonbytes.org/using-the-euler-x-toolkit-to-align-taxonomies-introductory-notes/" rel="noopener nofollow ugc">http://taxonbytes.org/using-the-euler-x-toolkit-to-align-taxonomies-introductory-notes/</a></p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

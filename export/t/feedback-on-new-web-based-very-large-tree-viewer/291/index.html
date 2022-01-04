@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Feedback on new web-based very large tree viewer</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Feedback on new web-based very large tree viewer</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p>I’m working on a web-based phylogeny viewer that uses an approach similar to Google Maps to display large images. There is a live demo <a href="http://iphylo.org/~rpage/deep-tree/demo/" rel="nofollow noopener">here</a>.</p>
+<p>I’ll blog about the project and put the code into github shortly. but I’m looking for any immediate thoughts people might have. My goal here is to have a simple, easy to use viewer that enables you to quickly browser through a large tree. For example, I envisage adding this to my <a href="http://iphylo.org/~rpage/bold-map/" rel="nofollow noopener">map of DNA barcodes</a>.</p>
+<p>Let me know what you think. Would you find this useful?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>This is totally cool!</p>
+<p>One thing that I’ve always wanted is a phylogenetics equivalent of <a href="http://getcloudapp.com/">http://getcloudapp.com/</a> or similar service. The idea is that you can upload a file and get an obfuscated URL which points to a reasonably nice visualization of the file (e.g. <a href="http://cl.ly/code/3y2q3O2O3O13/">http://cl.ly/code/3y2q3O2O3O13/</a>). A free service where one could upload a tree and get back something that could be shared with collaborators would be a huge win.</p>
+<p>Think that might be possible with your viewer?</p>
+<p>We have a nice little alignment-to-html converter that would be a nice complement.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p><span class="mention">@ematsen</span> Glad that you like it. Yes, I plan to add an upload feature (ran out of time last night). Generating the tiles can take a while for a big tree, so I’d like an interface that shows progress of that process.</p>
+<p>Regarding obfuscated URL, I’d use md5 hash of tree, so it will be obfuscated anyway, but do you mean that the URL is private, in the sense that only you and those you’d share it with would have access to it?</p>
+<p>Another feature that might be useful is to include a location in the link, so you can say to someone “look at this part of the tree” (equivalent to sending someone a link to a place in Google Maps).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p>OK, you can now upload a NEXUS format tree (or give a URL for one). All very crude but at least you can experiment: <a class="inline-onebox" href="http://iphylo.org/~rpage/deep-tree/demo/" rel="noopener nofollow ugc">Deep tree viewer</a></p>
+<p>Code is on github <a class="inline-onebox" href="https://github.com/rdmpage/deep-tree" rel="noopener nofollow ugc">GitHub - rdmpage/deep-tree: Big web-based phylogeny viewer</a></p>
+<p><img height="500" src="https://www.phylobabble.org/uploads/default/79/2c9e5b32570334b9.png" width="425"/> </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/44_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">pscUtah</div>
+          <div class="post_content">
+<p>This is superb. Looks like it will be wonderful for a graduate student that I’m advising. We’ll fool around with it and give you some feedback.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p>Thanks. It’s very much a work in progress, and very fussy about the tree format. For example, people stick all sorts of symbols in Newick files that my simple parser just baffs over. I hope to fix this ASAP. If you have a tree that fails, just send me an email <a href="mailto:rdmpage@gmail.com">rdmpage@gmail.com</a> or message me here and I’ll take a look.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>So cool. Re parsing, could you use some external library to normalize the string representation? I’m thinking one of the phylo libraries in Bioperl/Biopython, or <a href="http://pythonhosted.org/DendroPy/">DendroPy</a>, or the fantastic command line <a href="http://cegg.unige.ch/newick_utils">Newick utilities</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p>I’m a roll your own kind of guy <img alt=":wink:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/wink.png?v=5" title=":wink:"/> My current tree parser is a quick and dirty hack to avoid writing a decent one, just need a quiet afternoon to fix it. I also want to add a few things to the NEXUS parser like support “MRCA” commands to label internal nodes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Cool. Trying it with the OpenTree tree now (87 MB). We got all sorts of crazy characters, but taxon names are <a href="http://evolution.genetics.washington.edu/phylip/newick_doc.html" rel="nofollow noopener">newick-valid</a> (I know this is Nexus, but hopefully the naming conventions are compatible).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p><span class="mention">@josephwb</span> How did you get on? I don’t see a 87 Mb file on the server (I suspect that’s going to be too big for the web server to upload). Where does the OpenTree live? Is there a URL I can grab it from?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p><span class="mention">@josephwb</span> Please tell me it’s not the tree with labels like “6461_K∆RHEDE” …</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p><span class="mention">@rdmpage</span> Nothing happened. I guess the web server couldn’t handle it. I can put it somewhere and send you the link.</p>
+<p>There doesn’t appear to be any “6461_K*” in the tree, so hopefully that is not mine.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p><span class="mention">@rdmpage</span> Tree is up <a href="http://www-personal.umich.edu/~josephwb/Rod/" rel="nofollow noopener">here</a> in both <a href="http://www-personal.umich.edu/~josephwb/Rod/OpenTree_draft.NEX.txt" rel="nofollow noopener">uncompressed</a> (82 MB) and <a href="http://www-personal.umich.edu/~josephwb/Rod/OpenTree_draft.NEX.txt.tgz" rel="nofollow noopener">compressed</a> (tgz; 21 MB) versions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p><span class="mention">@josephwb</span> Thanks, I’ll take a look. The dimensions may be a bit challenging for the tile maker script…</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p>Unit branch lengths <img alt=":frowning:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/frowning.png?v=5" title=":frowning:"/></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p><span class="mention">@josephwb</span> OK I’ve loaded just the mammals to see what would happen. Not pretty as you can see <a class="inline-onebox" href="http://iphylo.org/~rpage/deep-tree/demo/show.php?id=536bf497bf897" rel="noopener nofollow ugc">Deep tree viewer</a></p>
+<p><img height="500" src="https://www.phylobabble.org/uploads/default/81/7902ce9fef85a61f.png" width="269"/> </p>
+<p>Compare this to the mammal super tree from <a href="http://dx.doi.org/10.1038/nature05634" rel="noopener nofollow ugc">http://dx.doi.org/10.1038/nature05634</a>, which you can see here  <a class="inline-onebox" href="http://iphylo.org/~rpage/deep-tree/demo/show.php?id=53691dd210cca" rel="noopener nofollow ugc">Deep tree viewer</a> and which looks much nicer:</p>
+<p><img height="410" src="https://www.phylobabble.org/uploads/default/82/95aa4ae0fa278baa.png" width="390"/> </p>
+<p>I’ll need to investigate why this is (will try it with tree with same number of leaves). Obviously the trees are different (unit branch length versus chronogram), but the OpenTree looks very “chained”, which may reduce the number of nicely distinct subtrees. May also be simply due to interaction between number of leaves and the zoom function (i.e., at every level I double the size of the image). Perhaps the structure of the tree is poorly served by my method for collapsing nodes. But part of me thinks the OpenTree looks a little “pathological”…</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<aside class="quote" data-post="8" data-topic="291">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/rdmpage/40/124_1.png" width="20"/> rdmpage:</div>
+<blockquote>
+<p>I’m a roll your own kind of guy</p>
+</blockquote>
+</aside>
+<p>Sure, but a NEXUS parser?</p>
+<p>Ah, the enthusiasm of youth.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Regarding the “pathological” appearance: I should have mentioned two things. First, there are a whole lot of polytomies; this should not be unexpected: given only a tiny fraction of taxa have ever appeared in trees, most of the OpenTree is taxonomy. Second, there are also something that we have been calling “knuckles” or “knees”: when monotypic taxa are involved, the entire taxonomic structure is present in the tree. An example is the Hoatzin (you’ll only get bird examples from me), the lone species in an entire Order. The tree preserves the 1) Species, 2) Genus, 3) Family, and 4) Order. Here it is in the tree string:</p>
+<p>(((((Opisthocomus_hoazin_ott928360:1.0)Opisthocomus_ott70726:1.0)Opisthocomidae_ott928357:1.0)Opisthocomiformes_ott928359:1.0…</p>
+<p>I know that some software (e.g. APE in R) cannot handle knuckles. Is this something you can handle?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p>Ah the joys of Gregg’s paradox <a href="http://iphylo.blogspot.co.uk/2009/10/wikipedia-and-gregg-paradox.html" rel="nofollow noopener">http://iphylo.blogspot.co.uk/2009/10/wikipedia-and-gregg-paradox.html</a>. I’ll investigate what the code does in this situation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p><span class="mention">@josephwb</span> I may have to take back the “pathological” slur. There’s a fairly crippling feature of the algorithm that I use to choose which nodes to collapse that means it will make a mess of highly unbalanced trees. I do a preorder traversal that asks whether the immediate children of a node are more than a specified distance apart (a function of the font size). If they aren’t, I draw the subtree rooted at that node as a polygon. If the base of the tree looks like ((a,b,c),(d,e,f)) this works great. But if it’s (a,(b,(c,(d,(e,f))))) not so much.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Regarding Gregg’s Paradox (and thanks for pointing that out: I didn’t know it had a name), the reason we keep all the levels in is that while a taxon may have only one extant species (or whatever), it is possible that there are many taxa that are simply extinct. Given the messiness of fossil taxonomies, we are currently filtering fossil taxa out. However, the goal is to ultimately have everything in there, so (most) problems that involve preserving the taxonomic hierarchy should go away.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/51_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">taxonbytes</div>
+          <div class="post_content">
+<p>Here is how the monotypy issue is represented in Euler/X. Different ranks – same referential extension. Ranks are serviceable for some things (human learning, for instance, though also human erring in “learning”), less so in other contexts. In some contexts asserting that all elements in a monotypic lineage are “the same” is probably acceptable.</p>
+<p><a class="onebox" href="http://taxonbytes.org/alignment-of-two-classifications-of-the-monotremata/" rel="noopener nofollow ugc" target="_blank">http://taxonbytes.org/alignment-of-two-classifications-of-the-monotremata/</a></p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>A sane parsimony implementation</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">A sane parsimony implementation</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Hello folks–</p>
+<p>Can anyone suggest a sane-to-use and reasonably fast implementation of parsimony tree estimation for DNA sequences that returns ancestral sequences as well? We have been using PHYLIP’s <code>dnapars</code> but getting all the information out of its output files is pretty hairy.</p>
+<p><span class="mention">@NickJMatzke</span> has (partially?) written <a href="http://phylo.wikidot.com/tntr">http://phylo.wikidot.com/tntr</a> as an R front-end to the TNT software, but this also looks pretty wild!</p>
+<p>Yes, parsimony <img alt=":grin:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/grin.png?v=5" title=":grin:"/> .</p>
+<p>Erick</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>There is one parsimony implementation in LLPLL and also my open-source implementation in parsimonator which is pretty fast: <a href="https://github.com/stamatak/Parsimonator-1.0.2" rel="nofollow noopener">https://github.com/stamatak/Parsimonator-1.0.2</a> it does however not output ancestral states.</p>
+<p>Sounds like you want to implement parsimony-biased moves for Bayesian MCMC <img alt=":slight_smile:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/slight_smile.png?v=5" title=":slight_smile:"/></p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Thanks, <span class="mention">@Alexis_RAxML</span>!</p>
+<p>You’re actually thinking lower-level than we’d like. I’d like a binary that takes in sequences and returns as many maximally parsimonious trees as it can find, along with the ancestral states.</p>
+<p>We could hook up one of your implementations to a front-end and tree rearrangements, but this is more work than we wish to take on right now.</p>
+<p><code>dnapars</code> does what we want, but its interface, formats, and failure modes have been frustrating for some folks in the lab.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Ah, you mean output as many best-known equally parsimonious trees as possible of course, since finding the maximum parsimony tree is NP-hard (I know that you know this, I just couldn’t resist) This would require changing the parsimonator code quite a bit, I am afraid.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">klaus_schliep</div>
+          <div class="post_content">
+<p>Hi Eric,
+the good old Paup* and TNT may be interesting to look in. There is also extensions like the parsimony ratchet for Paup*.<br/>
+XMP (White and Holland) offers a fast branch and bound search which would return all best MP trees, but only for limited number of taxa. The paper also gives a lot of nice inside into many computational aspects you may be interested.
+If you are interested in finding many trees of minimal parsimony score you should also look into a different direction. A problem with the methods I mentioned above is that they usually will return binary trees.<br/>
+So you want to assign edge length on your trees (MPR, ACCTRAN, DELTRAN, …) and prune edges which have length 0.
+This gives can give additional trees with a more parsimonious parametrization (less edges) than their binary counterpart. Who would report a non-parsimonious maximum parsimony tree? The other advantage is that you can generate candidate binary trees. If your pruned tree has for  example has two edges of degree 4 and two edges of degree 5 than you can expand this to 3 * 3 * 15 * 15 = 2025 binary trees, which may also share the same minimal parsimony score. You are like to miss some of these trees if you use heuristic search. It is however unlikely that implementations of the fitch algorithm will be able to handle multifurcating trees, the sankoff algorithm should have no problem with this.
+Cheers,
+Klaus</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Thanks, Klaus!</p>
+<p>You clearly know these things a lot better than we do! I had to look at some of <a href="http://evolution.gs.washington.edu/gs541/2010/lecture1.pdf">Felsenstein’s slides</a> to know about Fitch vs. Sankoff.</p>
+<p>We have tried playing around with PAUP*, but this is pretty much a deal-breaker:</p>
+<aside class="quote" data-post="1" data-topic="465">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="/letter_avatar_proxy/v2/letter/a/e99b99/40.png" width="20"/>
+<a href="//www.phylobabble.org/t/exporting-ancestral-reconstructions-from-paup/465">Exporting ancestral reconstructions from PAUP*</a> <a class="badge-wrapper bullet" href="/c/software"><span class="badge-category-bg" style="background-color: #808281;"></span><span class="badge-category clear-badge" data-drop-close="true" style="" title="Software release announcements and discussion.">Software</span></a>
+</div>
+<blockquote>
+    Does anyone know how to export the ancestral state reconstructions at nodes in trees estimated by PAUP*?  The "Reconstruct" command works to generate them, but there doesn't seem to be any straightforward way to export a list of nodes with the ancestral 'sequences' at each node...or maybe there is, but its not obvious (help?)
+  </blockquote>
+</aside>
+<p>It seems ironic that we’re struggling to get something so basic!</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

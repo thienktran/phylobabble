@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Upcoming talk on phylogenetic MCMC mixing using SPR distance</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Upcoming talk on phylogenetic MCMC mixing using SPR distance</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@cwhidden</span> and I have been applying his awesome SPR techniques to understand what keeps phylogenetic MCMC chains from mixing. Here’s a talk about it. My talk is (in theory) due today, but I would love to get any feedback to improve the talk and our upcoming writeup of the work.</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://www.slideshare.net/erickmatsen/talk-31957869">
+<header class="source">
+<img class="site-icon" height="32" src="https://public.slidesharecdn.com/v2/favicon.ico?f4544a845c" width="32"/>
+<a href="https://www.slideshare.net/erickmatsen/talk-31957869" rel="noopener" target="_blank">slideshare.net</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:170/128;"><img class="thumbnail" height="128" src="https://www.phylobabble.org/uploads/default/original/1X/0c6fbb9738913cc6fb04aae075883a84beb0d660.jpeg" width="170"/></div>
+<h3><a href="https://www.slideshare.net/erickmatsen/talk-31957869" rel="noopener" target="_blank">Quantifying MCMC exploration of phylogenetic tree space</a></h3>
+<p>A talk given at the Algorithms for Threat Detection Program Review, March 10th, 2014.</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>We thank <span class="mention">@beiko</span>, <span class="mention">@koadman</span>, and <span class="mention">@cmccoy</span> for providing helpful feedback, but this work builds on a big literature, with great work from <span class="mention">@hoehna</span>, <span class="mention">@alexei_drummond</span>, <span class="mention">@trayc7</span>, and many others.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">alexei_drummond</div>
+          <div class="post_content">
+<p>Nice slides <span class="mention">@ematsen</span>! Almost don’t need to hear the talk <img alt=":wink:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/wink.png?v=5" title=":wink:"/> I like the visualisation on slide 19. But without hearing your talk I don’t know how that differs from the technique used for the visualisation on slide 28, or if they are just different data sets. For those amongst us inclined towards time-trees rather than their uncouth unrooted brethren, is this work mainly applicable to one or the other? Are your examples on time-trees or unrooted trees? From our experience there can be some distinctive difficulties in sampling the space of time-trees compared to unrooted trees. You could also follow <span class="mention">@mathmomike</span>’s lead and finish with a list of specific open questions in this space!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/384_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">cwhidden</div>
+          <div class="post_content">
+<p>Hi <span class="mention">@alexei_drummond</span>. I’m glad you like the visualizations. Slide 28 is indeed a different data set and we are looking at many more.</p>
+<p>We’ve been focusing on unrooted trees with MrBayes for now and these examples are from unrooted trees. However, the methods themselves are applicable to both time-trees and unrooted trees. In fact, SPR distances are much faster to compute with rooted trees. I don’t think time-trees will make it into our first paper, as we are exploring many ideas that couldn’t fit into the talk (slide 29), but I’m very interested in comparing both.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">alexei_drummond</div>
+          <div class="post_content">
+<p>I like the party time list on slide 29. The area that we would be especially interested in is using these ideas to build better tree proposal moves for time-trees in BEAST2.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/376_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mlandis</div>
+          <div class="post_content">
+<p>Looks great <span class="mention">@cwhidden</span> and <span class="mention">@ematsen</span>!</p>
+<p>Do you have any metrics for edges in the SPR graph are the most heavily traversed? You might get at this by looking at the frequency of accepted MCMC proposals for T_i -&gt; T_j. (Perhaps you already recorded this in your commute time statistics). Some SPR paths must allow significantly faster passage between modes than a path chosen at random. It’d be interesting to see what are the major thoroughfares between treeburbs.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/384_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">cwhidden</div>
+          <div class="post_content">
+<p>Developing better tree proposal moves is one of our goals as well. We’re starting to look at examples like slide 26, although I don’t yet see an easy way to move between those two trees. This motivated the commute time approach (as you suggested in your 2012 paper) and we are trying to see which trees are difficult to reach and how the MCMC moves between them.</p>
+<p>I’m currently running some long golden runs with MrBayes on a different microbial dataset. I think I’ll have to fire up BEAST when those finish.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/384_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">cwhidden</div>
+          <div class="post_content">
+<p><span class="mention">@mlandis</span>, yes we have been looking at the frequency of traffic between trees as well and have tried visualizing this by making the edges thicker in proportion to the number of transitions. This also couldn’t fit into the talk and is very much a work in progress.</p>
+<p>One issue with directly looking at tree transitions is that sampling density affects the quality of tree transition statistics, but some of these tree islands require a large number of iterations to reach (and then get stuck in for a large number of iterations). I was filling up all of <span class="mention">@ematsen</span> 's hard drive space before I switched to sampling every 100 or 1000 iterations.  Commute time statistics are an alternative way of looking at this.</p>
+<p>Also, that last comment was <span class="mention">@alexei_drummond</span>, in case it wasn’t clear from the context.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/52_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">katherinestjohn</div>
+          <div class="post_content">
+<p>Interesting talk!  Are you doing NNI moves or SPR moves for your exploration?  The text says SPR, but the image used on the slides is of the 5-leaf NNI-space.  --Katherine</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><em>Urk!</em> We are using SPR moves. I’ll have to make it clear that we are just using this graph as an example of the sort of graph that SPR moves will create.</p>
+<p>Thanks, everyone, for your great feedback. I’ll have to tune the presentation up a bit before presenting to a phylogenetics audience! The upcoming audience is a bunch of folks who work on defense-related science projects.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

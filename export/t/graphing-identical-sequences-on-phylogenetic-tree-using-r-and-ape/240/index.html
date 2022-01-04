@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Graphing identical sequences on phylogenetic tree using R and APE</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Graphing identical sequences on phylogenetic tree using R and APE</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">blarsen_brendan</div>
+          <div class="post_content">
+<p>Hello I have phylogenetic trees of deep sequencing data.  The problem is that many of the sequences are identical so i wanted to have those nodes that have x number of identical sequences be represented by a circle of size x.  This is easily enough done in R using the APE package.  The problem is I have two groups of sequences that I want to color differently.  So at node 1 for example, 30% of the identical sequences come from group 1, and 70% come from group 2.  Ideally these circles at nodes would actually be pie charts that show the different representation but I cannot figure out how to calculate the vector to feed ape.  any ideas?</p>
+<p>Thanks,
+Brendan</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">boronian</div>
+          <div class="post_content">
+<p>Hi <span class="mention">@blarsen_brendan</span>,
+maybe I miss part of your problem, but this should be possible with phyloch::descendants (<a href="http://www.christophheibl.de/Rpackages.html" rel="nofollow noopener">http://www.christophheibl.de/Rpackages.html</a>) to get the percentages and ape::nodelabels to plot the pie charts.</p>
+<p>Does that help?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">boronian</div>
+          <div class="post_content">
+<p>Does this what you want (In the random tree the clades might be nested in each other, but I assume you have the list of nodes for which this operation would be needed)?</p>
+<pre><code>require(phyloch)
+r.tre&lt;-rtree(10)
+nodes&lt;-c(19,16,13)
+ga&lt;-c("t5","t9","t2")
+gb&lt;-c("t1","t3","t4","t6","t7","t8","t10")
+perc.a&lt;-c()
+perc.b&lt;-c()
+for (i in 1:length(nodes))
+{
+  leaves&lt;-descendants(r.tre,nodes[i], labels=T,type = "t")
+  sharea&lt;-length(which(leaves%in%ga))
+  shareb&lt;-length(which(leaves%in%gb))
+  perc.a[i]&lt;-sharea/(sharea+shareb)
+  perc.b[i]&lt;-shareb/(sharea+shareb)
+}
+pietab&lt;-cbind(perc.a,perc.b)
+plot(r.tre)
+nodelabels(,nodes,pie=pietab)
+</code></pre>
+<p>Cheers</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

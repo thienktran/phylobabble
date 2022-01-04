@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Concept taxonomy</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Concept taxonomy</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@blackrim</span> and others-- do you know about this notion of <a href="http://taxonbytes.org/prior-work-on-concept-taxonomy-2013/">concept taxonomy</a>? It seems that it might be going in parallel to some of your ideas.</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://www.slideshare.net/taxonbytes/franz-et-al">
+<header class="source">
+<img class="site-icon" height="32" src="https://public.slidesharecdn.com/v2/favicon.ico?f4544a845c" width="32"/>
+<a href="https://www.slideshare.net/taxonbytes/franz-et-al" rel="noopener" target="_blank">slideshare.net</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:170/128;"><img class="thumbnail" height="128" src="https://www.phylobabble.org/uploads/default/original/1X/cc72b42c182477e679c6ac337caa6571f46a1b06.jpeg" width="170"/></div>
+<h3><a href="https://www.slideshare.net/taxonbytes/franz-et-al" rel="noopener" target="_blank">Franz Et Al. A Toolkit for Reconciling Multiple Taxonomic Perspective…</a></h3>
+<p>See current related work at: https://taxonbytes.org/prior-work-on-concept-taxonomy-2013/  We will demonstrate the features of Euler/X, a toolkit in development …</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/51_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">taxonbytes</div>
+          <div class="post_content">
+<p>Thank you, Erick. Best, Nico (<a href="http://taxonbytes.org/" rel="nofollow noopener">lab</a>)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Er, actually, I was hoping that you would expound a little on what you view as the strengths of your approach in terms that biologists can understand. Your talk has a lot of jargon in it that I’ve never heard about.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/51_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">taxonbytes</div>
+          <div class="post_content">
+<p>Thanks, Erick. I can certainly try. One core assumption or goal is to fully represent, and integrate, alternative views of the taxonomic or phylogenetic relationships (trees) for a perceived group. There is no requirement for a single view; instead the approach is suited to build up a continuous chain of views. This means that alternative perspectives of what (e.g.) “Quercus” (oaks, to pick something most will recognize) entails can be represented as such, and linked “semantically”.</p>
+<p>The sec. convention achieves the independent representing of each input tree. As in: Quercus sec. OpenTree, Version1 (concept 1) <em>versus</em> Quercus sec. OpenTree, Version2 (concept 2). Using parent/child relationships we can ingest two or more concept trees wholly. The same names can be re-used under different meanings in different trees; in fact because identity (congruence) is not based on the names themselves, the approach allows all kinds of names to co-exist (Linnean, PhyloCode, informally named clades, etc.).</p>
+<p>We can then use five basic set theory relationships: congruence (==), inclusion (&gt; or &lt;), overlap (&gt;&lt;), and exclusion (|) to “articulate” similar concept pairs across trees. Let’s say concept 2 is wider somehow, subsuming more child concepts than concept 1. Then we can assert 2 &gt; 1. If 1 and 2 share some children but each also has non-shared children, then 1 &gt;&lt; 2.</p>
+<p>In the Euler toolkit workflow the trees are read in, along with a small set of input articulations, typically asserted by an “expert”. Because we model the input trees and other tree-relevant constraints, the toolkit can encode the entire input as a set of logic constraints (tree 1 + tree 2 + articulations + taxonomic constraints). The toolkit uses Answer Set Programming (ASP) to infer “possible worlds” in which all constraints are met and additional logically consistent relationships are expressed. This enlarged set of constraints is used to visualize the merge tree which shows all congruent concept pairs (grey squares) and non-congruent concepts (green/yellow) in a nested arrangement. If the input is somehow inconsistent or ambiguous, the toolkit can help with diagnosis and repair prior to visualization.</p>
+<p>Weaknesses: expert input is needed at the very beginning of the workflow. Toolkit is in development (though it all pretty much works since 3-4 months ago) and new use cases and larger scales will require more development. The articulations cannot express everything that makes up a concept (though they can express quite a bit). Folks who just want a single, up-to-date view at a given time likely won’t bother.</p>
+<p>Strengths: very widely applicable (classifications, phylogenies, dark taxa, etc.), as long as there is some set of tree-like input structures to ingest, and some set of input articulations. Represents the elements of these trees in ways that can bring out both synapomorphies (or equivalent property-centric identities) and included members. Represents taxonomic/phylogenetic congruence and non-congruence semantically, in ways that human users and machines can understand. Thus also highly suitable for assembling a large tree based on many smaller and partially overlapping trees, and adding partial updates, with proper attribution and without loss of prior views. ASP is a highly powerful reasoning approach, capable of encoding complex starting conditions and rules that Description Logic (the logic underwriting OWL) cannot deal with.</p>
+<p>That was probably still too much jargon. I’ve been involved with this for close to 10 years on and off (starting at NCEAS) and so it’s hard to step outside. Also there is enough novelty for some that an actual demonstration is needed. At some point a video might help.</p>
+<p>Also check out a working example here: <a href="http://taxonbytes.org/using-the-euler-x-toolkit-to-align-taxonomies-introductory-notes/" rel="nofollow noopener">http://taxonbytes.org/using-the-euler-x-toolkit-to-align-taxonomies-introductory-notes/</a></p>
+<p>[Merge visualization.][2] <a href="http://taxonbytes.org/pdf/Kuschel1995-MarvaldiMorrone2000-MergeWithOverlap.pdf" rel="nofollow noopener">http://taxonbytes.org/pdf/Kuschel1995-MarvaldiMorrone2000-MergeWithOverlap.pdf</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@taxonbytes</span> you did a great job of explaining things from my perspective.</p>
+<p>In my limited experience working on taxonomy resolution issues, I’ve run into a number of NP-complete problems. How computable is your framework?</p>
+<p>Can you clarify what form the expert-curated input articulations take?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/51_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">taxonbytes</div>
+          <div class="post_content">
+<h2>Thank you, Erick.
+I’m offering an initial response to the NP-complete question myself; though that is subject to revision as I am primarily the domain scientist on the Euler project.</h2>
+<h2>Likely the most comprehensive and published (well…) analysis of computational complexity as it relates to multi-tree alignment under a logic reasoning framework is Dave Thau’s thesis; available here: http:// <a href="http://www.learningsite.com/resume/files/thesis.pdf" rel="nofollow noopener">www.learningsite.com/resume/files/thesis.pdf</a>
+Chapter 5 (Optimizations, pp. 63 onwards) and especially Section 5.3.2. (Complexity, pp. 73 onwards) deals with the issue of complexity directly. On page 82 there is a summary table of complexity categories using different “languages”. Thau has published much of this in papers, primarily in CS conference proceedings.
+The key caveat here is that since 2010 we have shifted from First-Order Logic reasoners to Answer Set Programming encodings and reasoners, initially DLV and now increasingly Potassco (http:// <a href="http://potassco.sourceforge.net/" rel="nofollow noopener">potassco.sourceforge.net/</a>). That shift, plus some advances in “heuristics” when searching for stable models, have downgraded some issues to polynomial time. And I’m sure there is more that can be done. There is a bit on toolkit benchmarking here: http:// <a href="http://arxiv.org/abs/1402.1992" rel="nofollow noopener">arxiv.org/abs/1402.1992</a> (pp. 6-7).
+What does this mean, currently? Moderately complex alignments of two trees, each with 100-250 concepts, are doable in a matter of seconds to minutes. Overlap (&gt;&lt;) is computationally the most expensive in our experience, because this creates new Euler regions that are not defined in the input, and proper delimitation of those regions requires sorting through a lot of potential possible world models.</h2>
+<p>Regarding the input articulations - my own “how to?” paper is here: <a href="http://taxonbytes.org/pdf/FranzPeet2009-LanguageMappingTaxonomicConcepts.pdf" rel="nofollow noopener">http://taxonbytes.org/pdf/FranzPeet2009-LanguageMappingTaxonomicConcepts.pdf</a> Table 3 on page 9 gives an overview of the vocabulary used when asserting the articulations. Congruence, proper inclusion, inverse proper inclusion, overlap, and exclusion are the core RCC-5 relationships.
+I am working on a follow-up manuscript (in 2009 there was no software to test this with) that illustrates how the expert input/reasoner output interaction can play out; meaning how different input alignments drive the output in terms of consistency, ambiguity, and expressing alternative interpretations (more synapomorpy-centric merges; versus “count the members”-centric merges).
+That’s about where things stand at the moment.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/51_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">taxonbytes</div>
+          <div class="post_content">
+<p>Short update on this aging thread. Manuscript “Taxonomic provenance: Two influential primate classifications logically aligned” at <a href="http://arxiv.org/abs/1412.1025v2" rel="nofollow noopener">http://arxiv.org/abs/1412.1025v2</a> Re: scalability - a logically consistent 400 x 400 concept dataset takes about 7 minutes with a custom RCC-5 reasoner on a MacBook. Two obvious options to speed up more: parallelization &amp; “chopping up the merge regions”.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/51_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">taxonbytes</div>
+          <div class="post_content">
+<p>Paper now out in PLoS ONE. <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118247" rel="nofollow noopener">http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118247</a></p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

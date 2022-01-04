@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Conversion of BEAST XML alignments to PHYLIP format</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Conversion of BEAST XML alignments to PHYLIP format</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">db60</div>
+          <div class="post_content">
+<p>Does anyone know a good way to convert the alignment within a BEAST XML file to PHYLIP (or Nexus, Fasta, etc)?</p>
+<p>I could script it myself, but I assume the problem has already been addressed by others.</p>
+<p>I realise the non-sequence data within the BEAST XML file will be lost, but for my purposes that’s OK.</p>
+<p>Thank you very much, in advance.</p>
+<p>Daniel Barker</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<p>I have a program (called BEASTGen) that can convert BEAST to Nexus or FASTA:</p>
+<p><a class="onebox" href="https://code.google.com/p/beast-mcmc/downloads/detail?name=BEASTGen_v1.0.tgz" rel="nofollow noopener" target="_blank">https://code.google.com/p/beast-mcmc/downloads/detail?name=BEASTGen_v1.0.tgz</a></p>
+<p>It loads alignments from one file and uses a template to convert to another. There are templates to create Nexus or FASTA formats but it should be possible to create others. I am working on some documentation here: <a href="http://beast.bio.ed.ac.uk/beastgen" rel="nofollow noopener">http://beast.bio.ed.ac.uk/beastgen</a></p>
+<p>Andrew</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

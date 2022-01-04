@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>[Paper] Erasing Errors Due to Alignment Ambiguity When Estimating Positive Selection</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">[Paper] Erasing Errors Due to Alignment Ambiguity When Estimating Positive Selection</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>New from <span class="mention">@bredelings</span>:</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://pubmed.ncbi.nlm.nih.gov/24866534/">
+<header class="source">
+<img class="site-icon" height="64" src="https://cdn.ncbi.nlm.nih.gov/coreutils/nwds/img/favicons/favicon.ico" width="64"/>
+<a href="https://pubmed.ncbi.nlm.nih.gov/24866534/" rel="noopener" target="_blank">PubMed</a>
+</header>
+<article class="onebox-body">
+<img class="thumbnail onebox-avatar" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_10x10.png" height="500" src="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_500x500.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_500x500.png, https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_750x750.png 1.5x, https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_1000x1000.png 2x" width="500"/>
+<h3><a href="https://pubmed.ncbi.nlm.nih.gov/24866534/" rel="noopener" target="_blank">Erasing errors due to alignment ambiguity when estimating positive selection...</a></h3>
+<p>Current estimates of diversifying positive selection rely on first having an accurate multiple sequence alignment. Simulation studies have shown that under biologically plausible conditions, relying on a single estimate of the alignment from commonly...</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>This figure definitely made me sit up and pay attention:</p>
+<p><img height="471" src="https://www.phylobabble.org/uploads/default/148/34160268ad357cc3.png" width="690"/> </p>
+<p>The sequences were simulated with INDELible.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<p>Thanks for highlighting the paper, Erik!  I hope to extend this to more complex models of positive selection in the future.  The software works well (I think), but it doesn’t yet report which sites have undergone positive selection, partially because sites aren’t fixed with a variable alignment, and partly because I haven’t developed a simple and generic way to specify that site class 4 (say) is the interesting one.  I guess its part of the model… unless its part of the post-processing.</p>
+<p>You can specify somewhat generic substitution models for positive selection – for example M8[4,HKY,F61], but also M8[6,GTR,MG94].  I hope to add more in the future, especially models for codon frequencies with an intermediate number of parameters between F3x4 and F61.</p>
+<p>The code that specifies substitution models is here, and uses Haskell syntax:
+<aside class="onebox githubblob">
+<header class="source">
+<a href="https://github.com/bredelings/BAli-Phy/blob/master/modules/SModel.hs" rel="nofollow noopener" target="_blank">github.com</a>
+</header>
+<article class="onebox-body">
+<h4><a href="https://github.com/bredelings/BAli-Phy/blob/master/modules/SModel.hs" rel="nofollow noopener" target="_blank">bredelings/BAli-Phy/blob/master/modules/SModel.hs</a></h4>
+<pre><code class="lang-hs">module SModel where 
+{
+import Distributions;
+import Alphabet;
+import Tree;
+import Parameters;
+
+builtin f3x4_frequencies_builtin 4 "f3x4_frequencies" "SModel";
+builtin muse_gaut_matrix 4 "muse_gaut_matrix" "SModel";
+builtin builtin_plus_gwf 3 "plus_gwF" "SModel";
+builtin builtin_average_frequency 1 "average_frequency" "SModel";
+builtin builtin_gtr 2 "gtr" "SModel";
+builtin m0 3 "m0" "SModel";
+builtin lExp 3 "lExp" "SModel";
+builtin reversible_rate_matrix 2 "reversible_rate_matrix" "SModel";
+builtin get_eigensystem 2 "get_eigensystem" "SModel";
+builtin get_equilibrium_rate 4 "get_equilibrium_rate" "SModel";
+builtin singlet_to_triplet_exchange 2 "singlet_to_triplet_exchange" "SModel";
+builtin builtin_empirical 2 "empirical" "SModel";
+builtin pam 1 "pam" "SModel";
+</code></pre>
+
+  This file has been truncated. <a href="https://github.com/bredelings/BAli-Phy/blob/master/modules/SModel.hs" rel="nofollow noopener" target="_blank">show original</a>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+This should make rapid development of new models easier.  The scripting language is still evolving.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>A wee preview for the too-lazy-to-click:</p>
+<aside class="onebox githubblob">
+<header class="source">
+<a href="https://github.com/bredelings/BAli-Phy/blob/master/modules/SModel.hs" rel="nofollow noopener" target="_blank">github.com</a>
+</header>
+<article class="onebox-body">
+<h4><a href="https://github.com/bredelings/BAli-Phy/blob/master/modules/SModel.hs" rel="nofollow noopener" target="_blank">bredelings/BAli-Phy/blob/master/modules/SModel.hs</a></h4>
+<pre><code class="lang-hs">module SModel where 
+{
+import Distributions;
+import Alphabet;
+import Tree;
+import Parameters;
+
+builtin f3x4_frequencies_builtin 4 "f3x4_frequencies" "SModel";
+builtin muse_gaut_matrix 4 "muse_gaut_matrix" "SModel";
+builtin builtin_plus_gwf 3 "plus_gwF" "SModel";
+builtin builtin_average_frequency 1 "average_frequency" "SModel";
+builtin builtin_gtr 2 "gtr" "SModel";
+builtin m0 3 "m0" "SModel";
+builtin lExp 3 "lExp" "SModel";
+builtin reversible_rate_matrix 2 "reversible_rate_matrix" "SModel";
+builtin get_eigensystem 2 "get_eigensystem" "SModel";
+builtin get_equilibrium_rate 4 "get_equilibrium_rate" "SModel";
+builtin singlet_to_triplet_exchange 2 "singlet_to_triplet_exchange" "SModel";
+builtin builtin_empirical 2 "empirical" "SModel";
+builtin pam 1 "pam" "SModel";
+</code></pre>
+
+  This file has been truncated. <a href="https://github.com/bredelings/BAli-Phy/blob/master/modules/SModel.hs" rel="nofollow noopener" target="_blank">show original</a>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

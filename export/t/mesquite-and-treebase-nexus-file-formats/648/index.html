@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Mesquite and TreeBASE NEXUS file formats</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Mesquite and TreeBASE NEXUS file formats</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>For my work, I usually use FASTA format for mutliple sequence alignments and Newick format for phylogenetic trees.  On the downside these formats are very simple and don’t define partion blocks etc in the alignments, and don’t provide information about fonts or colors etc in the treefiles.  On the plus side, the formats are very simple and almost all phylogenetic analysis programs can take them as input and write them out as output.</p>
+<p>When I do need a more complex format, there are tools available to convert FASTA to NEXUS or other formats.</p>
+<p>Working at the HIV Databases, where people write to us with their problems, I have found that even the very most simple formats can present a variety of problems that are trivial but often difficult to recognize and solve.  For one example the “white space” characters for tabs, spaces, carriage returns, and line feeds can differ between operating systems and cause troubles.  The file looks perfectly fine to the human eye but one program or another will tell you that the format is not valid (and usually give you no clue at all as to what type of problem there is).</p>
+<p>Today, I am working with a researcher who needs to upload his published (in press) alignment and tree to TreeBase.  I am not a regular Mesquite or TreeBase user, so I am getting frustrated with attempting to create the “flavor” of NEXUS file that these two programs or sites are happy with.  I have <a href="https://github.com/TreeBASE/treebase/issues/263" rel="nofollow noopener">reported</a> the issues to TreeBASE at GitHub, but I also wanted to bring it up here, as an issue to consider when developing a tool or web site for broad use.  It seems to me that any tool that requires a special format should provide some help with converting a standard format to the required special format.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>To be fair, the TreeBASE site does provide a nice <a href="https://www.youtube.com/watch?v=2npvFJX31hs&amp;index=1&amp;list=PL9AD9904B8782D600" rel="nofollow noopener">tutorial</a> on how to create a good TreeBASE entry.  But the example begins with reading a file into Mesquite that seems to be ideal for a TreeBASE entry.  Watching the tutorial does not tell us a lot of the backstory on TreeBASE data requirements such as to never abbreviate the Genus_species names.  Most of the data I work with does not even fit a “Genus_species” format because it is from viruses where we usually need other details such as sample country and sample date as well as other information in order to make the analysis useful.  When I am not working with virus data, I am often working with data downloaded from GenBank, and I am at the mercy of the authors of that data for how they may have coded or miscoded their data.  The <a href="https://treebase.org/treebase-web/submitTutorial.html" rel="nofollow noopener">text</a> of the tutorial also says to “<em>Avoid</em> using quotation marks, brackets, parentheses, commas, colons, and semicolons.” when in fact at least some of these characters are absolutely <em>forbidden</em>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/377_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rutgeraldo</div>
+          <div class="post_content">
+<p>The NEXUS standard has unfortunately devolved in a family of sometimes mutually incompatible dialects. As such the TreeBASE submission functionality is not a case of going from a “standard” format to a “special” format. Rather, it is a case of having to pick one of the multiple “special” formats and sticking to it.</p>
+<p>There is nothing that TreeBASE can do about this situation other than recommend, as it does, that you use Mesquite to prepare your data so that TreeBASE at least knows which dialect it is going to receive (there is no reliable way to sniff this out based on the file contents).</p>
+<p>The requirement to use Genus_species is a weak requirement in the sense that this is only necessary if you want your sequence / tip labels to be recognized by the taxonomic name reconciliation service that TreeBASE uses. If you want to submit a tree of viruses that doesn’t conform to the Genus_species paradigm than you are free to do so, it simply means that TNRS will fail.</p>
+<p>As for the punctuation marks: if your file is “valid” in the sense that it is a NEXUS file that has passed through Mesquite than this is a non-issue: Mesquite won’t let those punctuation marks appear anywhere in the file where they could do harm (i.e. invalidate the file syntax).</p>
+<p>By the way, I notice that your GitHub issue was responded to within 12 hours, with Bill Piel himself correcting your input file by hand. Honestly I don’t know what more Team TreeBASE is supposed to do here.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/387_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">hlapp</div>
+          <div class="post_content">
+<p>I’d say the one thing that TreeBASE could be doing but isn’t is to accept NeXML format for submission. That it shouldn’t take a database editor with internal expert knowledge about file format and implicit metadata expectations to tweak a submitted file into the right form is, I think, a valid point. NeXML can be independently validated. (Though I suspect another data format isn’t what <span class="mention">@BrianFoley</span> was hoping for <img alt=":slight_smile:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/slight_smile.png?v=5" title=":slight_smile:"/>)</p>
+<p>Even then, though, we don’t have well-documented and widely implemented conventions for how to express common metadata for phylogenetic data. Hence, for a database such as TreeBASE that has strong expectations about certain metadata, a validatable format by itself isn’t going to solve the whole problem.</p>
+<p><span class="mention">@BrianFoley</span> if all that you care about is archiving your tree and alignment for perpetuity, you can use <a href="http://datadryad.org" rel="nofollow noopener">Dryad</a>. That may well limit their usefulness for synthesis efforts such as <a href="http://opentreeoflife.org" rel="nofollow noopener">Open Tree of Life</a>, though, which do need good metadata.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>I was not meaning to criticize Mequite or TreeBASE specifically.  I think TreeBASE is  very great idea, and well implemented.  I was more wanting to open a discussion about the problems users can have with file formats, and maybe hear some ideas about how to assist users with those problems.  At the HIV Databases, we provided a web interface to <a href="http://www.hiv.lanl.gov/content/sequence/FORMAT_CONVERSION/form.html" rel="nofollow noopener">a format converter</a> that was originally based on <a href="http://iubio.bio.indiana.edu/cgi-bin/readseq.cgi" rel="nofollow noopener">READSEQ</a> and then expanded to read and write more formats than READSEQ handles.  But even this is not the solution to all problems.</p>
+<p>I think the <a href="http://beast.bio.ed.ac.uk/" rel="nofollow noopener">BEAST</a> team did a great job with creating the <a href="http://www.molecularevolution.org/software/phylogenetics/BEAUti" rel="nofollow noopener">BEAUTi</a> program to assist users with assembling the data, for one example.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>&ldquo;Online&rdquo; algorithm for building phylogeny</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">&ldquo;Online&rdquo; algorithm for building phylogeny</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p>Just to be clear, by “online” I mean in the algorithmic sense <a href="http://en.wikipedia.org/wiki/Online_algorithm" rel="nofollow noopener">http://en.wikipedia.org/wiki/Online_algorithm</a>. That is, offline methods assume we have all the data to handle, and we build a tree (e.g., compute pairwise distances for all sequences, permute tree for all sequences to explore tree space). An <strong>online algorithm</strong> builds the tree as data comes to hand. Now, I guess the initial tree building steps in a tool like PAUP are effectively “online”: we start with, say, three sequences, then add each remaining sequence in turn. But I wonder if anyone’s done some work on this sort of problem. A use case would be, for example, having an existing phylogeny and adding new data to that tree without recomputing the whole tree. An old skool approach to this would be to take the existing tree as a constraint tree and add the new sequence to that tree - is there anything more to this problem than that? Googling is messy as “online” usually means “on the web”.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>This is a major interest for my group.</p>
+<p>You may be interested in a recent paper by <span class="mention">@blackrim</span> and <span class="mention">@Alexis_RAxML</span>:</p>
+<p><a class="onebox" href="http://bioinformatics.oxfordjournals.org/content/early/2014/02/28/bioinformatics.btu053" rel="noopener" target="_blank">http://bioinformatics.oxfordjournals.org/content/early/2014/02/28/bioinformatics.btu053</a></p>
+<p>I gave a <a href="http://matsen.github.io/talks/online_evolution2013.html#/">talk at Evolution 2013</a> on our efforts (joint with <span class="mention">@koadman</span>) to develop online Bayesian phylogenetic methods. A couple of months after the Evolution conference, <span class="mention">@cmccoy</span> and I got obsessed with B cell immunology, so didn’t have time to pursue this work.</p>
+<p>However, more recently <span class="mention">@bcclaywell</span>  has been doing some really nice work combining our previous efforts with our special purpose surrogate function for phylogenetic likelihood (you can see <span class="mention">@cmccoy</span>’s  <a href="http://matsen.github.io/talks/lcfit_evolution2013.html">Evolution talk on that</a>). This provides much better performance than represented in my Evolution talk.</p>
+<p>We will release a paper this summer.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">koadman</div>
+          <div class="post_content">
+<p><span class="mention">@ematsen</span> I sure hope we can get a paper out this austral winter!</p>
+<p>Having online tree inference is in many ways just the first step. Working out which data to delete from the tree may be just as important as figuring out how to add new data. Think of all that Illumina 16S amplicon data piling up in databases. Do we really want a tree with trillions of tips? If we don’t delete then at least we need meaningful abstractions. And of course there’s a range of things that people do with trees that would need to go online as well. I’m thinking of ways to update marginalized posterior distributions and possibly also hypothesis tests or other approaches to model selection.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">david_bryant</div>
+          <div class="post_content">
+<p>Have you checked out:
+Kannan, Sampath K., Eugene L. Lawler, and Tandy J. Warnow. “Determining the evolutionary tree using experiments.” Journal of Algorithms 21.1 (1996): 26-50.</p>
+<p>Not quite what you want, but maybe in the ball park?</p>
+<p>D.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><a href="http://www.sciencedirect.com/science/article/pii/S0196677496900358">Link to paper</a> and
+<a href="http://cl.ly/0k0c1J2q2e3c/1-s2.0-S0196677496900358-main.pdf">link to PDF</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>How time flies. We finally got two papers out about this.</p>
+<p>Fourment, M., Claywell, B. C., Dinh, V., McCoy, C., Matsen, F. A., &amp; Darling, A. E. (2017, June 2). Effective Online Bayesian Phylogenetics Via Sequential Monte Carlo With Guided Proposals. bioRxiv. <a href="https://doi.org/10.1101/145219">https://doi.org/10.1101/145219</a></p>
+<p>Dinh, V., Darling, A. E., &amp; Matsen, F. A., IV. (2016, October 26). Online Bayesian phylogenetic inference: theoretical foundations via Sequential Monte Carlo. arXiv [q-bio.PE]. Retrieved from <a class="inline-onebox" href="http://arxiv.org/abs/1610.08148">[1610.08148] Online Bayesian phylogenetic inference: theoretical foundations via Sequential Monte Carlo</a></p>
+<p>If you don’t like the measure theory of the second one, we’re going to post a revised version with less technical explanations in a few weeks.</p>
+<p>And a blog post about the first paper:</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://matsen.fredhutch.org/general/2017/06/07/sts.html">
+<header class="source">
+<a href="https://matsen.fredhutch.org/general/2017/06/07/sts.html" rel="noopener" target="_blank">matsen.fredhutch.org</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:448/500;"><img class="thumbnail" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/aca71735fa41aaeb5f846061a74b546329ab74e8_2_10x10.png" height="500" src="https://www.phylobabble.org/uploads/default/optimized/1X/aca71735fa41aaeb5f846061a74b546329ab74e8_2_448x500.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/aca71735fa41aaeb5f846061a74b546329ab74e8_2_448x500.png, https://www.phylobabble.org/uploads/default/optimized/1X/aca71735fa41aaeb5f846061a74b546329ab74e8_2_672x750.png 1.5x, https://www.phylobabble.org/uploads/default/original/1X/aca71735fa41aaeb5f846061a74b546329ab74e8.png 2x" width="448"/></div>
+<h3><a href="https://matsen.fredhutch.org/general/2017/06/07/sts.html" rel="noopener" target="_blank">Smart proposals win for online phylogenetics using sequential Monte Carlo.</a></h3>
+<p>Our proof-of-concept implementation of online phylogenetics using sequential Monte Carlo shows that 1. it can work 2. it's worth doing some calculation to get smart proposal distributions.</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

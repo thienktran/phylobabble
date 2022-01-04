@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Number of bootstrap replicates for short alignments</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Number of bootstrap replicates for short alignments</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jhcepas</div>
+          <div class="post_content">
+<p>Hi,
+I have been days struggling with a phylogenetic tree of around 90 short sequences (domain based) whose support values for many branches are really low (&lt;30 in many cases). I have noticed that aLRT supports are good and do not correlate with the bootstrapped result.</p>
+<p>I was wondering if the number of replicates (100 in my case) could have an effect in short alignments (~250 sites) or if there is an alternative way to measure the support of some specific branches in very unstable alignments. Note that even small variations in the the software used to align the sequences lead to different topologies.</p>
+<p>Any suggestion on how to address this type of problem?</p>
+<p>thanks!</p>
+<p>ps. I am using phyml for the tree (4 rate categories), and mafft-linsi for the alg</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">funwithwords26</div>
+          <div class="post_content">
+<p>My gut reaction is that the splits with inconsistent results across software versions and low bootstrap support cannot be reliable, even if they have high aLRT support. If you want to investigate further, I suggest simulating alignments using your estimated trees (and reintroducing any gaps) and seeing how the support values perform.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>We designed an empirical method to assess/decide how many BS replicates are necessary a couple of years ago and implemented it in RAxML: <a href="http://link.springer.com/chapter/10.1007/978-3-642-02008-7_13#page-1" rel="nofollow noopener">http://link.springer.com/chapter/10.1007/978-3-642-02008-7_13#page-1</a></p>
+<p>Generally, for datasets like the one you describe, I’d expect it to require at least 500 replicates, however this is until it will converge around stable values which can still be low, I assume that you will simply have to accept the low values because there is not enough data. I’d also explore how many topologically distinct but statistically not significantly different ML trees you obtain on the original alignment.</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">smirarab</div>
+          <div class="post_content">
+<p>[quote=“Alexis_RAxML, post:3, topic:353”]
+explore how many topologically distinct but statistically not significantly different ML trees you obtain on the original alignment.[/quote]</p>
+<p><span class="mention">@Alexis_RAxML</span>, is there a way to do explore those topologies in RAxML? As RAxML is searching the tree space, it would be good if there was a way to ask RAxML to save all the close-to-optimal topologies it encounters to a file. These can be tested later using options that are already available in RAxML.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jhcepas</div>
+          <div class="post_content">
+<p><span class="mention">@smirarab</span>,  <span class="mention">@Alexis_RAxML</span> gave me some useful hints about this in the raxml mailing list:
+<a class="onebox" href="https://groups.google.com/forum/#!topic/raxml/Rd-WyAbVKxw" rel="nofollow noopener" target="_blank">https://groups.google.com/forum/#!topic/raxml/Rd-WyAbVKxw</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>This sounds like a problem that would also be well served by a Bayesian approach. In particular, the dataset is small enough to ru nthe neat new Bayesian approach to partitioning in BEAST2.</p>
+<p>Regardless of the models used, a Bayesian approach would provide useful information on the posterior distribution of topologies.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jhcepas</div>
+          <div class="post_content">
+<p><span class="mention">@rob_lanfear</span>, thanks. I already used a bayesian approach (MrBayes) and posterior probabilities are indeed much higher than the bootstrap support for the same branches. I will definitively take a look at the new BEAST2!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p><span class="mention">@jhcepas</span>: beware comparing posterior probabilities and bootstrap support. In general the former are always higher, because the two are measuring different things. So, the fact that the posterior probabilities are higher probably doesn’t tell you whether the other methods are working well or not. A rough rule of thumb is that you want posterior probabilities to be &gt;95% before making any strong interpretations of a node (others may disagree, and it’s always better to compare trees in some formal way rather than just interpret support values of any support on a single ‘best’ tree).</p>
+<p>Rob</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

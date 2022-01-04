@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Generating a set of trees that are as different from each other as possible</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Generating a set of trees that are as different from each other as possible</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/319_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Dan_Warren</div>
+          <div class="post_content">
+<p>Do any of you know of an existing method for constructing a set of trees that are as different from each other as possible?  I’ve been thinking of trying a few things for possible inclusion in a future version of <a href="https://www.ncbi.nlm.nih.gov/pubmed/28087773" rel="nofollow noopener">RWTY</a>, and for some of them it would be nice to have a set of trees that are kind of like a Latin hypercube sampling of treespace.  Obviously I could just generate a bunch of random trees and have some algorithm for picking a subset of them to maximize the sum of tree distances or something, but that could be quite time-consuming for large numbers of taxa.  If there’s something more efficient, I’d like to know.  I haven’t found anything with a bit of googling, and Rob L. suggested that someone here might have some idea of where to look.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Brian_OMeara</div>
+          <div class="post_content">
+<p>I don’t know of such an algorithm. However, a sketch of one is to use quartets. Start with all three quartets for four species. To each of these, add a different quartet with a fifth species. Keep reiterating. Eventually you’ll have three trees with the same taxa but no quartets in common (I <em>think</em>: it’s possible some of the other quartets made in the process of adding trees together would overlap).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/319_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Dan_Warren</div>
+          <div class="post_content">
+<p>That makes sense.  Thanks, Brian!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@cwhidden</span> and I have thought about related things, both the abstract question you pose about maximally distant topologies and also the implied question of if we can strategically pick a set of trees that will end up in various posterior modes. Nothing’s been written though.</p>
+<p>On the other hand, random in large combinatorial spaces is pretty good! Chris reminded me of this nice result:</p>
+<p><div class="lightbox-wrapper"><a class="lightbox" data-download-href="https://www.phylobabble.org/uploads/default/a602e052df588c265a6305f891b2d2e8993c59c4" href="https://www.phylobabble.org/uploads/default/original/1X/a602e052df588c265a6305f891b2d2e8993c59c4.png" title="29 PM"><img alt="29 PM" data-base62-sha1="nGBqbWJwOnu92MrWhllXcvSHGeg" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/a602e052df588c265a6305f891b2d2e8993c59c4_2_10x10.png" height="151" src="https://www.phylobabble.org/uploads/default/optimized/1X/a602e052df588c265a6305f891b2d2e8993c59c4_2_690x151.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/a602e052df588c265a6305f891b2d2e8993c59c4_2_690x151.png, https://www.phylobabble.org/uploads/default/optimized/1X/a602e052df588c265a6305f891b2d2e8993c59c4_2_1035x226.png 1.5x, https://www.phylobabble.org/uploads/default/original/1X/a602e052df588c265a6305f891b2d2e8993c59c4.png 2x" width="690"/><div class="meta">
+<svg aria-hidden="true" class="fa d-icon d-icon-far-image svg-icon"><use xlink:href="#far-image"></use></svg><span class="filename">29 PM</span><span class="informations">1036×227 83.7 KB</span><svg aria-hidden="true" class="fa d-icon d-icon-discourse-expand svg-icon"><use xlink:href="#discourse-expand"></use></svg>
+</div></a></div></p>
+<p>See <a href="https://arxiv.org/abs/1509.00669">https://arxiv.org/abs/1509.00669</a> for details.</p>
+<p>So you are only picking up a factor of n^{1/6} by the hard work of finding the actual pair of maximally distant trees. How this would change if we were looking for more than two trees I couldn’t say.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/319_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Dan_Warren</div>
+          <div class="post_content">
+<p>Oh hey, that’s great!  It sounds like I may not need to muck with it at all, in that case.</p>
+<p>Just to eyeball how much of an issue it is, I measured tree distances between a bunch of randomly chosen trees for data sets of different sizes.  X axis is the number of randomly generated trees in a set, Y axis is the minimum tree distance between any pair of trees in the set, scaled by the maximum tree distance in the set.  Obviously I don’t know how this compares to the performance of Brian’s suggestion, but given my intended use it looks like random trees are probably good enough.</p>
+<p><div class="lightbox-wrapper"><a class="lightbox" data-download-href="https://www.phylobabble.org/uploads/default/5b465cd430ddc4239091a6cb48e9606f687949f6" href="https://www.phylobabble.org/uploads/default/original/1X/5b465cd430ddc4239091a6cb48e9606f687949f6.jpg" title="image"><img alt="image" data-base62-sha1="d1scsH8HWz692grUGuErEQYusYK" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/5b465cd430ddc4239091a6cb48e9606f687949f6_2_10x10.png" height="426" src="https://www.phylobabble.org/uploads/default/optimized/1X/5b465cd430ddc4239091a6cb48e9606f687949f6_2_690x426.jpg" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/5b465cd430ddc4239091a6cb48e9606f687949f6_2_690x426.jpg, https://www.phylobabble.org/uploads/default/optimized/1X/5b465cd430ddc4239091a6cb48e9606f687949f6_2_1035x639.jpg 1.5x, https://www.phylobabble.org/uploads/default/optimized/1X/5b465cd430ddc4239091a6cb48e9606f687949f6_2_1380x852.jpg 2x" width="690"/><div class="meta">
+<svg aria-hidden="true" class="fa d-icon d-icon-far-image svg-icon"><use xlink:href="#far-image"></use></svg><span class="filename">image</span><span class="informations">1470×908 89.7 KB</span><svg aria-hidden="true" class="fa d-icon d-icon-discourse-expand svg-icon"><use xlink:href="#discourse-expand"></use></svg>
+</div></a></div></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/385_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">leomrtns</div>
+          <div class="post_content">
+<p>In your figure, for large trees it seems that the minimum is very close to the maximum, which can also mean that the distance you are using is not very discriminative.</p>
+<p>My guess is that you are using the RF distance – and two random trees rarely have bipartitions in common, which explains the large RF. If that is what you want (no bipartitions in common), then you are fine. However there are other ways of defining “very different trees”: for instance if you move just one leave from one end to another of the tree, this will result in a large RF distance but the trees are still very similar in terms of the SPR distance or their maximum agreement subtree (MAST).</p>
+<p>(I like Brian’s idea, BTW!)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/319_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Dan_Warren</div>
+          <div class="post_content">
+<p>That’s a very good point.  The plot looks pretty similar using SPR distances (below), but not quite as good.</p>
+<p><div class="lightbox-wrapper"><a class="lightbox" data-download-href="https://www.phylobabble.org/uploads/default/859ccb87f7e6f0489108341fa396348009b6dd19" href="https://www.phylobabble.org/uploads/default/original/1X/859ccb87f7e6f0489108341fa396348009b6dd19.jpg" title="image"><img alt="image" data-base62-sha1="j3ZqZGg5rmOBJRauCk5yn32QuIp" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/859ccb87f7e6f0489108341fa396348009b6dd19_2_10x10.png" height="421" src="https://www.phylobabble.org/uploads/default/optimized/1X/859ccb87f7e6f0489108341fa396348009b6dd19_2_690x421.jpg" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/859ccb87f7e6f0489108341fa396348009b6dd19_2_690x421.jpg, https://www.phylobabble.org/uploads/default/optimized/1X/859ccb87f7e6f0489108341fa396348009b6dd19_2_1035x631.jpg 1.5x, https://www.phylobabble.org/uploads/default/optimized/1X/859ccb87f7e6f0489108341fa396348009b6dd19_2_1380x842.jpg 2x" width="690"/><div class="meta">
+<svg aria-hidden="true" class="fa d-icon d-icon-far-image svg-icon"><use xlink:href="#far-image"></use></svg><span class="filename">image</span><span class="informations">1520×928 97.6 KB</span><svg aria-hidden="true" class="fa d-icon d-icon-discourse-expand svg-icon"><use xlink:href="#discourse-expand"></use></svg>
+</div></a></div></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/15_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mathmomike</div>
+          <div class="post_content">
+<p>I don’t know if this result is helpful but here goes. For each n there is a set of  (at least a constant times)  n^2 binary phylogenetics trees, each of which is maximally distant from each other tree in that collection under the Robinson Foulds RF distance. In other words, no two of the Cn^2 trees share any non-trivial splits. My proof of this is non-constructive, but I’m pretty sure a (poly-time) construction should be possible.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/433_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">alexG</div>
+          <div class="post_content">
+<p>I was composing a post and phylobabble suggested me to look into this one too <img alt=":slight_smile:" class="emoji" src="https://www.phylobabble.org/images/emoji/twitter/slight_smile.png?v=9" title=":slight_smile:"/></p>
+<p>If ranked trees are of interest, this paper has an algorithm to produce trees as distant from a given tree as theoretically possible: <a href="https://doi.org/10.1101/2019.12.19.883603" rel="nofollow noopener">https://doi.org/10.1101/2019.12.19.883603</a></p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

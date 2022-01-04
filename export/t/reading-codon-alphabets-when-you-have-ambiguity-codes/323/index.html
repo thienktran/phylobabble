@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Reading codon alphabets, when you have ambiguity codes</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Reading codon alphabets, when you have ambiguity codes</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<p>Hi everyone,</p>
+<p>I was wondering if people have any helpful hints on reading in codon alignments while handling ambiguity codes.  I need to rewrite how I do this, because my current approach takes a ton of time and memory when the number of ambiguous patterns (e.g. NGC, or RGC) get large.  As a result, I currently only allow Y,R,W,S, and N in codons, and disallow  K,M,B,D,H,V.  Any thoughts?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/376_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mlandis</div>
+          <div class="post_content">
+<p>How are you encoding this now? For a single nucleotide, you can encode each site as an integer from 0 to 15 using four bits. For a codon, this can be done with integers from 0 to 2^(4^3) = 2^64 using 64 bits, which might be in the ballpark of large numbers you’re talking about.</p>
+<p>Does the state-space need to be expanded in this way throughout the analysis? For example, ambiguous states are only needed to initialize the tip states of a tree to compute the likelihood and can then be thrown away. If this is the case, you may be able to allocate states dynamically per dataset, since a single dataset is unlikely to contain all possible ambiguous states (e.g. assign integer 30234 to NGC when it is detected). These integers would then constitute the data matrix and would be pretty straightforward to decode with a map with integers as keys and a 3x4 bit-matrix as a value.</p>
+<p>Is this for general use in a software library? Or more of a constrained problem in a stand-alone program?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<p>To start with the second question first, the state space does NOT have to be expanded throughout the analysis.  I’m implement a classic pruning algorithm for the substitution likelihood, so ambiguous letters are only relevant as observations for leaf branches.  I’m assuming that, for most purposes, you can index the (unambiguous) letters by 0…N-1.  This causes problems with codon alphabets: since we have to eliminate stop codons, the index of a codon stops being an obvious function of the component letters of the codon.</p>
+<p>To answer the first question: right now every codon (e.g. ATA) or ambiguity code (e.g. NTY) gets its own index.  It also gets an entry in a giant array that maps the index to a bitmask.  The array takes a lot of RAM and also takes a lot of time to construct.</p>
+<p>I guess the alphabet, sequence, and alignment-reading code are supposed to be general purpose.  I haven’t factored them out into a library yet, but that would be nice, as they could then benefit from improvements by other people.</p>
+<p>The alphabet code is here:
+<aside class="onebox githubblob">
+<header class="source">
+<a href="https://github.com/bredelings/BAli-Phy/blob/master/src/sequence/alphabet.H" rel="nofollow noopener" target="_blank">github.com</a>
+</header>
+<article class="onebox-body">
+<h4><a href="https://github.com/bredelings/BAli-Phy/blob/master/src/sequence/alphabet.H" rel="nofollow noopener" target="_blank">bredelings/BAli-Phy/blob/master/src/sequence/alphabet.H</a></h4>
+<pre><code class="lang-h">/*
+  Copyright (C) 2004-2009 Benjamin Redelings
+
+  This file is part of BAli-Phy.
+
+  BAli-Phy is free software; you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free
+  Software Foundation; either version 2, or (at your option) any later
+  version.
+
+  BAli-Phy is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+  for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with BAli-Phy; see the file COPYING.  If not see
+  &lt;http://www.gnu.org/licenses/&gt;.  */
+
+/**
+</code></pre>
+
+  This file has been truncated. <a href="https://github.com/bredelings/BAli-Phy/blob/master/src/sequence/alphabet.H" rel="nofollow noopener" target="_blank">show original</a>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<a class="onebox" href="https://github.com/bredelings/BAli-Phy/blob/master/src/sequence/alphabet.C" rel="nofollow noopener" target="_blank">https://github.com/bredelings/BAli-Phy/blob/master/src/sequence/alphabet.C</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">funwithwords26</div>
+          <div class="post_content">
+<p>My impression is that ambiguity codes are low-quality data. I’d just replace the whole codon with a gap.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<aside class="quote" data-full="true" data-post="4" data-topic="323">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/letter_avatar_proxy/v2/letter/f/71c47a/40.png" width="20"/> funwithwords26:</div>
+<blockquote>
+<p>My impression is that ambiguity codes are low-quality data. I’d just replace the whole codon with a gap.</p>
+</blockquote>
+</aside>
+<p>It is not clear to me that ambiguity codes can be completely dismissed as just low quality data.  One possibility would be to read codons like RGC as NGC.  However, I am interesting in what algorithms people might use to actually read codons like KBN.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/376_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mlandis</div>
+          <div class="post_content">
+<aside class="quote" data-post="3" data-topic="323">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/bredelings/40/300_1.png" width="20"/> bredelings:</div>
+<blockquote>
+<p>To answer the first question: right now every codon (e.g. ATA) or ambiguity code (e.g. NTY) gets its own index.  It also gets an entry in a giant array that maps the index to a bitmask.  The array takes a lot of RAM and also takes a lot of time to construct.</p>
+</blockquote>
+</aside>
+<p>Does <code>Alphabet::letter_masks_</code> map the ambiguous codon integer-value to a 61-bit vector? And is this the RAM-intensive data structure?</p>
+<p>If so, you might want to use <code>int*</code> as a 1D-representation of a 2D-array instead of <code>std::vector&lt;std::vector&lt;bool&gt; &gt;</code> for two reasons. First, those STL containers require something like 48 bits of memory overhead per instance, where your vector data is only about 61 bits. So if you have many states mapping to small bitfields, almost half the memory may be spent on container headers. Second, <code>std::vector&lt;bool&gt;</code> is actually a specialized template, which optimizes for space at the (potential) expense of speed, and is generally considered as a <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2160.html" rel="nofollow noopener">mistake</a> in the C++ language definition. With <code>int*</code> you should generally have good speed and storage without more reliable behavior (although a less intuitive interface).</p>
+<p>Also, I definitely think you should be able to expand your alphabet if you define ambiguous codons only for those seen in the current dataset. Not sure if this is too restrictive for software like BAli-Phy that might need to dynamically insert/remove characters into the alphabet as part of alignment.</p>
+<p>Finally, nothing like a profiler to figure out what’s hogging the CPU/RAM. <img alt=":computer:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/computer.png?v=5" title=":computer:"/><img alt=":pig2:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/pig2.png?v=5" title=":pig2:"/></p>
+<p>Fun problem to think about!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<p>Yup, back to the benchmarking board for me.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/117_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">argriffing</div>
+          <div class="post_content">
+<blockquote>
+<p>my current approach takes a ton of time and memory when the number of ambiguous patterns (e.g. NGC, or RGC) get large. As a result, I currently only allow Y,R,W,S, and N in codons, and disallow  K,M,B,D,H,V. Any thoughts?</p>
+</blockquote>
+<blockquote>
+<p>right now every codon (e.g. ATA) or ambiguity code (e.g. NTY) gets its own index.</p>
+</blockquote>
+<blockquote>
+<p>I am interesting in what algorithms people might use to actually read codons like KBN.</p>
+</blockquote>
+<p>I use an unnecessarily complicated data representation system that, for each node in the tree, associates an emission likelihood to each possible state.  So in the traditional setting, unobserved internal nodes would have 1.0 associated to each codon state, and leaves would have 1.0 associated with only the observed codon and 0.0 associated with all other codons.  In this setting of complete overkill, if a taxon has the ambiguously coded codon KBN at a given site in the alignment, then the corresponding leaf would have 1.0 associated with all codons compatible with KBN and 0.0 associated with all codons not compatible with KBN.</p>
+<p>This is probably not your question, but instead of precomputing a mask for each possible triple (e.g. KBN) you could precompute a mask for each ambiguous nucleotide for each of the three possible sites within a codon, and then binary-and the three masks together later when you need it.  So for example the mask associated with KBN could be something like mask[K0] &amp; mask[B1] &amp; mask[N2].</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<p>Thanks for the feedback.  I went ahead and just added all the ambiguity codes, and it actually didn’t take very much time or memory.  Apparently my own memory of this problem was bad <img alt=":stuck_out_tongue:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/stuck_out_tongue.png?v=5" title=":stuck_out_tongue:"/>  I think I actually had a different reason for not enabling all the ambiguity codes.  Oops.</p>
+<p>If I were to allow all possible subsets of codons, then I’d need 2^64 table entries, which would be too large.  But right now ambiguity for each codon position is independent, so I only need (2^4)^3 = 2^12 possible subsets.  This is sufficient to handle ambiguity codes like RGN.</p>
+<p>I went back and replaced vector with boost::dynamic_bitset&lt;&gt;.  This has given me big speed improvements in the past, but here it didn’t really make much of a difference in speed.  (For bipartitions, or for things where you are doing bitwise operations, dynamic_bitset&lt;&gt; can give a 20-fold speed improvement.  Over vector I think.)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<p>Hmm…  do you mean binary OR?</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

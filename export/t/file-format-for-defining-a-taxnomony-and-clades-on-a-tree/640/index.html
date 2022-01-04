@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>File format for defining a taxnomony and clades on a tree</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">File format for defining a taxnomony and clades on a tree</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/263_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">lczech</div>
+          <div class="post_content">
+<p>Hi all,</p>
+<p>does anyone know of a (halfway standardized) file format or annotation scheme for taxonomies and/or for identifying clades on a tree?</p>
+<p>One of our programs, Sativa (<a href="https://github.com/amkozlov/sativa" rel="nofollow noopener">https://github.com/amkozlov/sativa</a>) for example uses a taxonomy notation like this:</p>
+<pre><code>Taxon_name &lt;tab&gt; Rank_1;Rank_2;...
+</code></pre>
+<p>In order to use this for identifying clades of a tree, one can then use a particular rank of this taxonomy and put every taxon that shares this rank (and all the higher level ranks) into the same clade. This defines a clade on a tree, iff the tree is monophyletic with respect to the clade. That is, if there is a branch of the tree that contains all of the taxa of the clade (and no other taxa) in one of the induced subtrees, and all other taxa in the other subtree.</p>
+<p>This is a bit ad-hoc in two ways: the file format is not standardized, and using it for defining clades on a tree comes with the caveat that someone first has to make sure that they give indeed monophyletic subtrees.</p>
+<p>So, my questions are:</p>
+<ul>
+<li>Is there a standard file format for taxonomies?</li>
+<li>Is there one for dividing a tree into clades?</li>
+</ul>
+<p>Thanks and cheers,
+Lucas</p>
+<p>PS: I don’t want to define the 1000th Newick extension…</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/377_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rutgeraldo</div>
+          <div class="post_content">
+<p>Maybe you can use the format that NCBI uses for the taxonomy dump? That way there are at least already some Bio* toolkits that can read it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/263_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">lczech</div>
+          <div class="post_content">
+<p>Thanks, <span class="mention">@rutgeraldo</span>. I had a look at it, and it seems to be a very involved format, with different files (nodes, names, …), referring to each other via IDs, and allowing multiple entries per ID.</p>
+<p>For NCBI, such complexity is probably needed. It’s however totally an overkill for projects where the taxa, their tree and taxonomy are relatively small (some thousands) and fixed (no need for taxon synonyms).</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Split decomposition</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Split decomposition</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>Hi all,</p>
+<p>Does anyone know of an implementation of split decomposition in R or Python?</p>
+<p>Cheers,</p>
+<p>Rob</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I assume you mean the full split decomposition as in</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/1342941" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/1342941" rel="nofollow noopener" target="_blank">Split decomposition: a new and useful approach to phylogenetic analysis of distance data.</a>
+</h4>
+<div class="date">
+  HJ Bandelt and AW Dress,
+  <i>Molecular phylogenetics and evolution</i>, Sep 1992
+</div>
+<p class="pubmed-abstract">
+  In order to analyze the structure inherent to a matrix of dissimilarities (such as evolutionary distances) we propose to use a new technique called split decomposition. This method accurately dissects the given dissimilarity measure as a sum of elementary "split" metrics plus a (small) residue. The split summands identify related groups which are susceptible to further interpretation when casted against the available biological information. Reanalysis of previously published ribosomal RNA data sets using split decomposition illustrate the potential of this approach.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>vs just getting splits from a tree?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>Yep, that’s it. To be precise, I’m wondering if anybody has already written a function that takes a distance matrix as input, and outputs the splits you get from split decomposition.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

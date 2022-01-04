@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Interesting phylogenetic search heuristics</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Interesting phylogenetic search heuristics</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I thought it would be fun to have a discussion about interesting optimization heuristics for phylogenetic inference.
+Please post to contribute!
+Here’s one from the parsimony literature:</p>
+<h3>The Parsimony Ratchet <a href="http://dx.doi.org/10.1111/j.1096-0031.1999.tb00277.x">Nixon, Cladistics 1999</a>; <a href="https://paperpile.com/shared/YyFcN2">PDF</a>.</h3>
+<ol>
+<li>Generate a starting tree (e.g., a “Wagner” tree followed by some level of branch swapping or not)</li>
+<li>Randomly select a subset of characters, each of which is given additional weight (e.g., add 1 to the weight of each selected character).</li>
+<li>Perform branch swapping (e.g., “branch-breaking” or TBR) on the current tree using the reweighted matrix, keeping only one (or a few) trees.</li>
+<li>Set all weights for the characters to the “original” weights (typically, equal weights).</li>
+<li>Perform branch swapping (e.g., branch-breaking or TBR) on the current tree (from step 3) keeping one (or a few) trees.</li>
+<li>Return to step 2. Steps 2–6 are considered to be one iteration, and typically, 50–200 or more iterations are performed. The number of characters to be sampled for reweighting in step 2 is determined by the user; I have found that between 5 and 25% of the characters provide good results in most cases.</li>
+</ol>
+<p>In this context, a “weight” is a per-column multiplier of the parsimony score used in the grand parsimony total.</p>
+<p>I think this one is interesting, and I don’t know of anything like it being used in the likelihood literature. Does anyone else? Seems to me that the closest would be a love child between heated chains and the bootstrap.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p><span class="mention">@rutgeraldo</span> has his <a href="http://sysbio.oxfordjournals.org/content/52/3/368.abstract" rel="nofollow noopener">“Likeihood Ratchet”</a>, but I don’t know where it might be implemented.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Pretty neat!</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/12775525" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/12775525" rel="nofollow noopener" target="_blank">Accelerated likelihood surface exploration: the likelihood ratchet.</a>
+</h4>
+<div class="date">
+  RA Vos,
+  <i>Systematic biology</i>, Jun 2003
+</div>
+<p class="pubmed-abstract">
+  The existence of multiple likelihood maxima necessitates algorithms that explore a large part of the tree space. However, because of computational constraints, stepwise addition-based tree-searching methods do not allow for this exploration in reasonable time. Here, I present an algorithm that increases the speed at which the likelihood landscape can be explored. The iterative algorithm combines the computational speed of distance-based tree construction methods to arrive at approximations of the global optimum with the accuracy of optimality criterion based branch-swapping methods to improve on the result of the starting tree. The algorithm moves between local optima by iteratively perturbing the tree landscape through a process of reweighting randomly drawn samples of the underlying sequence data set. Tests on simulated and real data sets demonstrated that the optimal solution obtained using stepwise addition-based heuristic searches was found faster using the algorithm presented here. Tests on a previously published data set that established the presence of tree islands under maximum likelihood demonstrated that the algorithm identifies the same tree islands in a shorter amount of time than that needed using stepwise addition. The algorithm can be readily applied using standard software for phylogenetic inference.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Here’s a new one from <span class="mention">@Alexis_RAxML</span> &amp; co:</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/26231183" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/26231183" rel="nofollow noopener" target="_blank">An Efficient Independence Sampler for Updating Branches in Bayesian Markov chain Monte Carlo Sampling of Phylogenetic Trees.</a>
+</h4>
+<div class="date">
+  AJ Aberer, A Stamatakis and F Ronquist,
+  <i>Systematic biology</i>, Jan 2016
+</div>
+<p class="pubmed-abstract">
+  Sampling tree space is the most challenging aspect of Bayesian phylogenetic inference. The sheer number of alternative topologies is problematic by itself. In addition, the complex dependency between branch lengths and topology increases the difficulty of moving efficiently among topologies. Current tree proposals are fast but sample new trees using primitive transformations or re-mappings of old branch lengths. This reduces acceptance rates and presumably slows down convergence and mixing. Here, we explore branch proposals that do not rely on old branch lengths but instead are based on approximations of the conditional posterior. Using a diverse set of empirical data sets, we show that most conditional branch posteriors can be accurately approximated via a [Formula: see text] distribution. We empirically determine the relationship between the logarithmic conditional posterior density, its derivatives, and the characteristics of the branch posterior. We use these relationships to derive an independence sampler for proposing branches with an acceptance ratio of ~90% on most data sets. This proposal samples branches between 2× and 3× more efficiently than traditional proposals with respect to the effective sample size per unit of runtime. We also compare the performance of standard topology proposals with hybrid proposals that use the new independence sampler to update those branches that are most affected by the topological change. Our results show that hybrid proposals can sometimes noticeably decrease the number of generations necessary for topological convergence. Inconsistent performance gains indicate that branch updates are not the limiting factor in improving topological convergence for the currently employed set of proposals. However, our independence sampler might be essential for the construction of novel tree proposals that apply more radical topology changes.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>It’s related to some ideas I presented in a <a href="http://matsen.github.io/talks/lcfit_evolution2013.html#/">talk at Evolution 2013</a> and which we’re finally getting around to writing up.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

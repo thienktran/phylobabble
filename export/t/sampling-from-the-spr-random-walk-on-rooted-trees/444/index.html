@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Sampling from the SPR random walk on rooted trees</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Sampling from the SPR random walk on rooted trees</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Fellow babblers,</p>
+<p><span class="mention">@cwhidden</span> and I would like to sample from the subtree-prune-regraft (SPR) random walk on rooted phylogenetic trees. Does anyone know an easy way to do this? Chris could roll his own, but I’ll bet that there is an easy solution out there.</p>
+<p>If we wanted to sample from the random walk on unrooted trees, we could sample from the MrBayes prior. BEAST is rooted, which is nice, but has non-uniform priors on topologies. <span class="mention">@mlandis</span> would this be easy with revBayes?</p>
+<p>Thanks!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">GrahamJones</div>
+          <div class="post_content">
+<p>The priors in BEAST are uniform on histories, also known as ranked trees. A ranked tree is a rooted topology plus an ordering of the internal nodes which increases towards the tips. To me, these seem the most natural objects to study in the context of rooted trees. Do you need to use unranked trees?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/376_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mlandis</div>
+          <div class="post_content">
+<p><span class="mention">@ematsen</span>, <span class="mention">@cwhidden</span> : Running under MCMC under the prior to sample from a diffusion on tree-space sounds like a great idea. BEAST, MrBayes, and RevBayes would all work nicely for this. Feel free to email if you’d like help doing this through RevBayes.</p>
+<p>One thing to consider is SPR may be applied without constraint on an unrooted tree. For time trees (rooted trees with branch lengths proportional to time), whether a branch is a valid regrafting point depends both on the subtree’s ancestor’s age and the start and end age of the receiving branch. e.g. A subtree with age 100 cannot regraft to a branch originating at age 1.</p>
+<p>So SPR proposals for time trees often impose additional constraints on regraft points (see fixed node-height prune regraft, FNPR), or impose constraints and resample the attachment node’s age (Wilson-Balding). For more, see Hoehna, Defoin-Platel, and <span class="mention">@alexei_drummond</span>’s work on <a href="http://people.su.se/~sehh3288/documents/Clock-constrained%20Tree%20Proposal%20Operators%20in%20Bayesian%20Phylogenetic%20Inference.pdf" rel="nofollow noopener">tree proposals</a>. You can imagine other types of SPR proposals that produce valid states for a time tree, some of which would perform poorly in practice, but I wanted to mention that the type of diffusion you impose on time-tree-space will interact with your prior distribution on divergence times. Of course that might be exactly what you’re interested in!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Thanks, Graham and Michael!</p>
+<p>I should have been a little more specific. The set of objects that interest us are rooted phylogenetic tree topologies without branch lengths or any other extra information. The random walk of interest to us is the MCMC using rooted subtree-prune-regraft (SPR) moves corresponding to the uniform distribution on rooted phylogenetic tree topologies.</p>
+<p>I belive this can be constructed MCMC-style by uniformly sampling a neighbor s of a given t (with respect to SPR) and accepting such a proposal with probability <code>min(1, d_t / d_s)</code>, where <code>d_t</code> is the degree of <code>t</code> and <code>d_s</code> is the degree of <code>s</code>. I’d think MrBayes is doing the unrooted equivalent when sampling from the prior and is limited to SPR moves. However, we are interested in rooted trees and rooted SPR moves.</p>
+<p>Is that more clear? Is that something that can be done easily with RevBayes?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/376_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mlandis</div>
+          <div class="post_content">
+<p><span class="mention">@ematsen</span>: Here are two simple .Rev files that will sample trees under a prior: an <a href="https://gist.github.com/mlandis/392340164646e5b4af6d" rel="nofollow noopener">unrooted tree</a> with SPR, and a <a href="https://gist.github.com/mlandis/ba54b19884db58177368" rel="nofollow noopener">time tree</a> using various proposals. These work with the language implemented in the <a href="https://github.com/revbayes/revbayes/tree/development" rel="nofollow noopener">development</a> branch, which will most likely be the final language definition.</p>
+<p>I know you mentioned you’d like these SPR proposals to disregard node ages for rooted trees. This is not currently implemented since time-free rooted trees appear rarely in phylogenetics, but I’d be glad to add it if RevBayes looks like an easy solution for you.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@mlandis</span>, thank you very much for your complete response.</p>
+<p>We will have a look and a think. Your point is well taken regarding time-free rooted trees, but that’s what we can do right now given our mathematical “technology.”</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">alexei_drummond</div>
+          <div class="post_content">
+<p>Maybe you are interested in the wrong objects <img alt=":slight_smile:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/slight_smile.png?v=5" title=":slight_smile:"/> If the trees are rooted then all simple phylogenetic models I know (e.g. coalescent and birth-death trees with single-time sampling) generate uniform priors on <em>ranked</em> rooted trees (as <span class="mention">@mlandis</span> points out).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>The prior is not actually a problem. We can set things up to have any Markov proposal and acceptance mechanism, and hence we can get any prior on topologies, such as the induced prior on rooted phylogenetic trees coming from ranked phylogenetic topologies. Thus, if there are any proposals in either RB or BEAST that induce Markov proposals on rooted phylogenetic topologies, then we would be good to go.</p>
+<p>Note that this isn’t a trivial criterion, as a proposal that uses the real-valued branch lengths or times in a nontrivial way will probably not be Markov when projected down to rooted topologies. Indeed, I don’t think that the standard RB or BEAST proposals would be.</p>
+<p>Thanks, all. This has been quite helpful.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">GrahamJones</div>
+          <div class="post_content">
+<p>Once you have learned to love ranked rooted trees, you might like this paper</p>
+<p>Song, Y.: Properties of subtree-prune-and-regraft operations on totally-ordered phylogenetic trees. Annals of Combinatorics 10, 129–146 (2006)</p>
+<p>(totally-ordered = ranked)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I’m already a fan. They make many things easier, and are interesting in their own right, e.g.</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/20525576" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/20525576" rel="nofollow noopener" target="_blank">A method for investigating relative timing information on phylogenetic trees.</a>
+</h4>
+<div class="date">
+  D Ford, FA Matsen and T Stadler,
+  <i>Systematic biology</i>, Apr 2009
+</div>
+<p class="pubmed-abstract">
+  In this paper, we present a new way to describe the timing of branching events in phylogenetic trees. Our description is in terms of the relative timing of diversification events between sister clades; as such it is complementary to existing methods using lineages-through-time plots which consider diversification in aggregate. The method can be applied to look for evidence of diversification happening in lineage-specific "bursts", or the opposite, where diversification between 2 clades happens in an unusually regular fashion. In order to be able to distinguish interesting events from stochasticity, we discuss 2 classes of neutral models on trees with relative timing information and develop a statistical framework for testing these models. These model classes include both the coalescent with ancestral population size variation and global rate speciation-extinction models. We end the paper with 2 example applications: first, we show that the evolution of the hepatitis C virus deviates from the coalescent with arbitrary population size. Second, we analyze a large tree of ants, demonstrating that a period of elevated diversification rates does not appear to have occurred in a bursting manner.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>Thanks for the tip, Graham!</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

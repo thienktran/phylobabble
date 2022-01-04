@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>The SNAD Sequence Renaming tool</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">The SNAD Sequence Renaming tool</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>The <a href="http://veb.lumc.nl/SNAD/" rel="nofollow noopener">Sequence Name Annotation Designer</a> tool is very useful for renaming sequences obtained from BLAST output, for example.  Note that characters such as “:” and “(” are not allowed in sequence names in a Nexus/Newick tree file.</p>
+<p>&gt;gi|260677811|gb|GU046734.1|:1-1695 Influenza A virus (A/mallard/Bavaria/35/2006(H5)) segment 4 hemagglutinin (HA) gene, complete cds
+ATGGAGAAAATAGTGCTTCTTCTTGCAATAGTCAGTCTTGTTAAAAGTGACCAGATTTGCATTGGTTACCATGCAAACAA</p>
+<p>&gt;gi|301322577|gb|HM849027.1|:1-1695 Influenza A virus (A/mallard/PT/28006/2007(H5N3)) segment 4 hemagglutinin (HA) gene, complete cds
+ATGGAGAAAATAGTGCTTCTTCTTGCAATAGTCAGTCTTGTTAAAAGTGACCAGATTTGCATTGGTTACCATGCAAACAA</p>
+<p>&gt;gi|148532753|gb|EF597262.1|:1-1684 Influenza A virus (A/mallard/Italy/1980/1993(H5N2)) hemagglutinin (HA) gene, partial cds
+ATGGAGAAAATAGTGCTTCTTTTTGCAATAGTCAGTCTTGTCAAAAGTGACCAGATTTGCATTGGTTACCATGCAAACAA</p>
+<p>etc…</p>
+<p>to</p>
+<p>&gt; A/H5N1/mallard/Bavaria/35/2006_GU046734
+ATGGAGAAAATAGTGCTTCTTCTTGCAATAGTCAGTCTTGTTAAAAGTGACCAGATTTGCATTGGTTACCATGCAAACAA</p>
+<p>&gt; A/H5N3/mallard/Portugal/28006/2007_HM849027
+ATGGAGAAAATAGTGCTTCTTCTTGCAATAGTCAGTCTTGTTAAAAGTGACCAGATTTGCATTGGTTACCATGCAAACAA</p>
+<p>&gt; A/H5N2/mallard/Italy/1980/1993_EF597262
+ATGGAGAAAATAGTGCTTCTTTTTGCAATAGTCAGTCTTGTCAAAAGTGACCAGATTTGCATTGGTTACCATGCAAACAA</p>
+<p>etc…</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/127_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jeetsukumaran</div>
+          <div class="post_content">
+<p>Again, apologies for the auto-tooting … DendroPy’s <code>interop.genbank</code> module provides <a href="https://pythonhosted.org/DendroPy/tutorial/genbank.html#specifying-a-custom-label-for-sequence-taxa" rel="nofollow noopener">this functionality</a> for GenBank data, at any rate, with several options to customize the labeling for compatibility with most phylogenetic software.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

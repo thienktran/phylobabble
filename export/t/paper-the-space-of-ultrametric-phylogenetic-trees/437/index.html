@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>[Paper] The space of ultrametric phylogenetic trees</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">[Paper] The space of ultrametric phylogenetic trees</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>New from <span class="mention">@alexei_drummond</span> and his postdoc:</p>
+<blockquote>
+<p>The space of ultrametric phylogenetic trees by Alex Gavruskin, Alexei J.
+Drummond</p>
+<p>We introduce two metric spaces on ultrametric phylogenetic trees and
+compare them with existing models of tree space. We formulate several
+formal requirements that a metric space on phylogenetic trees must
+possess in order to be a satisfactory space for statistical analysis,
+and justify them. We show that only a few known constructions of the
+space of phylogenetic trees satisfy these requirements. However, our
+results suggest that these basic requirements are not enough to
+distinguish between the two metric spaces we introduce and that the
+choice between metric spaces requires additional properties to be
+considered.</p>
+</blockquote>
+<p><a class="onebox" href="http://arxiv.org/abs/1410.3544" target="_blank">http://arxiv.org/abs/1410.3544</a></p>
+<p>I haven’t read it in detail, but it seems that the most version of the space that is most natural for time-trees (their t-space) has properties that make it mathematically difficult to analyze. The combinatorial machinery that helped out with the BHV space doesn’t help here.</p>
+<blockquote>
+<p><strong>Theorem 8.</strong> The problem of computing geodesics in t-space is NP-hard.
+We will reduce the problem of computing NNI-distance to the problem of
+computing geodesics in t-space, but before going on to the proof of
+this result, we would like to develop some intuition of why t-space is
+so different from both BHV and τ -space. The key property for this
+difference is that the cone-path is rarely a geodesic in t-space.
+Indeed, in both BHV and τ - space the position of two cubes can result
+in a cone-path being the geodesic between any pair of trees from these
+cubes. Particularly, the measure of the set of pairs of trees between
+which the cone-path is a geodesic is positive. For example, if two
+trees T and R have topologies with no compatible splits, then the
+geodesic between T and R is a cone-path [3]. A property such as this
+does not present in t-space. It will follow from the observations
+below that the measure of the set of pairs of trees between which the
+geodesic is a cone-path in t-space has measure 0.</p>
+</blockquote>
+<p>I know <span class="mention">@cwhidden</span> has been reading it so perhaps he’ll post some observations.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

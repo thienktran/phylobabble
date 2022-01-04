@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>How to get Accession numbers by sequences or &ldquo;gi numbers&rdquo; in Genbank in a batch-job manner?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">How to get Accession numbers by sequences or &ldquo;gi numbers&rdquo; in Genbank in a batch-job manner?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Hi geniuses,</p>
+<p>A really big headache issue haunting me recently, required your insightful suggestions to help me out:</p>
+<p>I have a large matrix, about 12,000 taxa, and the data is formalized as below:</p>
+<blockquote>
+<p>Balanopaceae_Balanops_pachyphylla_ti1241920_gi408902408
+ATGAGAATCAATCCTACTNNNNNNACTTCTGGTCCTGGAGTTTCCGCGCTTGAAAAAAAGAA</p>
+</blockquote>
+<p>So using information like “taxa name or gi No.”, how can I  get the corresponding Accession number from each taxon in this large matrix  via NCBI website as a batch job?</p>
+<p>Any ideas or experience to share?</p>
+<p>Thanks!</p>
+<p>Miao</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/35_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">eme_laura</div>
+          <div class="post_content">
+<p>One of the most efficient ways to do such things is to use Perl and Bioperl. You can see examples here of people looking to do similar things: <a href="https://www.biostars.org/p/65102/" rel="nofollow noopener">https://www.biostars.org/p/65102/</a>
+Extremely powerful!</p>
+<p>Maybe someone else can come up with a “scripting-less” approach.</p>
+<p>Good luck,</p>
+<p>Laura</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Thank you very much Laura for your insightful suggestion!</p>
+<p>And those examples are very good, I’ll start from perl.</p>
+<p>Thanks again!</p>
+<p>Miao</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Well, I really find a a “scripting-less” approach in NCBI website:
+<a class="onebox" href="http://www.ncbi.nlm.nih.gov/sites/batchentrez" rel="nofollow noopener" target="_blank">http://www.ncbi.nlm.nih.gov/sites/batchentrez</a></p>
+<p>Hope it will be helpful for someone in future.</p>
+<p>Miao</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/357_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">lalopangue</div>
+          <div class="post_content">
+<p>The other option, which I find very straightforward, is to use eBot from NCBI to create a perl script (<a href="http://www.ncbi.nlm.nih.gov/Class/PowerTools/eutils/ebot/ebot.cgi" rel="nofollow noopener">http://www.ncbi.nlm.nih.gov/Class/PowerTools/eutils/ebot/ebot.cgi</a>). You can query Entrez databases and select the type of output you prefer. Often times I parsed the outputs using regex.</p>
+<p>Alternatively, NCBI published some standalone tools exactly for batch queries recently (<a href="http://www.ncbi.nlm.nih.gov/news/02-06-2014-entrez-direct-released/" rel="nofollow noopener">http://www.ncbi.nlm.nih.gov/news/02-06-2014-entrez-direct-released/</a>)</p>
+<p>Good Luck</p>
+<p>Eduardo</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Better!</p>
+<p>Thanks!</p>
+<p>Miao</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Model testing large multigene families</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Model testing large multigene families</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Gadget</div>
+          <div class="post_content">
+<p>Hi Folks,
+I am generating phylogenies for a large number of GPCR gene families from a variety of organisms. A lot of these gene families contain 2-3000 genes, and I can run prottest on them. As they are transmembrane, the JTT+G model has the best fit for some of the alignments. However there are some with more than 4000 sequences, which prottest cannot handle. Does anyone know of an alternative multithreaded program to determine the best fit amino acid model of sequence evolution for large datasets? The 4000+ gene families are close orthologues of the smaller families, however this is surely not enough to justify assuming the larger families must be JTT too. Can anyone share some advice on how to proceed?
+Thank you!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/365_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">cmeehan</div>
+          <div class="post_content">
+<p>You could try PartitionFinder (<a href="http://www.robertlanfear.com/partitionfinder/" rel="nofollow noopener">http://www.robertlanfear.com/partitionfinder/</a>). This looks for partitions in your data but also returns the best model fit. I don’t know how it handles such large sets but hopefully should do well. I know PartitionFinder is also implemented in the latest test version of PAUP* which also is good at handling large datasets.</p>
+<p>C</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

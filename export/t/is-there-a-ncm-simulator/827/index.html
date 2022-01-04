@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Is there a NCM simulator?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Is there a NCM simulator?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Hey phellow phylo dorks.</p>
+<p>I was wondering if a no common mechanism model <em>simulator</em> existed. I know that the model can be used for inference, but am not aware of a simulator.</p>
+<p>Thanks!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>I suppose a parsimony simulator would be equivalent?</p>
+<p>Anyway, should have pinged <span class="mention">@mathmomike</span> above.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/15_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mathmomike</div>
+          <div class="post_content">
+<p>An interesting thing can happen if you simulate NCM.   Suppose that for each character/site you generate/sample each branch length independently from some fixed distribution D and let m_D be the mean of this distribution. Then evolve a character on the tree with this distribution according to (say) the Jukes-Cantor distribution. Repeat this process (independently) from character to character.  It turns out that the resulting data set is generated with exactly the same probability distribution as if you had sampled all the characters i.i.d. from a standard Jukes-Cantor model in which ALL the branch lengths were equal to m_D. It turns out that this no-common mechanism model is stochastically equivalent to a very common-mechanism model (i.e. the “usual” common mechanism JC model,  and with all its branch lengths equal). It’s not hard to show this with a few lines of algebra (or see below).  If you move outside JC (to models where the rate matrix has more than one nonzero eigenvalue) then the statement needs modifying slightly.
+The following paper may be helpful as it discusses this issue in passing:</p>
+<p>Huelsenbeck J., Ane, C. Larget B., Ronquist F. 2008. A Bayesian
+perspective on a non-parsimonious parsimony model. Syst. Biol.
+57:406–419.  and it’s also discussed in
+Steel, M. (2011). Can we avoid ‘SIN’ in the House of ‘No Common Mechanism’? Systematic Biology 60(1): 96-109.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Thanks <span class="mention">@mathmomike</span>! Very interesting.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

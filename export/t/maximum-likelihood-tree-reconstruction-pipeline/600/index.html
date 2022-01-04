@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Maximum Likelihood tree reconstruction pipeline</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Maximum Likelihood tree reconstruction pipeline</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<p>I recently had need to reconstruct a reasonably large Ebola virus tree and I wanted a maximum likelihood tree with good branch length estimates and bootstrap values for all the nodes in the ML tree.  We wrote this pipeline that bats back and forth between phyml (to get an initial NJ tree and optimise the branch lengths) and raxml (to find ML topologies and bootstrap).</p>
+<p>I thought I would post it here for discussion and to see if anyone would do things differently. On a fixed topology <code>phyml</code> did a better job of optimising branch lengths but this may be because I couldn’t find the appropriate settings in <code>raxml</code>.</p>
+<blockquote>
+<pre><code>#phyml to find initial tree using BioNJ
+phyml --quiet -i $1.phy -q -t e -a e -o lr -b 0
+mv $1.phy_phyml_tree.txt initial_tree.newick
+
+#raxml to find ml topology
+raxml -f d -T 6 -j -s $1.fasta -n topology -m GTRGAMMA -t initial_tree.newick
+
+#phyml to optimise branch lengths on ml topology
+phyml --quiet -i $1.phy -q -t e -a e -o lr -u RAxML_result.topology -b 0
+mv $1.phy_phyml_tree.txt $1.ml.tree
+
+#use raxml to produce boostrap trees - the seed needs to be set here in $2
+raxml -f a ­p $2 -s $1.fasta ­x 12345 -#200 -m GTRGAMMA -n bootstrap
+
+#use raxml to project boostrap values on to ML tree
+raxml -f b -t $1.ml.tree -z RAxML_bootstrap.bootstrap -m GTRGAMMA -n final
+mv RAxML_result.final $1.ml_bootstrap.tree</code></pre>
+</blockquote>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Perhaps you could be a little more specific what you saw in the <code>phyml</code> branch lengths that you preferred to the <code>raxml</code> branch lengths. Once the branch lengths were optimized by <code>phyml</code>, are they judged to have a higher likelihood by <code>raxml</code> than the branch lengths it inferred?</p>
+<p>With that sort of information I bet that <span class="mention">@Alexis_RAxML</span> will be happy to advise.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Hi <span class="mention">@arambaut</span> the settings look okay, could you be a bit more specific though about what you mean by better branch lengths? Did PHYML yield a better LnL?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<p>These are the likelihoods after each stage:</p>
+<pre><code>Phyml BioNJ				-43819.695026
+Raxml topology search			-43686.158939
+Phyml branch length optimization	-43673.144059
+</code></pre>
+<p>The main thing is that the branch lengths are very small because the sequences are long (19kb). This means they are arbitrarily interacting with a lower bound in the optimization algorithm. The branches that are affected are those with the maximum likelihood value of zero.</p>
+<p>Here is a plot of the equivalent terminal branch lengths:</p>
+<p><div class="lightbox-wrapper"><a class="lightbox" data-download-href="https://www.phylobabble.org/uploads/default/4870be943f4fa00d80a365e1609b34b87bfaca73" href="https://www.phylobabble.org/uploads/default/original/1X/4870be943f4fa00d80a365e1609b34b87bfaca73.png" title="plot.png"><img data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/4870be943f4fa00d80a365e1609b34b87bfaca73_2_10x10.png" height="500" src="https://www.phylobabble.org/uploads/default/optimized/1X/4870be943f4fa00d80a365e1609b34b87bfaca73_2_592x500.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/4870be943f4fa00d80a365e1609b34b87bfaca73_2_592x500.png, https://www.phylobabble.org/uploads/default/original/1X/4870be943f4fa00d80a365e1609b34b87bfaca73.png 1.5x, https://www.phylobabble.org/uploads/default/original/1X/4870be943f4fa00d80a365e1609b34b87bfaca73.png 2x" width="592"/><div class="meta">
+<svg aria-hidden="true" class="fa d-icon d-icon-far-image svg-icon"><use xlink:href="#far-image"></use></svg><span class="filename">plot.png</span><span class="informations">719×607 16.1 KB</span><svg aria-hidden="true" class="fa d-icon d-icon-discourse-expand svg-icon"><use xlink:href="#discourse-expand"></use></svg>
+</div></a></div></p>
+<p>The difference in a branch length of 1E-6 and 1E-8 does actually matter here because there are some large polytomies that result in a ‘ladderised’ affect.</p>
+<p>Possibly there is an option to set the lower bound on branch lengths? Interestingly Phyml is clearly going hard against its lower bound of 1E-8 but Raxml has a lower bound of 1.47E-6 which seems unlikely to be a selected constant so I suspect this is the result of some other stopping criterion?</p>
+<pre><code>raxml			phyml
+0.000054351	0.000054140
+0.000001470	0.000000010
+0.000001470	0.000000010
+0.000001470	0.000000010
+0.000001470	0.000000010
+0.000001470	0.000000010
+0.000053708	0.000053520
+0.000269037	0.000268020
+0.000053768	0.000053570
+0.000001470	0.000000010
+0.000101194	0.000106900
+0.000054020	0.000053820
+0.000053750	0.000053550
+</code></pre>
+<p>I suspect that a general solution would be to introduce a constant scaling factor for the branch lengths between the optimization search algorithm and the likelihood evaluation. A suggestion would be to use the ratio of the sequence length to the number of unique site patterns.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Hi <span class="mention">@arambaut</span>, yes now it makes sense, the lower bound in RAxML is indeed determined dynamically depending on other model params, but there is indeed a lower bound that is hit by RAxML, thanks for pointing this out, I’ll put this on the TODO list,</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

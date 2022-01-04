@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Fast implementation of branch length likelihood gradients anywhere?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Fast implementation of branch length likelihood gradients anywhere?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Howdy folks–</p>
+<p>We’re developing some new Bayesian phylogenetic methods and need fast branch length gradients of the likelihood function. That is, given a tree with branch lengths, we’d like to get a log likelihood as well as a vector such that the <em>i</em>th entry is the derivative of the log likelihood with respect to the <em>i</em>th branch length.</p>
+<p>Methods for doing this are described in</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/9521926" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/9521926" target="_blank">Computational advances in maximum likelihood methods for molecular phylogeny.</a>
+</h4>
+<div class="date">
+  EE Schadt, JS Sinsheimer and K Lange,
+  <i>Genome research</i>, Mar 1998
+</div>
+<p class="pubmed-abstract">
+  We have developed a generalization of Kimura's Markov chain model for base substitution at a single nucleotide site. This generalized model incorporates more flexible transition rates and consequently allows irreversible as well as reversible chains. Because the model embodies just the right amount of symmetry, it permits explicit calculation of finite-time transition probabilities and equilibrium distributions. The model also meshes well with maximum likelihood methods for phylogenetic analysis. Quick calculation of likelihoods and their derivatives can be carried out by adapting Baum's forward and backward algorithms from the theory of hidden Markov chains. Analysis of HIV sequence data illustrates the speed of the algorithms on trees with many contemporary taxa. Analysis of some of Lake's data on the origin of the eukaryotic nucleus contrasts the reversible and irreversible versions of the model.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>We have a numpy implementation, but would like more speed, including low-level tweaking.</p>
+<p>Note that in contrast to typical applications of likelihood calculations with local search, it’s not important to be able to do partial caching to speed up local modifications, which makes some of the functionality of existing likelihood libraries inessential. Each tree is brand new.</p>
+<p>Anyone know of such a thing, before we set “pen to paper”?</p>
+<p>Thanks,</p>
+<p>Erick</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Jesse Bloom pointed me to <a href="http://www.maths.otago.ac.nz/~dbryant/Papers/04IHPLikelihood.pdf">http://www.maths.otago.ac.nz/~dbryant/Papers/04IHPLikelihood.pdf</a>, which has this table:</p>
+<p><img alt="image" height="500" src="/uploads/default/original/1X/9799ab59883292092fbe154cbedd5d9c651af37e.png" width="304"/></p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

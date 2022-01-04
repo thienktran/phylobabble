@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Calculating distances with ambiguity codes (R, Y, N etc) in the data</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Calculating distances with ambiguity codes (R, Y, N etc) in the data</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>Are there any distance calculators, such as DNAdist in PHYLIP, which can be set to treat ambiguity codes as a partial match?  For example, I want a R to be counted as half a match to A or G.  I believe that PHYLIP DNAdist counts R as a full match to either A or G.</p>
+<p>For diploid organisms an “R” is usually indicating that one allele had A and the other G.  But for populations such as a swarm of HIV-1 in a single patient, the R usually means that part of the population had A and the other part G.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">cswarth</div>
+          <div class="post_content">
+<p>There was a discussion of this topic on a mailing list a couple years ago that offered some possible options.</p>
+<p><a class="onebox" href="http://grokbase.com/t/r/r-sig-phylo/13517bj6z4/dist-dna-inconsistent-behavior-with-ambiguous-sequences" rel="nofollow noopener" target="_blank">http://grokbase.com/t/r/r-sig-phylo/13517bj6z4/dist-dna-inconsistent-behavior-with-ambiguous-sequences</a></p>
+<p>– Chris</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">sdwfrost</div>
+          <div class="post_content">
+<p>There’s also this:</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://github.com/veg/tn93">
+<header class="source">
+<img class="site-icon" height="32" src="https://github.githubassets.com/favicons/favicon.svg" width="32"/>
+<a href="https://github.com/veg/tn93" rel="noopener nofollow ugc" target="_blank">GitHub</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:690/345;"><img class="thumbnail" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/b04185403ba756d12a89ff21743e131f9d381b02_2_10x10.png" height="345" src="https://www.phylobabble.org/uploads/default/optimized/1X/b04185403ba756d12a89ff21743e131f9d381b02_2_690x345.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/b04185403ba756d12a89ff21743e131f9d381b02_2_690x345.png, https://www.phylobabble.org/uploads/default/optimized/1X/b04185403ba756d12a89ff21743e131f9d381b02_2_1035x517.png 1.5x, https://www.phylobabble.org/uploads/default/original/1X/b04185403ba756d12a89ff21743e131f9d381b02.png 2x" width="690"/></div>
+<h3><a href="https://github.com/veg/tn93" rel="noopener nofollow ugc" target="_blank">veg/tn93</a></h3>
+<p>TN93 fast distance calculator. Contribute to veg/tn93 development by creating an account on GitHub.</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>I have some Julia code to calculate distances with ambiguities too, but I haven’t committed the code to the BioJulia repository yet.</p>
+<p>Best,</p>
+<p>Simon</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/245_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">sergeilkp</div>
+          <div class="post_content">
+<p>Hi Brian,</p>
+<p>As <span class="mention">@sdwfrost</span> suggests, take a look at our TN93 calculator ( <a href="https://github.com/veg/tn93" rel="nofollow noopener">https://github.com/veg/tn93</a>). It has fairly comprehensive ambiguity handling, including partial matching (like what you want), partial matching subject to constraints (e.g. two-fold ambigs only), and corresponding ambig-ambig matching. The code is easy to modify to compute any other nucleotide distance for which you have a closed form expression.</p>
+<p>Best,
+Sergei</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

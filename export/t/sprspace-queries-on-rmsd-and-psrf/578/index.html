@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>[sprspace] Queries on RMSD and PSRF</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">[sprspace] Queries on RMSD and PSRF</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ss107</div>
+          <div class="post_content">
+<p>I have some queries related to “Quantifying MCMC Exploration of Phylogenetic Tree Space (Whidden and Matsen, 2015)”.</p>
+<p>TGR-PSRF:
+Is there any threshold for TGR-PSRF?
+For example, in Bayesian inferences with ASDSF use a magic threshold of 0.01, below which they declare convergence.</p>
+<p>TGR-RMSD:
+What is the intuition behind TGR-RMSD?</p>
+<p>For a particular dataset, I am getting RMSD values in the range ~20 and PSRF values are ~1.0002.
+According to ASDSF values the chains have converged.
+What is the meaning of the large RMSD value? Have the chains converged based on this diagnostic?</p>
+<p>[Sample output:
+Output//run1  Output//run2
+computing within-chain variance
+chain_W: 504.19646591726
+chain_W: 464.727826287548
+W: 484.462146102404
+computing between-chain variance
+chain_B: 494.917330110875
+chain_B: 475.091153866239
+B: 485.004241988557
+variance: 484.733194045481
+RMSD: 22.0166571950757
+PSRF: 1.00027970197902
+]</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/384_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">cwhidden</div>
+          <div class="post_content">
+<p>Hello,</p>
+<p>Thanks for your interest in our work. We did not identify a specific threshold for the TGR-PSRF, and I believe that any threshold that tries to declare convergence using it would have to be dataset dependent because posterior probabilities for specific topologies vary much more widely than probabilities for splits. Our main observation with respect to TGR-PSRF was that split convergence tended to imply topology convergence on the datasets we tested.</p>
+<p>That being said, your PSRF values are similar to those we obtained on converged datasets. Does it appear that the PSRF values are still decreasing? You could test this by calculating the PSRF values for the first, say, 90% and 95% of your samples. If the PSRF values are still decreasing then you may wish to continue sampling.</p>
+<p>The RMSD is the root mean square deviation of sampled topologies in terms of subtree prune-and-regraft moves. This is an estimate of the variance between topologies in the sample and has little to do with diagnosing convergence by itself. We obtained similarly large RMSD values on two large flat posteriors where we never saw the same topology twice. An RMSD of 20 can be (very) loosely interpreted as indicating that your sampled trees tend to differ by 20 SPR moves. In such situations you will never have enough samples to obtain accurate topology probabilities. The PSRF values here (and in our presumably similar datasets) seem to imply that the different chains are sampling roughly the same space despite the fact that they do not sample any of the exact same topologies.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ss107</div>
+          <div class="post_content">
+<p>Thanks Chris, for the quick response. It clears a lot of my confusions.</p>
+<p>According to you, in Bayesian Phylogenetics, what should be a reasonable claim of convergence?</p>
+<p>In some cases, the first instance when ASDSF score falls below 0.01,  my PSRF scores are ~1.1. It is probably one of those cases when the chain deceivingly appears to have converged according to ASDSF.</p>
+<p>My understanding is that upon convergence PSRF should be as close to 1 as possible.</p>
+<p>What could be the downside if I fix a threshold for PSRF say &lt; 1.01?</p>
+<p>Do you think, in absence of a ‘golden run’ or true posterior, an ASDSF of &lt; 0.01 + PSRF of &lt; 1.01 is a reasonable indication of convergence for a chain?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/384_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">cwhidden</div>
+          <div class="post_content">
+<p>Unfortunately, I don’t think that any method yet proposed can be used to make a reasonable claim of convergence. Convergence diagnostics can only tell you that a chain has not converged. That being said, you clearly need some criteria to stop sampling.</p>
+<p>Again, we did not use TGR-PSRF values as a stopping criteria and I don’t have an understanding yet of what a specific threshold would imply (if anything). A value of 1.1 does seem low and a threshold of 1.01 does seem reasonable <strong>just looking at the values we obtained on our datasets</strong>. The downside to fixing a threshold for PSRF is that you would be the first to do so and may either (1) get a false sense of security with a threshold that is too high or (2) require an excessive amount of computation with a threshold that is too low or even unobtainable. I want to make it clear for anyone else reading this that TGR-PSRF is a newly proposed idea and that I don’t recommend it be used as a sole measure of convergence (which you did not suggest).</p>
+<p>There are two observations we made in our paper with respect to convergence criteria that you may wish to consider. First, how many independent chains are you using? As far as I can tell this has not been discussed much previously, but we observed that an ASDSF threshold of 0.01 is much stricter with three or four independent chains (runs in MrBayes parlance) instead of two. In our tests on peaky datasets we found that many tests with two runs would fail to converge using an ASDSF criteria simply because the chains happened to sample the same peak more often than not. You may find that ASDSF gives you a better indicator of convergence with 3 or 4 runs if you have only been using 2 (which is the default in MrBayes).</p>
+<p>Second, have you sampled your problematic datasets multiple times? If you obtain similar split frequencies from 3 or 4 completely independent MCMC executions with random starting points then that is a better indicator of convergence than any diagnostics on a single MCMC execution.</p>
+<p>Finally, have you tried other methods of looking at convergence? For example, looking at PSRF values for split frequencies or graphing split frequencies with AWTY? In your potentially problematic datasets, does the ASDSF drop smoothly or bounce around? The latter could indicate a peaky dataset, particularly if the results are not consistent between multiple MrBayes executions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ss107</div>
+          <div class="post_content">
+<p>I always use 4-5 independent runs for one dataset, but only 2 chains within each run.</p>
+<p>I am planning to try:
+i) Using multiple chains within a run, so that the ASDSF scores are more robust.
+ii) Calculating ASDSF between chains from different runs.</p>
+<p>I believe PSRF for split frequencies would not add any new information, as ASDSF itself deals with the split frequencies. Also I haven’t read any paper that uses PSRF (instead/alongside ASDSF) for split frequencies.</p>
+<p>I have used AWTY briefly in the past. Not sure how it can be helpful beyond the metrics we already evaluate.</p>
+<p>From my experience, for most data sets, the ASDSF usually drops quickly and smoothly at the beginning. As it gets closer to 0.01 it does bounce around for a while. Unless the data set is very small or “easy” (i.e, less peaky) - this is the behavior.</p>
+<p>Thanks for all the helpful suggestions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ss107</div>
+          <div class="post_content">
+<p><span class="mention">@cwhidden</span>: On a separate note, will you be willing to share the output files (*.t and *.p files of MrBayes) for DS1-DS11 relevant to (Figure 3, Table 2) in the paper. Please consider adding them in the DRYAD alongside the supplementary pdf.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/384_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">cwhidden</div>
+          <div class="post_content">
+<p>I’m glad you found my suggestions helpful.</p>
+<p>PSRF for split frequencies is just another “sanity check” rather than a specific convergence criteria. It can be used to identify whether some splits are found in different proportions between your independent runs. You can easily have a few splits that are rare in some runs and nonexistent in others while still having a good average standard deviation of split frequencies. This is especially true for splits that hover around the 0.1 threshold for inclusion in the ASDSF. I also haven’t seen many papers that mention split frequency PSRF values but we were asked about them during peer review.</p>
+<p>Similarly, AWTY can be used to plot the split frequencies over time. If the split frequencies are still fluctuating then your chains have likely not converged yet. This is again something to look at after the fact when you suspect that ASDSF is not enough, rather than a way to tell when to stop sampling.</p>
+<p>In our problematic peaky datasets, the ASDSF had a wavelike structure that tended downward over time, particularly when the ASDSF was only calculated using 2 runs. It was common for these “waves” to dip below the 0.01 threshold long before the chains had actually converged. If the ASDSF drops smoothly then this suggests that your data is not peaky (or, to play devil’s advocate, has a very difficult to reach sub-peak).</p>
+<p>Finally, in response to your separate note, I would include the files if it weren’t for the fact that they are huge. Even compressed and just for DS1-DS11, the gzipped *.t and *.p files are more than 108GB, which is far beyond the Dryad 10GB limit.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I just wanted to comment briefly on:</p>
+<aside class="quote no-group" data-post="7" data-topic="578">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="https://www.phylobabble.org/user_avatar/www.phylobabble.org/cwhidden/40/384_2.png" width="20"/> cwhidden:</div>
+<blockquote>
+<p>PSRF for split frequencies is just another “sanity check” rather than a specific convergence criteria.</p>
+</blockquote>
+</aside>
+<p>PRSF <em>is</em> a convergence criterion, as described in the original <a href="https://projecteuclid.org/euclid.ss/1177011136" rel="nofollow noopener">Gelman and Rubin, 1992</a> paper, though there are a couple of caveats in the phylogenetic setting.
+First, and I think this is what <span class="mention">@cwhidden</span> was pointing out, convergence of split frequencies is not the same as convergence of tree topology.  Indeed, topological convergence is an almost unachievable goal: it’s impossible to sample topologies enough such that the empirical distribution of topology samples is even close to the posterior probability except for trees on a handful of taxa. Second, the derivations in the Gelman and Rubin paper are for mean and variance of simple parametric distributions, which is not what we have here. Third, their caveat concerning multimodality:</p>
+<p><img height="313" src="https://www.phylobabble.org/uploads/default/original/1X/7e91a95231d6d5382434cefbf8fe7774548aa36a.png" width="414"/></p>
+<p>to which we also add the caveat that if independent walks stay in the same peak then everything will look peachy even if it’s not.</p>
+<p>I don’t want to be alarmist, and I think that for reasonably well-behaved data that is run with slightly stricter PRSF convergence criteria than the defaults there is probably no problem.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ss107</div>
+          <div class="post_content">
+<p>Thanks for all the clarifications.</p>
+<p><span class="mention">@cwhidden</span>: Computing pairwise SPR/RF distances are time consuming if I am dealing with large posterior of trees. So I was thinking if there is a natural way to speed up the pairwise distance computation if I have access to multiple processors.</p>
+<p>The “rspr” documentation mentions:
+“Optional arguments to -pairwise can be used to compute subsets of the
+matrix (e.g. for partitioning computation over multiple processes).”</p>
+<p>What are the optional arguments?</p>
+<p>Any suggestions will be helpful.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/384_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">cwhidden</div>
+          <div class="post_content">
+<p><span class="mention">@ss107</span>: If you run “rspr -h” or “rspr --help” you can take a look at the options (although I believe this is also in the documentation). The section on “PAIRWISE COMPARISON OPTIONS” (reproduced below) explains these options. Basically you just input the rows (and possibly columns) of the matrix that you wish to compute. For example, rspr -pairwise 0 1 will compute just the first row of the matrix and rspr -pairwise 1 2 0 5 will compute the first 5 entries of the second row of the matrix.</p>
+<p>Please note that rspr will only compute the upper right half of the matrix by default (as the distances are symmetric). You can either use the “-no-symmetric-pairwise” option to disable this behaviour (and take twice as long) or use the included fill_matrix program to fill in the missing values after you assemble the matrix.</p>
+<p>Depending on the number of trees, I typically just break the data up into rows (i.e. two arguments) and submit each row (or a group of rows for a small number of trees) as a single process to a cluster that will output something like “data_a_b”. I then concatenate the lines in order with “cat” and fill in the missing values with “fill_matrix”. Note that the earlier lines will require more computation. I’ve been playing around with a method for optimally breaking the data up into rows, but don’t have anything ready for release yet on that front.</p>
+<hr/>
+<p>PAIRWISE COMPARISON OPTIONS</p>
+<hr/>
+<p>-pairwise
+-pairwise a b
+-pairwise a b c d        Compare each input tree to each other tree and output
+the resulting SPR distance matrix. If -unrooted is
+enabled this will compute the “best rooting” SPR
+distance by testing each rooting of the trees. The
+optional arguments a b c d compute only rows a-b and/or
+columns c-d of the matrix.</p>
+<p>-no-symmetric-pairwise   By default, -pairwise will ignore the symmetric lower
+left triangle of the matrix. With this option the
+lower triangle is filled in.</p>
+<p>-pairwise_max x          Use with -pairwise to only compute distances at most x.
+Larger values are output as -1. Very efficient for
+small distances (e.g. 1-10).</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

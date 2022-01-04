@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>[Paper] Correcting for sequencing error in maximum likelihood phylogeny inference</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">[Paper] Correcting for sequencing error in maximum likelihood phylogeny inference</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>This paper appeared in a journal I don’t commonly read, so I wanted to highlight it. The ideas are not new (as they acknowledge) but it’s a good reminder that we should be fighting model mis-specification on all fronts. Comments, anyone?</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/25378476" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/25378476" rel="nofollow noopener" target="_blank">Correcting for sequencing error in maximum likelihood phylogeny inference.</a>
+</h4>
+<div class="date">
+  MK Kuhner and J McGill,
+  <i>G3 (Bethesda, Md.)</i>, Nov 2014 04
+</div>
+<p class="pubmed-abstract">
+  Accurate phylogenies are critical to taxonomy as well as studies of speciation processes and other evolutionary patterns. Accurate branch lengths in phylogenies are critical for dating and rate measurements. Such accuracy may be jeopardized by unacknowledged sequencing error. We use simulated data to test a correction for DNA sequencing error in maximum likelihood phylogeny inference. Over a wide range of data polymorphism and true error rate, we found that correcting for sequencing error improves recovery of the branch lengths, even if the assumed error rate is up to twice the true error rate. Low error rates have little effect on recovery of the topology. When error is high, correction improves topological inference; however, when error is extremely high, using an assumed error rate greater than the true error rate leads to poor recovery of both topology and branch lengths. The error correction approach tested here was proposed in 2004 but has not been widely used, perhaps because researchers do not want to commit to an estimate of the error rate. This study shows that correction with an approximate error rate is generally preferable to ignoring the issue.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<p>If anyone wants to use this model (described by Felsenstein in Inferring Phylogenies) in a Bayesian context, it is implemented in BEAST. We describe our implementation in Rambaut et al (2008) MBE [doi:10.1093/molbev/msn256]. In our paper we were modelling postmortem DNA damage so provide extensions where the error rate is a function of time in the ground and where specific types of nucleotide replacements are happening. But the basic homogeneous error model is also available (turned on in the ‘Sites’ panel in BEAUti).</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/19001634" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/19001634" rel="nofollow noopener" target="_blank">Accommodating the effect of ancient DNA damage on inferences of demographic histories.</a>
+</h4>
+<div class="date">
+  A Rambaut, SY Ho, AJ Drummond and B Shapiro,
+  <i>Molecular biology and evolution</i>, Feb 2009
+</div>
+<p class="pubmed-abstract">
+  DNA sequences extracted from ancient remains are increasingly used to generate large population data sets, often spanning tens of thousands of years of population history. Bayesian coalescent methods such as those implemented in the software package BEAST can be used to estimate the demographic history of these populations, sometimes resulting in complex scenarios of fluctuations in population size, which can be correlated with the timing of environmental events, such as glaciations. Recently, however, Axelsson et al. (Axelsson E, Willerslev E, Gilbert MTP, Nielsen R. 2008. The effect of ancient DNA damage on inferences of demographic histories. Mol Biol Evol 25:2181-2187.) claimed that many of these complex demographic trends are likely to be the result of postmortem DNA damage, a problem that they investigate by removing all sites involving transitions from ancient sequences prior to analysis. When this solution is applied to a previously published data set of Pleistocene bison, they show that the demographic signal of population expansion and decline disappears. Although some apparently segregating mutations in ancient sequences may be due to postmortem damage, we argue that discarding the data will result in loss of power to detect patterns of population change. Instead, to accommodate this problem, we implement a model in which sequences are the result of a joint process of molecular evolution and postmortem DNA damage within a probabilistic inference framework. Through simulation, we demonstrate the ability of this model to accurately recover evolutionary parameters, demographic history, and DNA damage rates. When this model is applied to the bison data set, we find that the rate of DNA damage is significant but low and that the reconstruction of population size history is nearly identical to previously published estimates.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/376_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mlandis</div>
+          <div class="post_content">
+<p>I think this simulation is useful to demonstrate that sequencing error should be modeled somewhere.
+Incorporating the uncertainty in the observation before the alignment phase might improve things further, since a misread character may result in the alignment opening a gap. Then, you should be able to propagate the error in the (marginal) tip state in a similar manner.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>There are a number of multiple sequence alignment programs that output a per-column measure of uncertainty. I know that FSA’s is in terms of an expected accuracy, which could be used as a prior on the error tip state:</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/19478997" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/19478997" rel="nofollow noopener" target="_blank">Fast statistical alignment.</a>
+</h4>
+<div class="date">
+  RK Bradley, A Roberts, M Smoot, S Juvekar, J Do, C Dewey, I Holmes and L Pachter,
+  <i>PLoS computational biology</i>, May 2009
+</div>
+<p class="pubmed-abstract">
+  We describe a new program for the alignment of multiple biological sequences that is both statistically motivated and fast enough for problem sizes that arise in practice. Our Fast Statistical Alignment program is based on pair hidden Markov models which approximate an insertion/deletion process on a tree and uses a sequence annealing algorithm to combine the posterior probabilities estimated from these models into a multiple alignment. FSA uses its explicit statistical model to produce multiple alignments which are accompanied by estimates of the alignment accuracy and uncertainty for every column and character of the alignment--previously available only with alignment programs which use computationally-expensive Markov Chain Monte Carlo approaches--yet can align thousands of long sequences. Moreover, FSA utilizes an unsupervised query-specific learning procedure for parameter estimation which leads to improved accuracy on benchmark reference alignments in comparison to existing programs. The centroid alignment approach taken by FSA, in combination with its learning procedure, drastically reduces the amount of false-positive alignment on biological data in comparison to that given by other methods. The FSA program and a companion visualization tool for exploring uncertainty in alignments can be used via a web interface at http://orangutan.math.berkeley.edu/fsa/, and the source code is available at http://fsa.sourceforge.net/.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>Re BEAST, here’s the link (note that paper info is pasted automatically if a pubmed link is given on its own line):</p>
+<aside class="onebox pubmed">
+<header class="source">
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/19001634" rel="nofollow noopener" target="_blank">ncbi.nlm.nih.gov</a>
+</header>
+<article class="onebox-body">
+<h4>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/19001634" rel="nofollow noopener" target="_blank">Accommodating the effect of ancient DNA damage on inferences of demographic histories.</a>
+</h4>
+<div class="date">
+  A Rambaut, SY Ho, AJ Drummond and B Shapiro,
+  <i>Molecular biology and evolution</i>, Feb 2009
+</div>
+<p class="pubmed-abstract">
+  DNA sequences extracted from ancient remains are increasingly used to generate large population data sets, often spanning tens of thousands of years of population history. Bayesian coalescent methods such as those implemented in the software package BEAST can be used to estimate the demographic history of these populations, sometimes resulting in complex scenarios of fluctuations in population size, which can be correlated with the timing of environmental events, such as glaciations. Recently, however, Axelsson et al. (Axelsson E, Willerslev E, Gilbert MTP, Nielsen R. 2008. The effect of ancient DNA damage on inferences of demographic histories. Mol Biol Evol 25:2181-2187.) claimed that many of these complex demographic trends are likely to be the result of postmortem DNA damage, a problem that they investigate by removing all sites involving transitions from ancient sequences prior to analysis. When this solution is applied to a previously published data set of Pleistocene bison, they show that the demographic signal of population expansion and decline disappears. Although some apparently segregating mutations in ancient sequences may be due to postmortem damage, we argue that discarding the data will result in loss of power to detect patterns of population change. Instead, to accommodate this problem, we implement a model in which sequences are the result of a joint process of molecular evolution and postmortem DNA damage within a probabilistic inference framework. Through simulation, we demonstrate the ability of this model to accurately recover evolutionary parameters, demographic history, and DNA damage rates. When this model is applied to the bison data set, we find that the rate of DNA damage is significant but low and that the reconstruction of population size history is nearly identical to previously published estimates.
+</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>A simulation study sure seems like some low-hanging fruit for some student or postdoc. I’ve set up a framework that makes it easy to do lots of simulation using INDELible. Anyone keen?</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

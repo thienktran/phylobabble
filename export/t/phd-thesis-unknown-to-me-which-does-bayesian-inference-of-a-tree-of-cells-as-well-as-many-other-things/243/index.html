@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>PhD thesis unknown to me, which does Bayesian inference of a tree of cells, as well as many other things</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">PhD thesis unknown to me, which does Bayesian inference of a tree of cells, as well as many other things</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I was following a reference chain and came across the <a href="http://purl.stanford.edu/xp796hy4748">PhD thesis</a> of
+<a href="http://cs.stanford.edu/~joni/">Jonathan Laserson</a>, who was a Daphne Koller student and now works at Google.</p>
+<p>The thesis is interesting. It’s quite ambitious: in one chapter he sets up a Bayesian inference algorithm for a tree of cells (cc <span class="mention">@mathmomike</span>) that explicitly models sequencing error. On the other hand, I can’t see how he got any of this to work efficiently for the sizes of data sets discussed, and his software, called ImmuniTree, is not to be found on the web.</p>
+<p><span class="mention">@jeetsukumaran</span> and others may know this fellow from his Genovo de novo assembly software for mixed populations.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/65_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">vminin</div>
+          <div class="post_content">
+<p>The software ImmuniTree features prominently in the <a href="http://www.plospathogens.org/article/info:doi/10.1371/journal.ppat.1003754" rel="nofollow noopener">article</a> by Sok et al., but the still I found no link to the software itself. <a href="http://www.plospathogens.org/article/fetchSingleRepresentation.action?uri=info:doi/10.1371/journal.ppat.1003754.s027" rel="nofollow noopener">Text S1</a> has a fairly detailed description of the Bayesian framework used by ImmuniTree. There are two modeling assumptions that I don’t fully understand:</p>
+<ol>
+<li>Mutations are modeled using a discrete-time Markov chain, while the prior over the tree appears to be a continuous-time birth-death process.</li>
+<li>Internal nodes of the tree are supposed to be observed, because reads are assigned to all nodes of the tree. It is possible that I simply don’t understand the experimental design used by the authors.</li>
+</ol>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

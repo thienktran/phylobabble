@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Dryad and GPL software</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Dryad and GPL software</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rainbowgoblin</div>
+          <div class="post_content">
+<p>I’m running into a hitch putting the finishing touches on a paper that’s been accepted by Methods in Ecology and Evolution. The journal requires that data, etc. be available in some repository that they deem acceptable, and since mine is a software paper I stupidly assumed that Github would meet their criteria. It doesn’t, so I made a tar archive of the current version I have on GitHub, put it up on Dryad (their preferred repo), and figured THAT would be ok.</p>
+<p>Still no good, and now it starts to get complicated. Dryad can’t deal with GPL. They require that software be covered by a Creative Commons (CC0) license. Since my software is already on both GitHub and its own website, and has been distributed under GPL up to this point, I don’t know whether it makes sense to change the licence I use now, or whether I can just distribute the version on Dryad under CC0, but keep using GPL elsewhere.</p>
+<p>Dryad also has an option to link to materials on GitHub as well, which sounds like a better option, but I contacted the journal to ask about  it, and they said probably not, and that this was all highly unusual, they’d never encountered this problem before.</p>
+<p>Has anyone else run into anything like this before? Is ecology software usually not GPL?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">GrahamJones</div>
+          <div class="post_content">
+<p>Since CC0 and GPL are compatible (<a href="http://creativecommons.org/tag/gpl" rel="nofollow noopener">http://creativecommons.org/tag/gpl</a>) I don’t see a problem with distributing the version on Dryad under CC0, and using GPL elsewhere.</p>
+<p>Software is very different from data, and I think journals need different policies. You might like to point Methods in Ecology and Evolution to Systematic Biology’s  much more sensible requirements (<a href="http://www.oxfordjournals.org/our_journals/sysbio/for_authors/ms_preparation.html" rel="nofollow noopener">http://www.oxfordjournals.org/our_journals/sysbio/for_authors/ms_preparation.html</a>):</p>
+<blockquote>
+<p>Any software must be open source, web-distributed and free to
+non-commercial users. In addition, the authors must certify that they
+will provide support for the software or tools for a minimum of two
+years from the date of publication. Systematic Biology encourages the
+use of GPL-like licenses and the use of open repositories, such as
+SourceForge or Google Code.</p>
+</blockquote>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/382_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mtholder</div>
+          <div class="post_content">
+<p>It looks like there was a request for comments on this issue by the Dryad folks back in 2011: <a href="http://blog.datadryad.org/2011/06/19/request-for-input-archiving-and-licensing-software/" rel="nofollow noopener">http://blog.datadryad.org/2011/06/19/request-for-input-archiving-and-licensing-software/</a>
+I missed that.  I have no idea if they are still considering options on this topic. It probably would not hurt to weigh in on that thread.</p>
+<p>The fact that you’ve distributed your code to other using the GPL does not constrain you. So, if you don’t mind dual-licensing it under CC0, there is no problem with depositing a snapshot under CC0.  Of course, that means that users of that snapshot need not abide by the GPL’s conditions. So this solution is unsatisfying, if you have a philosophical preference for a “copyleft” (license like the GPL).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rainbowgoblin</div>
+          <div class="post_content">
+<p>Thanks for your feedback. I agree that Methods in Ecology and Evolution needs to come up with a better solution. I’m currently hoping to fly under the radar and just add a link to my GitHub repository to Dryad, but when they inevitably figure out what I’ve done I’ll point out that they should update their policy on software so that it looks more like Systematic Biology’s.</p>
+<p>I don’t really care if I have to dedicate a snapshot of my sources to the public domain under CC0, but the principle bothers me. MEE publishes an awful lot of software (mostly R packages, from the looks). It’s amazing that this hasn’t been a major issue already. Perhaps other authors just do what I’m going to try to do and the journal hasn’t figured it out yet.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/387_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">hlapp</div>
+          <div class="post_content">
+<p>Just a few comments. Software is a creative work,  and hence as the author you hold copyright. As the copyright holder, you can license your work in as many ways you want, including releasing it to the public domain, which is what CC0 does, in contrast to licenses. (CC0 waives copyright, licenses assert it.)</p>
+<p>First off, this is laudable! And putting a copyright-eligible work legally in the public domain should not be confused with expectations of professional norms to be followed, such as proper attribution and citation by those who use it, so you are not and need not be waiving that along with the copyright.</p>
+<p>Second, if you continue to distribute your software primarily under GPL, you are within your rights, but you create confusion, for the reasons <span class="mention">@mtholder</span> is stating. So if you weren’t ever planning to waive copyright, then doing so in one place but not in others is clearly not consistent with what you were trying to achieve.</p>
+<p>Third, Dryad is not the only, and arguably (including for the reasons you mention) not the best repository for archiving software. Both Zenodo (<a href="http://zenodo.org" rel="nofollow noopener">http://zenodo.org</a>) and Figshare (<a href="http://figshare.com" rel="nofollow noopener">http://figshare.com</a>) integrate well with Github in a way that allows you declare a release on your Github repository, which Zenodo or Figshare will then pick up, archive for perpetuity, and assign a DOI, which you can use for citation. And in this case you decide on the license, which presumably would be the license you have used for your code already. Here are two examples:</p>
+<ul>
+<li>Jason Stajich et al… (2015). bioperl-live: Basic tag for Zenodo. Zenodo. <a href="http://dx.doi.org/10.5281/zenodo.16344" rel="nofollow noopener">10.5281/zenodo.16344</a>
+</li>
+<li>James Balhoff et al… (2014). ontotrace: Ontotrace release 1.0.3. Zenodo. <a href="http://dx.doi.org/10.5281/zenodo.12705" rel="nofollow noopener">10.5281/zenodo.12705</a>
+</li>
+</ul>
+<p>The latter of these is an archive of record for a paper now in press at Syst, Biology. The following is an archive of record for a pending manuscript submitted to MEE:</p>
+<ul>
+<li>Carl Boettiger et al… (2014). RNeXML v2.0.0. Zenodo. <a href="http://dx.doi.org/10.5281/zenodo.13131" rel="nofollow noopener">10.5281/zenodo.13131</a>
+</li>
+</ul>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

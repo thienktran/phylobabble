@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Genesis SW for post-processing phylogenetic placements</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Genesis SW for post-processing phylogenetic placements</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Dear All,</p>
+<p>For those of you using the Evolutionary Placement Algorithm (EPA) or  <span class="mention">@ematsen</span> 's pplacer tool  there is now a
+toolkit available at <a href="http://genesis-lib.org/" rel="nofollow noopener">http://genesis-lib.org/</a> to</p>
+<ul>
+<li>Read, manipulate and write .jplace files</li>
+<li>Extract, filter and merge placements</li>
+<li>Calculate distance measures (e.g., Earth Movers Distance)</li>
+<li>Visualize read abundances on the branches of the tree</li>
+</ul>
+<p>Cheers,</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Could you describe the differences from our <code>guppy</code>, which does all of those things?</p>
+<p><a class="onebox" href="http://matsen.github.io/pplacer/generated_rst/guppy.html#list-of-subcommands" target="_blank">http://matsen.github.io/pplacer/generated_rst/guppy.html#list-of-subcommands</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/263_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">lczech</div>
+          <div class="post_content">
+<p>The main difference is that genesis is a library, for both C++ and Python. This makes it flexible and offers different use cases:</p>
+<ul>
+<li>Interactively inspecting and manipulating Pqueries (and other data types).</li>
+<li>Writing custom scripts or programs for specific purposes, e.g., count some quantity, convert a file, output some information, etc.</li>
+<li>Adding or modifying functionality, e.g., new visualizations, new distance measures, etc.</li>
+</ul>
+<p>In addition, the currently available functions are different ones than the ones guppy offers. I did not want to create a copy/replacement for guppy but instead offer new complementary methods. For example:</p>
+<ul>
+<li>Simulation of Pqueries, i.e., artificially create them according to some distribution and with some specific properties. I’m currently working on that part again, so there will be more of that in the near future.</li>
+<li>The earth mover’s distance is different from guppy’s Kantorovich-Rubinstein distance: Instead of moving around masses that sit on the edges of the tree, the masses of single placements (given by their like_weight_ratio) are moved around. It is thus more finely grained.</li>
+<li>The visualization of placements and trees is customizable. For example, the placement density can be shown using colour coded tree edges, but could easily be extended to make the edges thicker instead.</li>
+<li>It is generally meant for experimenting and playing around with data. The tree data structure for example is customizable so that arbitrary data can be stored on the nodes and edges of the tree.</li>
+</ul>
+<p>There are also some helpful out-of-the-box tools to be used. Currently, there are two demo programs (<a href="http://doc.genesis-lib.org/demos.html" rel="nofollow noopener">http://doc.genesis-lib.org/demos.html</a>) for visualizing placements and for extracting them from clades of the tree. I will add more in the future.</p>
+<p>As a final remark, I am open to feature requests. Maybe it’s just a three-liner, and it is always good to get a feeling about what kind of functionality is needed by the community.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>That’s cool, <span class="mention">@lczech</span>! Thanks for the update. I should also say that in general it’s a good thing for there to be at least two software packages doing the same thing.</p>
+<p>Regarding</p>
+<aside class="quote" data-post="3" data-topic="631">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/lczech/40/263_1.png" width="20"/> lczech:</div>
+<blockquote>
+<p>The earth mover’s distance is different from guppy’s Kantorovich-Rubinstein distance: Instead of moving around masses that sit on the edges of the tree, the masses of single placements (given by their like_weight_ratio) are moved around. It is thus more finely grained.</p>
+</blockquote>
+</aside>
+<p>I’m not sure if I quite understand. Guppy’s KR can move about mass from individual placements, split by their likelihood weight ratio or posterior probability.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/263_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">lczech</div>
+          <div class="post_content">
+<p>Oh, that’s right. Somehow, I had in mind that the KR distance works on edges (maybe because of the figures showing thickened edges). Anyway, I now read the paper again (<a href="http://arxiv.org/abs/1005.1699" rel="nofollow noopener">http://arxiv.org/abs/1005.1699</a>), and it seems my procedure is quite close to yours. Sorry for the confusion.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

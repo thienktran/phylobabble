@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Exporting ancestral reconstructions from PAUP*</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Exporting ancestral reconstructions from PAUP*</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">aroger</div>
+          <div class="post_content">
+<p>Does anyone know how to export the ancestral state reconstructions at nodes in trees estimated by PAUP*?  The “Reconstruct” command works to generate them, but there doesn’t seem to be any straightforward way to export a list of nodes with the ancestral ‘sequences’ at each node…or maybe there is, but its not obvious (help?)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/379_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">metasoarous</div>
+          <div class="post_content">
+<p>Hi aroger</p>
+<p>Did you manage to figure this out? I’m trying to do the same thing presently, and can only get out tree representations of position by position character states.</p>
+<p>I’ll post if I find anything.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">gkahochberg</div>
+          <div class="post_content">
+<p>Had the same problem, just clicked around forever until I figured it out. Click on trees -&gt; Describe trees, and in the dialog, click the ‘states for internal nodes’ box. In the output window you may have to scroll up past the cladogram, if you didn’t untick the box for outputting it. It will give you a list of each node number together with its associated state.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

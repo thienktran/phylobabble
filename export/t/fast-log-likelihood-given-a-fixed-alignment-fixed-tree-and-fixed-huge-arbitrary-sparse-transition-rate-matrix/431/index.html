@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Fast log likelihood given a fixed alignment, fixed tree, and fixed huge arbitrary sparse transition rate matrix</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Fast log likelihood given a fixed alignment, fixed tree, and fixed huge arbitrary sparse transition rate matrix</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/117_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">argriffing</div>
+          <div class="post_content">
+<p>I know some ways to compute this, but I wonder who has the best current implementation?  This would just be a tool for methods development testing rather than for doing anything practical, for example it wouldn’t estimate anything and it wouldn’t need to know anything about biology.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>PyCogent might be worth a look. Very flexible likelihood calculation implementation, and some very nice optimisation routines too (the hard stuff is in C). All very customisable to give you the full range of options from quick to thorough.</p>
+<p><a class="onebox" href="http://pycogent.org/" rel="nofollow noopener" target="_blank">http://pycogent.org/</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<p>BEAGLE library - <a href="https://code.google.com/p/beagle-lib/" rel="nofollow noopener">https://code.google.com/p/beagle-lib/</a> - is a fast library for computing these likelihoods. It can use GPUs to parallelize the computation of large state space transition probability matrices but it depends on what you mean by ‘huge’.</p>
+<p>There are some example programs showing how to call the library and some Python wrappers in the examples folder.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

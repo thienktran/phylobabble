@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>About parsing newick format</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">About parsing newick format</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/378_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">guangchuangyu</div>
+          <div class="post_content">
+<p>Dear all,</p>
+<p>I am new to phylogeny, and I start to learn by solving problems in ROSALIND.
+I got stuck with the problem of : <a href="http://rosalind.info/problems/nwck/" rel="nofollow noopener">http://rosalind.info/problems/nwck/</a></p>
+<p>My solution to it is define a NEWICK class to store the tree and after setting the current node, the getParentList() method can return all its ancester nodes.</p>
+<p>So the problem turn out to be finding the most recent common ancestor, and the distance between to nodes can be calculated then.</p>
+<p>Source code and sample data can be found at <a href="https://github.com/GuangchuangYu/ROSALIND" rel="nofollow noopener">https://github.com/GuangchuangYu/ROSALIND</a></p>
+<p>java/NWCK.java
+java/tree/Newick.java
+java/FILE/ReadFile.java
+DATA/rosalind_nwck.txt</p>
+<p>Most of the time, my code can give correct answer, except the newick text contain no ‘,’.
+For example:
+((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((sibiricus_molurus)sibiricus_deminutus)Ursus_means)Tupinambus_dactylisonans)Trachemys_cancerides)Tadorna_ferina)Tadarida_albertisii)Syrrhaptes_ulikovskii)Strepsilas_subrubrum)Spizaetus_vittatus)Sitta_plathyrhychos)Selenocosmia_barbatus)Scaphiopus_not)Saxicola_politus)Salmo_hosii)Saga_subruficollis)Saga_rufodorsata)Ruticilla_fiber)Rufibrenta_vanellus)Rhynchaspis_parvus)Rhombomys_erythronotus)Rhacodactylus_spaldingi)Remiz_porzana)Ptyodactylus_ignicapillus)Pseudemys_felderi)Prunella_lagopus)Poephagus_turtur)Phrynocephalus_chrysargos)Pelomedusa_mlokosiewiczi)Pelomedusa_arcticus)Pelodytes_rusticolus)Parus_altaicus)Pandion_grossmani)Oceanodroma_glareola)Nucifraga_insularis)Nucifraga_deremensis)Nipponia_pelagicus)Mochlus_buccata)Marmota_duplex)Madagascarophis_hodgsoni)Lystrophis_isabellina)Lycaenopsis_timidus)Limnodromus_horridum)Liasis_angulifer)Lepus_sudanensis)Lepus_arenarius)Leptopelis_totanus)Leptobrachium_zagrosensis)Ingerophrynus_hypoleucus)Iguana_albatrus)Hydrosaurus_schreibersi)Homopholis_tarandus)Holaspis_querquedula)Heteroscodra_lasiopterus)Haplopelma_turtur)Geochelone_constrictor)Gavia_metallica)Fuligula_vulpes)Fuligula_capreolus)Felis_saxatilis)Felis_middendorffi)Eurynorhynchus_taeniura)Eunectes_weberi)Eucratoscelus_doctus)Erpeton_squamatus)Equus_parreyssi)Equus_cristatus)Cygnus_pachypus)Cuculus_bimaculata)Colaeus_mexicana)Citellus_castaneus)Circaetus_scripta)Chen_corticale)Chelydra_mycterizans)Cardiocranius_aspera)Capella_baeri)Bubulcus_arvensis)Bronchocela_piscator)Branta_cristatellus)Bradyporus_ornata)Bradyporus_ladogensis)Arenaria_campestris)Archispirostreptus_maldivarum)Amphiuma_longicaudata)Amphiuma_bukhunensis)Alauda_opimus);Felis_middendorffi Liasis_angulifer</p>
+<p>My code will return the number of correct answer+2.</p>
+<p>It took me many times to figure out this bug, and I have no idea why this happened.</p>
+<p>Anyone has some ideas?</p>
+<p>Thank you!</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

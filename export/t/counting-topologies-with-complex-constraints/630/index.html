@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Counting topologies with complex constraints</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Counting topologies with complex constraints</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jembrown</div>
+          <div class="post_content">
+<p>Does anyone know of a solution to count all possible topologies consistent with a complex set of constraints (including hard positive, hard negative, and partial positive)? Ideally, I’m interested in existing software solutions, but theory leads are welcome too.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Are your constraints equivalent to splits, i.e. these taxa form an unrooted clade?</p>
+<p>Could you please clarify a little what you mean by hard vs partial?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jembrown</div>
+          <div class="post_content">
+<p>Apologies for the ambiguity. Yes, the constraints are equivalent to splits. Regarding hard vs. partial, I was using the terminology employed by MrBayes. Hard constraints are strict and define a split for all taxa. Partial (or backbone) constraints are defined for a subset of taxa, with the remainder allowed to occur on either side of the split.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/15_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mathmomike</div>
+          <div class="post_content">
+<p>A couple of further questions:</p>
+<ol>
+<li>are you interested in counting
+(i) all phylogenetic trees, or
+(ii) just all binary ones, or
+(ii) all minimally-refined trees,
+subject to the constraints?</li>
+</ol>
+<p>Also, are you working with rooted trees (and so clusters rather than splits) or unrooted trees?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jembrown</div>
+          <div class="post_content">
+<p>We’re interested in counting all binary, unrooted trees.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/15_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mathmomike</div>
+          <div class="post_content">
+<p>Hi, ok this might help.</p>
+<p>Let <span class="math">S= \{\sigma_1,..., \sigma_k\}</span> be a set of splits you want to be in your (binary) trees, and let <span class="math">N_S</span> be the number of binary trees with these splits. Note that <span class="math">N_S=0</span> unless the splits are pairwise compatible, and if they are, then they form a unique minimally-resolved tree <span class="math">T_S</span> (generally not binary). Then there is a simple formula for <span class="math">N_S</span>, namely</p>
+<p>N_S = \prod_{v \in IV(T_S)} b(deg(v))$</p>
+<p>where IV(T_S) is the set of interior vertices of $T_S, deg(v) is the degree of vertex v in T_S, and b(k) = (2k-5)!! is the number of unrooted binary tree in k leaves = 1x 3 x … x(2k-5)</p>
+<p>For example if S= {123|45678, 1234|5678} then T_S (good idea to draw it) has interior vertices of degrees 3,4 and 5 and so N_S = b(3)xb(4)xb(5) = 1x(1x3)x (1x3x5) = 45.</p>
+<p>Now suppose that you also want to exclude certain splits - so you have a second set
+\Sigma’ =  {\sigma’<em>1,…, \sigma’<em>k}$ and you want your (binary) tree to also exclude each split in this set.  So let N</em>{S,S’} be the number of binary trees that have each split in S and no split in S’.  You can now just use the previous result (for N_S) in concert with the “principle of inclusion and exclusion” PIE (see Wikipedia if that is not familiar).  For example, in our previous example, if we want to also exclude two splits by taking <span class="math">S'= \{56|....., 78|....\}</span> (where … just means the other taxa) then the PIE (and the theory from the previous paragraph) tells us that this will be:
+N_S - N</em>(S + 56|…) - N_(S+ 78|…) + N_(S+56|…+ 78|…)
+= 45 - (1x 3 x 3) - (1x 3 x 3) + (1 x 3 x 1) = 30
+(it’s worth drawing the last 3 trees to check the degrees of the vertices).</p>
+<p>Finally if you have partial information (e.g. partial splits like 14|67) you want to include - then in general there is not good algorithm since even if all you have is s set of quartet splits Q  (like 14|67) and no other full splits at all to insist on or exclude (as above) then even deciding whether or not <span class="math">N_Q=0</span> is NP-hard.</p>
+<p>However if there is some taxon/leaf that is present in all the partial splits, then an algorithm is possible (based on the Aho et al. algorithm, and the counting approach developed by Constantinescu and Sankoff (SUPERB I think it was called)).</p>
+<p>Hope that helps. Just get back if you have any questions (here or by email).
+best, Mike Steel</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jembrown</div>
+          <div class="post_content">
+<p>Mike, thanks much, this is very helpful. The partial constraints have been giving us the most trouble, although we do have several taxa that are present in all partial splits. Is this the Constantinescu and Sankoff paper that you were referencing?</p>
+<p>An efficient algorithm for supertrees. 1995. Journal of Classification. 12:101-112.</p>
+<p>This is probably overly hopeful, but do you know of any existing software implementation of this algorithm?</p>
+<p>Best, Jeremy Brown</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/15_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mathmomike</div>
+          <div class="post_content">
+<p>Hi Jeremy,</p>
+<p>Pleased that helps.  yes, that’s the paper I meant … I think Michael Sanderson (Arizona) may have an implementation of that algorithm - you could email him and ask (username is <code>sanderm</code>, domain is <code>email.arizona.edu</code>). best,
+Mike</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Thanks a bunch, <span class="mention">@mathmomike</span>! I’ve just invited Michael Sanderson to phylobabble (and slightly obscured his email address in your post).</p>
+<p>It would be great to continue the conversation here for others who are interested in this topic.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

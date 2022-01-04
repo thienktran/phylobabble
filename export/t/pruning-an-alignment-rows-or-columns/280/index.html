@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Pruning an alignment, rows or columns</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Pruning an alignment, rows or columns</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>The <a href="http://www.hiv.lanl.gov/content/sequence/ELIMDUPES/elimdupes.html" rel="nofollow noopener">ElimDupes program</a> can be set to eliminate identical, or nearly identical sequences from a multiple sequence alignment.  Useful for retaining one sequence per species for example.</p>
+<p>The <a href="http://www.hiv.lanl.gov/content/sequence/GAPSTREEZE/gap.html" rel="nofollow noopener">GapStreeze program</a>, can be set to eliminate columns in an alignment, where one or more (x percent) of the sequences is represented by a gap character.  It can be set to preserve codons, so the reading frame of the alignment does not get thrown out of sync.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<p>Interesting.  My command-line tool alignment-thin can eliminate identical of near-identical sequences.  It can also eliminate rows containing fewer than N non-gap characters.  It doesn’t handle codons, though it could be extended to do so.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/300_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">bredelings</div>
+          <div class="post_content">
+<p>If anyone is interested, the alignment-thin program is a command line tool that is part of the BAli-Phy codebase.  You can download compiled binaries at <a href="http://www.bali-phy.org" rel="nofollow noopener">http://www.bali-phy.org</a>. The source code is available at <a href="https://github.com/bredelings/BAli-Phy" rel="nofollow noopener">https://github.com/bredelings/BAli-Phy</a>.  There isn’t a GUI version available, but there is usage information in the BAli-Phy manual under ‘alignment utilities’.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/179_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ajeffries</div>
+          <div class="post_content">
+<p>Excellent. Gap Streeze just went into my class computer workshop. Thanks for making this available.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">gorm</div>
+          <div class="post_content">
+<p>In this context MaxAlign (<a href="http://www.ncbi.nlm.nih.gov/pubmed/17725821" rel="nofollow noopener">Paper</a>, <a href="http://www.cbs.dtu.dk/services/MaxAlign/" rel="nofollow noopener">Server</a>, <a href="http://www.cbs.dtu.dk/services/MaxAlign/maxalign.pl" rel="nofollow noopener">Perl-standalone</a>) may also be of interest to some:</p>
+<blockquote>
+<p>MaxAlign […] maximizes the number of nucleotide (or amino acid)
+symbols that are present in gap-free columns - the alignment area - by
+selecting the optimal subset of sequences to exclude from the
+alignment.</p>
+</blockquote>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

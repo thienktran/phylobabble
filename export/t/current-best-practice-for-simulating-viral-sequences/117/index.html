@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Current best practice for simulating viral sequences?</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Current best practice for simulating viral sequences?</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I would like to simulate sequences for a population undergoing mutation and recombination in the presence of strong selection. I would like to be able to specify an arbitrary fitness landscape, hopefully with some nice parameterization. I don’t want to start from scratch and write a forward time simulator. I’m hoping to get some feedback from you all about how to do this.</p>
+<p>Here is what I have seen so far:</p>
+<p><span class="mention">@tgvaughan</span> has written the very nice looking <a href="https://github.com/CompEvol/MASTER/wiki">MASTER</a>.  However, my impression is that this involves a fixed number of types, and relative fitness is implicitly defined by the master equations determining how those types leave progeny. I would like a mutant to have a different fitness than its predecessor.</p>
+<p>I found a software package called <a href="http://bioinformatics.oxfordjournals.org/content/30/4/578">VIRAPOPS</a> which is distributed as <a href="http://petitjeanmichel.free.fr/itoweb.petitjean.freeware.html">binaries</a>. I contacted the author and the f77 code is not open-source. Not going to use a simulator that I can’t look at under the hood of, thankyouverymuch.</p>
+<p>There is a cool looking package called <a href="http://arxiv.org/abs/1310.3234">forqs</a> that is
+<a href="https://bitbucket.org/dkessner/forqs">open source C++</a>, but which is really designed with diploid populations that recombine via crossing-over in mind. I’ve been in touch with that author, who was very friendly and helpful, but it would require some deep recoding, or some abuse.</p>
+<p>Am I forgetting something obvious?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>Sorry, I do not have a simulator in mind.  But I wanted to make sure you were not overlooking “deep sequencing” data sets from HIV-1 infected individuals.  HIV packages 2 copies of the viral RNA genome, and “recombination” happens when the reverse transcriptase switches from one RNA genome to the other during reverse transcription.  It is not strand break/repair, but results in recombinant cDNA and provirus.  Anyway, HIV is actually undergoing mutation and recombination in the presence of several types of strong selection (CTL and antibody immune responses remove more than 99% of the virions produced each day; antoretrovirual drugs can remove more than 99.999%), and we have some stunningly huge data sets now from single time points and from patients followed over time.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/127_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jeetsukumaran</div>
+          <div class="post_content">
+<p>Hi <span class="mention">@ematsen</span>!</p>
+<p>I actually have some Python scripts to leverage Vaughn’s MASTER to do something like this:</p>
+<pre><code>[https://gist.github.com/jeetsukumaran/9217140][1]
+</code></pre>
+<p>It basically generates a rather large and complex configuration file for MASTER rather than being any clever code modification.</p>
+<p>It probably is not ideal for your purposes, because you have to set the maximum number of strains that can evolve (and things get pretty slow once you get above 5 or 6 strains). I allow fitness varies as well, but the ways that it can vary are limited. So again, not quite what you are looking for. But maybe with some imagination you can tweak it to get what you want?</p>
+<p>I actually did begin work on a from-the-ground-up viral phylogeny simulation in C++11 last year. It has been on the back-burner for a long time, mainly because it was difficult to justify working on it when other things could get me <em>almost</em> what I want with a little bit of hacking, so I would not expect anything quickly! Looking forward to someone else suggesting an alternative so that I do not disappear down the rabbit-hole to work on this toy (at the expense of other, ongoing “real” projects).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/389_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tgvaughan</div>
+          <div class="post_content">
+<p>Hi Eric, you’re right about MASTER probably not being the best choice here.  While it’s strictly possible to express non-neutral population genetics models within the chemical master equation framework the program operates in, this isn’t practical.  (Each genetically distinct sub-population would need to be given its own type/location tag.)  MASTER is mostly about neutral phylodynamics at this stage.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<aside class="quote" data-post="2" data-topic="117">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/brianfoley/40/116_1.png" width="20"/> BrianFoley:</div>
+<blockquote>
+<p>Sorry, I do not have a simulator in mind.  But I wanted to make sure you were not overlooking “deep sequencing” data sets from HIV-1 infected individuals.</p>
+</blockquote>
+</aside>
+<p>I find these data sets exceedingly interesting, but we don’t know the sequence of events that led to those deep sequencing data sets (unless you have something I don’t know about over at LANL!).</p>
+<aside class="quote" data-post="2" data-topic="117">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/brianfoley/40/116_1.png" width="20"/> BrianFoley:</div>
+<blockquote>
+<p>we have some stunningly huge data sets now from single time points and from patients followed over time.</p>
+</blockquote>
+</aside>
+<p>I can’t wait for those to become public!</p>
+<aside class="quote" data-post="3" data-topic="117">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/jeetsukumaran/40/127_1.png" width="20"/> jeetsukumaran:</div>
+<blockquote>
+<p>I actually have some Python scripts to leverage Vaughn’s MASTER to do something like this:</p>
+</blockquote>
+</aside>
+<p><span class="mention">@jeetsukumaran</span>, you are a madman. I mean this in the most complimentary sense.</p>
+<aside class="quote" data-post="4" data-topic="117">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/tgvaughan/40/137_1.png" width="20"/> tgvaughan:</div>
+<blockquote>
+<p>MASTER is mostly about neutral phylodynamics at this stage.</p>
+</blockquote>
+</aside>
+<p><span class="mention">@tgvaughan</span>… that <em>mostly</em> is of course piquing my interest. Do you have some future plans?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/389_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tgvaughan</div>
+          <div class="post_content">
+<aside class="quote" data-post="5" data-topic="117">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/ematsen/40/114_1.png" width="20"/> ematsen:</div>
+<blockquote>
+<p><span class="mention">@tgvaughan</span>… that <em>mostly</em> is of course piquing my interest. Do you have some future plans?</p>
+</blockquote>
+</aside>
+<p>No, nothing solid, but it’s a problem I’ve thought about often!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<p>Ages ago we (Alexei Drummond, Koen Deforche and others) wrote a simulator like this. You set it up using an XML description language. The aim was to simulate complete genomes with selection and recombination for 10^6 populations and higher.</p>
+<p>I haven’t had time to work on it and I have basically let people in Annemie Vandamme’s group try to take it on. It is FOSS Java code and can be found here: <a href="https://code.google.com/p/santa-sim/" rel="noopener nofollow ugc">https://code.google.com/p/santa-sim/</a></p>
+<p>Documentation is here:</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://github.com/santa-dev/santa-sim">
+<header class="source">
+<img class="site-icon" height="32" src="https://github.githubassets.com/favicons/favicon.svg" width="32"/>
+<a href="https://github.com/santa-dev/santa-sim" rel="noopener nofollow ugc" target="_blank">GitHub</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:690/345;"><img class="thumbnail" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/79cae0e32e1433db3fd973ce997b266f97568a5c_2_10x10.png" height="345" src="https://www.phylobabble.org/uploads/default/optimized/1X/79cae0e32e1433db3fd973ce997b266f97568a5c_2_690x345.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/79cae0e32e1433db3fd973ce997b266f97568a5c_2_690x345.png, https://www.phylobabble.org/uploads/default/optimized/1X/79cae0e32e1433db3fd973ce997b266f97568a5c_2_1035x517.png 1.5x, https://www.phylobabble.org/uploads/default/original/1X/79cae0e32e1433db3fd973ce997b266f97568a5c.png 2x" width="690"/></div>
+<h3><a href="https://github.com/santa-dev/santa-sim" rel="noopener nofollow ugc" target="_blank">santa-dev/santa-sim</a></h3>
+<p>A forward-time simulator for gene sequences modeling a variety of mutation and selection processes. - santa-dev/santa-sim</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">peterbriangilbe</div>
+          <div class="post_content">
+<p>Some applications only need to model evolution in a single potential epitope region or event at a single amino acid site.  I wonder if MASTER would be useful there.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@arambaut</span>-- I just had a chance to look through the documentation. I’m impressed, especially by the component-wise flexibility you built into it.</p>
+<p>Can I assume that the functionality in the wiki works as described?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<aside class="quote" data-post="2" data-topic="117">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/brianfoley/40/116_1.png" width="20"/> BrianFoley:</div>
+<blockquote>
+<p>Sorry, I do not have a simulator in mind.  But I wanted to make sure you were not overlooking “deep sequencing” data sets from HIV-1 infected individuals.</p>
+</blockquote>
+</aside>
+<p>It seems like this sort of data set is not kept on the LANL HIV site, and rather lives on the <a href="http://www.ncbi.nlm.nih.gov/sra">SRA</a>. Do you have any collections of links to such data sets? I’m especially interested in longitudinal samples through time. Thanks, <span class="mention">@BrianFoley</span>!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>The LANL HIV Database is also offering to store next generation data here <a href="http://www.hiv.lanl.gov/content/sequence/HIV/NextGenArchive/" rel="nofollow noopener">http://www.hiv.lanl.gov/content/sequence/HIV/NextGenArchive/</a>
+Our goal is to have not only the “raw data” but alignments in more useful format, with sequence names (or sequence ID plus an accompanying spreadsheet of sequence information; patient ID, sample date, etc) that are informative.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>This looks great, <span class="mention">@BrianFoley</span>, but I wish there were more! I know that this is a question of users not depositing data at LANL, but still, a list of data sets available at SRA or something would be really nice.</p>
+<p>By the way, I have found the <a href="http://sra.dnanexus.com/">DNANexus interface to the SRA</a>  to be <em>much</em> better than the original.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Predicting the most likely location for a unknown discrete trait tip on the phylogeny</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Predicting the most likely location for a unknown discrete trait tip on the phylogeny</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/367_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">blJOg</div>
+          <div class="post_content">
+<p>Hi,</p>
+<p>I’m looking for a method that would enable me to predict with some confidence value the most likely trait for a tip on my phylogeny. For example, I have a set of sequences from different locations except that the location for one of the sequences is missing. I would like to predict this missing trait and get a probability for the assignment.
+I thought that something like the ancestral character evolution (ace in APE) might work but it only seems to allow for known traits at the tips.</p>
+<p>I’m currently making the assumption that my phylogeny is correct but if it was possible to apply a method that allowed for uncertainty in the phylogeny by providing a sample of trees from a bayesian phylogenetic reconstruction, that would be very useful.</p>
+<p>Any suggestions or guidance would be very much appreciated.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">afmagee</div>
+          <div class="post_content">
+<p>If you’re still looking into this, my two cents are that it’s not liable to go very well unless you have many traits and a correlation structure.</p>
+<p>If you just estimate ancestral sequences, your best guess for any unobserved tip is just the most likely ancestral sequence, but the uncertainty will be larger the longer the branch is. Eventually, with a long enough branch, you just predict the stationary distribution for the missing tip. Bottom line: unless the branch is quite short, there will likely be a lot of uncertainty about the state, is a guess of “A” over “C” really useful if it’s a 55-45 split on the probability of each state?</p>
+<p>If you have multiple traits and you can infer an evolutionary correlation structure for your traits (as with a threshold model or phylogenetic factor analysis), you’d be able to leverage extra information and your estimates would be a lot better.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

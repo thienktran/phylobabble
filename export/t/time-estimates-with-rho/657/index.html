@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Time estimates with rho</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Time estimates with rho</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">sandra_oliveira</div>
+          <div class="post_content">
+<p>Hi,</p>
+<p>I am using the software Network to estimate the rho ages for some mtDNA haplotypes. When I tried to calculate the rho and standard deviation (sigma) myself I found that in some cases I get different values for sigma. I am following the calculation presented in Saillard et a. 2000, just like it is done in Network. This problem seems to occur only when I have derived haplotypes that are closer to an intermediate than to the ancestral haplotype.</p>
+<p>Consider, as an example the figure bellow. The blue haplotype is the ancestral (n=39) and the green haplotypes are derived (n=4; n=1).</p>
+<p>From what I understand:</p>
+<p>Rho = ( (4<em>1 ) + (1</em>2) ) / 44 = 0.13636</p>
+<p>σ^2 = ( (4^2 * 1) + (1^2 * 2) ) / 44^2 = 0.0093</p>
+<p>σ = 0.09642</p>
+<p>However the value in Network is σ = 0.11589.</p>
+<p><div class="lightbox-wrapper"><a class="lightbox" data-download-href="https://www.phylobabble.org/uploads/default/684b4c9779dadc7387debb1908f2984ca80e0060" href="https://www.phylobabble.org/uploads/default/original/1X/684b4c9779dadc7387debb1908f2984ca80e0060.png" title="Pasted image"><img data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/684b4c9779dadc7387debb1908f2984ca80e0060_2_10x10.png" height="462" src="https://www.phylobabble.org/uploads/default/optimized/1X/684b4c9779dadc7387debb1908f2984ca80e0060_2_690x462.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/684b4c9779dadc7387debb1908f2984ca80e0060_2_690x462.png, https://www.phylobabble.org/uploads/default/original/1X/684b4c9779dadc7387debb1908f2984ca80e0060.png 1.5x, https://www.phylobabble.org/uploads/default/original/1X/684b4c9779dadc7387debb1908f2984ca80e0060.png 2x" width="690"/><div class="meta">
+<svg aria-hidden="true" class="fa d-icon d-icon-far-image svg-icon"><use xlink:href="#far-image"></use></svg><span class="filename">Pasted image</span><span class="informations">1026×687 37.2 KB</span><svg aria-hidden="true" class="fa d-icon d-icon-discourse-expand svg-icon"><use xlink:href="#discourse-expand"></use></svg>
+</div></a></div></p>
+<p>In a more complex example, besides the wrong estimate of sigma, I also get a different value for rho. (ancestral is in blue n=2, derived are in green n=9; 6; 1; 1; 1)</p>
+<p>Rho= ( (9<em>2)+(6</em>3)+(1<em>3)+(1</em>3)+(1*4) ) / 20 = 2.3</p>
+<p>σ^2 = ( ((9^2)*2) + ((6^2)*3) + ((1^2)*3) + ((1^2)*3) + ((1^2)*4) ) / 20^2</p>
+<p>σ = 0.837</p>
+<p><img height="392" src="https://www.phylobabble.org/uploads/default/original/1X/f314187ba6c93c55bb84123be6d28c7a28cf83bc.png" width="575"/></p>
+<p>Am I doing something wrong? I appreciate your help!</p>
+<p>Sandra</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

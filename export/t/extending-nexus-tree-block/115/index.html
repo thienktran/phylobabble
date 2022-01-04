@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Extending NEXUS TREE block</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Extending NEXUS TREE block</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">david_bryant</div>
+          <div class="post_content">
+<p>Hello,</p>
+<p>I need to have some way to include information on trees (e.g. score, Posterior Probability etc.) in NEXUS tree blocks, as part of SplitsTree. Does anyone know of other software which does this:- I’m specifically interested in the NEXUS format and not just extended NEWICK. I’d like to IO files that can be shared with other software (we’d have a newick/phylip importer and exporter built in).</p>
+<p>cheers,</p>
+<p>David.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/377_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rutgeraldo</div>
+          <div class="post_content">
+<p>Hi David,</p>
+<p>may I suggest you consider using NeXML (<a href="http://www.nexml.org" rel="nofollow noopener">http://www.nexml.org</a>)? It has an annotation mechanism that was designed for such use cases, whereas extending NEXUS would yield a dialect that is probably going to be inaccessible for a lot of other NEXUS readers, precluding true interoperability.</p>
+<p>Best wishes,</p>
+<p>Rutger</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">GrahamJones</div>
+          <div class="post_content">
+<p>You could look at TreeAnnotator as supplied with BEAST which uses NEXUS. I can’t make the preformatted text option here work for more than one line,  so here’s one line.</p>
+<pre><code>tree TREE1 = [&amp;R] (2[&amp;length_range={1.8535875112778622E-6,0.013618234368958357},length_95%_HPD={1.8535875112778622E-6,0.0017586455552517461},height=0.0,length=5.095983931291041E-4,length_median=2.661823905940256E-4]:3.3239397262662323E-4,1[&amp;length_range={1.8535875112778622E-6,0.013618234368958357},length_95%_HPD={1.8535875112778622E-6,0.0017586455552517461},height=0.0,length=5.095983931291041E-4,length_median=2.661823905940256E-4]:3.3239397262662323E-4)[&amp;height_95%_HPD={1.8535875112778622E-6,0.0017586455552517461},height_median=2.661823905940256E-4,height=5.095983931291041E-4,posterior=1.0,height_range={1.8535875112778622E-6,0.013618234368958357},length=0.0];
+</code></pre>
+<p>I think the<code>[&amp;R]</code> means rooted, but I guess you could add more here.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">david_bryant</div>
+          <div class="post_content">
+<p>Cheers.</p>
+<p>A NeXML importer/exporter would be a worthy project. I really really can’t stand XML, though it appears to be the only viable alternative to NEXUS at the moment.</p>
+<p>-David.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<p>The NEXUS extensions used by BEAST/FigTree are given inside comments so that they don’t break other NEXUS readers/programs. The [&amp;R] does denote rooted and this comes from PAUP. So I used the same convention of using an &amp; to denote a comment with information (I call these meta comments).</p>
+<p>Details about this format is given here:</p>
+<p><a class="onebox" href="https://code.google.com/p/beast-mcmc/wiki/NexusMetacommentFormat" rel="nofollow noopener" target="_blank">https://code.google.com/p/beast-mcmc/wiki/NexusMetacommentFormat</a></p>
+<p>The main advantage of using this format is that FigTree can recognise them.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/389_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tgvaughan</div>
+          <div class="post_content">
+<p>I’d just like to add that both <a href="http://compevol.github.io/MASTER" rel="nofollow noopener">MASTER</a> and <a href="http://git.io/icytree" rel="nofollow noopener">IcyTree</a> also employ <span class="mention">@arambaut</span>’s  BEAST/FigTree NEXUS extensions, so there are a growing number of precedents for this format.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">alexei_drummond</div>
+          <div class="post_content">
+<p>Hey Tim, is there some official description of that extended Newick format that BEAST, MASTER, IcyTree use? I remember there was some room for confusion about how some types of attribute are interpreted and also the precise use and interpretation of the &amp; sign?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/389_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tgvaughan</div>
+          <div class="post_content">
+<p>Hi Alexei, the link <span class="mention">@arambaut</span>  gave in his comment is what you’re after, isn’t it?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/25_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">arambaut</div>
+          <div class="post_content">
+<p>Just to be clear - these are NEXUS metacomment extensions. Extended Newick is different.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/389_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tgvaughan</div>
+          <div class="post_content">
+<p>Although, perhaps confusingly, MASTER mixes in Extended Newick as well…</p>
+<p>In case it’s useful to anyone, I’ve put together an EBNF (to first order anyway) grammar for the tree/network strings in the NEXUS files that MASTER generates up on its <a href="https://github.com/CompEvol/MASTER/wiki/Annotated-Network-and-Tree-grammar" rel="nofollow noopener">wiki</a>.  Note that MASTER currently only allows for node annotations, not branch annotations, and this is reflected in the grammar.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

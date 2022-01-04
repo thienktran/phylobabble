@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>PLL (Phylogenetic Likelihood Library from Stamatakis group) is up</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">PLL (Phylogenetic Likelihood Library from Stamatakis group) is up</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Sounds like all the speediness one would expect from a <span class="mention">@Alexis_RAxML</span> group project, now in library form.</p>
+<p><a class="onebox" href="http://www.libpll.org/" target="_blank">http://www.libpll.org/</a></p>
+<p>I’d love to hear if anyone’s using it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">maxmaronna</div>
+          <div class="post_content">
+<p>The new IQ-TREE
+<a class="onebox" href="http://www.cibiv.at/software/iqtree/" rel="nofollow noopener" target="_blank">http://www.cibiv.at/software/iqtree/</a></p>
+<p>“IQ-TREE can use PLL for likelihood computations, if you use “-pll” option”</p>
+<p>best,
+max</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/377_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rutgeraldo</div>
+          <div class="post_content">
+<p>I would be interested in having scriptable access to it, (ideally) from Perl. In the past I would have been most interested in a SWIG interface - the way it was done for HYPHY and Beagle, but there seems to be less of a market for that: in Python there’s cython, and in Perl there’s Inline::C. Maybe I will be able to play around with this in my copious spare time <img alt=":wink:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/wink.png?v=5" title=":wink:"/></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>On the other end of the spectrum comes</p>
+<blockquote>
+<p>GeLL: A Generalized Likelihood Library for Phylogenetic Models</p>
+<p>Daniel Money and Simon Whelan</p>
+<p>Summary: Phylogenetic models are an important tool in molecular
+evolution allowing us to study the pattern and rate of sequence
+change. The recent influx of new sequence data in the biosciences
+means that in order to address evolutionary questions we need a means
+for rapid and easy model development and implementation. Here we
+present GeLL, a Java library that lets users use text to quickly and
+efficiently define novel forms of discrete data and create new
+substitution models that describe how those data change on a
+phylogeny. GeLL allows users to define general substitution models and
+data structures in a way that is not possible in other existing
+libraries, including mixture models and non-reversible models. Classes
+are provided for calculating likelihoods, optimizing model parameters
+and branch lengths, ancestral reconstruction and sequence simulation.</p>
+</blockquote>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://academic.oup.com/bioinformatics/article/31/14/2391/254526?login=true">
+<header class="source">
+<img class="site-icon" height="32" src="https://www.phylobabble.org/uploads/default/original/1X/36b1fc1a081382ce15caafa31522bdc021cf8c4e.png" width="32"/>
+<a href="https://academic.oup.com/bioinformatics/article/31/14/2391/254526?login=true" rel="noopener" target="_blank">OUP Academic</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:134/173;"><img class="thumbnail" height="173" src="https://www.phylobabble.org/uploads/default/original/1X/c54ca1247a2635f2dbae5ff1c75e542c5eb264db.gif" width="134"/></div>
+<h3><a href="https://academic.oup.com/bioinformatics/article/31/14/2391/254526?login=true" rel="noopener" target="_blank">GeLL: a generalized likelihood library for phylogenetic models</a></h3>
+<p>Abstract. Summary: Phylogenetic models are an important tool in molecular evolution allowing us to study the pattern and rate of sequence change. The recent inf</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>I tested IQ tree on a variety of data sets, and found something very interesting.  This method for some reason calculates the very large distances, when sequences are beyond saturation of silent sites (such as comparing the mitochodrial DNA of fish, amphibians, birds, mammals, turtles etc), very differently than other methods I have used.<br/>
+<img height="300" src="https://www.phylobabble.org/uploads/default/225/afb306c3a0eebbd2.jpg" width="690"/></p>
+<p>For more similar sequences (for example the mitochondrial DNA of just mammals), the distances computed by IQ tree are quite similar to PHYML, RAXML etc…   I wrote to the authors to ask if there was anything in the IQtree method which was designed to get a better estimate of very large distances, but have not gotten a response back from them about it, other than that we all think this is not a “bug”, it seems to actually be doing a good job with this.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>With Ebolavirus genomes (Ebola-Sudan, Ebola_Zaire, Ebola_Tai Forest) the distances between these groups is huge far beyond saturation of silent sites.</p>
+<p><img height="500" src="https://www.phylobabble.org/uploads/default/226/8617132781f905dd.jpg" width="657"/> </p>
+<p>Within a single group such as Ebola_Zaire the distances are much smaller.</p>
+<p><img height="500" src="https://www.phylobabble.org/uploads/default/227/89d3f0194227ec01.jpg" width="684"/></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/317_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">max</div>
+          <div class="post_content">
+<p>Hey Phylobabblers,</p>
+<p>I’m thinking of implementing IQ-tree in my pipeline, and would be very interested in a follow-up of Brian’s findings.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>The alignments I used for the filovirus trees are available in our <a href="http://hfv.lanl.gov/content/sequence/NEWALIGN/align.html" rel="nofollow noopener">filovirus database pre-built alignments</a>.
+The vertebrate <a href="http://figshare.com/articles/Vertebrate_Mitochondrial_DNA_Phylogeny/692165" rel="nofollow noopener">complete mitochondrial genome alignment</a> is available on FigShare.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>I found out this week that when I was creating trees with PHYML I was using a neighbor-joining tree (created with BONJ or Weighbor for example) as the guide tree for maximum likelihood, and that the default setting in the program I was using was for optimize branch lengths set to no.   After running PHYML with optimize branch lengths = yes, the results are the same as those obtained with IQtree.  Thus the difference was not IQtree maximum likelihood vs PHYML maximum likelihood.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Returning a little to the original topic of this thread, it turns out that the <span class="mention">@Alexis_RAxML</span> lab is not using the original PLL moving forward, but rather this one:</p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://github.com/xflouris/libpll">
+<header class="source">
+<img class="site-icon" height="32" src="https://github.githubassets.com/favicons/favicon.svg" width="32"/>
+<a href="https://github.com/xflouris/libpll" rel="noopener" target="_blank">GitHub</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:690/345;"><img class="thumbnail" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/dbd56585600d36628a8f4b8c22afdcc6f3d514da_2_10x10.png" height="345" src="https://www.phylobabble.org/uploads/default/optimized/1X/dbd56585600d36628a8f4b8c22afdcc6f3d514da_2_690x345.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/dbd56585600d36628a8f4b8c22afdcc6f3d514da_2_690x345.png, https://www.phylobabble.org/uploads/default/optimized/1X/dbd56585600d36628a8f4b8c22afdcc6f3d514da_2_1035x517.png 1.5x, https://www.phylobabble.org/uploads/default/original/1X/dbd56585600d36628a8f4b8c22afdcc6f3d514da.png 2x" width="690"/></div>
+<h3><a href="https://github.com/xflouris/libpll" rel="noopener" target="_blank">xflouris/libpll</a></h3>
+<p>Phylogenetic Likelihood Library. Contribute to xflouris/libpll development by creating an account on GitHub.</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>We have enjoyed using it. The code is nice and it has some good examples.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

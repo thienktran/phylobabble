@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Quantifying support in the face of missing data</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Quantifying support in the face of missing data</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Sort of the reciprocal of <span class="mention">@ematsen</span>’s post on <a href="http://phylobabble.org/t/lets-quantify-the-impact-of-missing-data/72/13" rel="nofollow noopener">quantifying the impact of missing data</a>. What is the best way to quantify edge support when dealing with an exceedingly sparse matrix? When bootstrapping, what is often sampled is empty sites, so each replicate gives a more or less random tree, with the result that edges on the ML tree have very low support. I prefer the Bayesian option here (well, always), where support is conditional on the sampled data. However, for a matrix of 10,000+ taxa, this is simply not tractable.</p>
+<p>So, bootstrapping gives junk, and Bayesian is out of the question. What is the best way to proceed? Some options we are kicking around:</p>
+<ol>
+<li>Divide-and-conquer. That is, bootstrapping a backbone phylogeny and each individual non-controversial clade.</li>
+<li>Taxon jacknifing. So, a different measure of support, more akin to “stability”.</li>
+<li>Quartet reconstructions. The idea here is to consider all possible quartets for a given edge on the ML tree and quantify something like <a href="http://mbe.oxfordjournals.org/content/early/2014/02/21/molbev.msu061" rel="nofollow noopener">ICA</a>. However, after crunching the numbers, it seems like this is not feasible either (there are too many possible quartets). We can limit it to the decisive quartets (that is, only quartets that have overlapping data), but that is sort of hoping for missing data so all of the calculations can get done!</li>
+<li>Something smarter that we haven’t thought of yet.</li>
+</ol>
+<p>Someone must have come up with a reasonable way to quantify support for a sparse matrix, right? Any ideas?</p>
+<p>Thanks.
+JWB.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<aside class="quote" data-post="1" data-topic="187">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/josephwb/40/125_1.png" width="20"/> josephwb:</div>
+<blockquote>
+<p>When bootstrapping, what is often sampled is empty sites, so each replicate gives a more or less random tree, with the result that edges on the ML tree have very low support.</p>
+</blockquote>
+</aside>
+<p>I’m not sure if I understand this. Do you mean that you often sample columns that have a high proportion of empty sites?</p>
+<p>Here is a relevant question: let’s say that we have a concatenated alignment of two genes, A and B. Gene A is twice as long as gene B. Should support from gene A’s evolutionary history be weighed twice as strongly as support from gene B?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Yes, I mean that you often sample columns that have a high proportion of empty sites. Since there is little information, the tree for that replicate is poor. (This is due partly to the little information present, and also to the decisiveness of the resampled sites: certain (true) edges cannot be reconstructed because there are no overlapping data to speak to the edge). Add up a bunch of such replicates, and the consensus tee is unresolved.</p>
+<p>I’m afraid I don’t see the relevance of your example of genes A and B. Perhaps I did not phrase my question clearly enough. I am just looking to put support values on the edges of a ML tree from a sparse matrix. There are a lot of loci involved, but each is assumed to share the same underlying phylogeny (yes, this is inappropriate, but is the best we can do at this scale).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>My guess is that you are being messed up by the bootstrap sample giving samples that don’t have the same pattern of presence/absence as your original alignment.</p>
+<p>If you want to avoid this, divide your column into blocks such that each block has the same pattern of taxon presence/absence, and then apply stratified sampling:</p>
+<aside class="onebox wikipedia" data-onebox-src="https://en.wikipedia.org/wiki/Stratified_sampling">
+<header class="source">
+<a href="https://en.wikipedia.org/wiki/Stratified_sampling" rel="noopener" target="_blank">en.wikipedia.org</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:220/167;"><img class="thumbnail" height="167" src="https://www.phylobabble.org/uploads/default/original/1X/c95896d238bc5367d9d3becaecbd6c3a88cbd1b8.jpeg" width="220"/></div>
+<h3><a href="https://en.wikipedia.org/wiki/Stratified_sampling" rel="noopener" target="_blank">Stratified sampling</a></h3>
+<p>In statistics, stratified sampling is a method of sampling from a population which can be partitioned into subpopulations.
+ In statistical surveys, when subpopulations within an overall population vary, it could be advantageous to sample each subpopulation (stratum) independently. Stratification is the process of dividing members of the population into homogeneous subgroups before sampling. The strata should define a partition of the population. That is, it should be collectively exhaustive and m...</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>in the way that it is used for variance reduction:</p>
+<aside class="onebox wikipedia" data-onebox-src="https://en.wikipedia.org/wiki/Variance_reduction">
+<header class="source">
+<a href="https://en.wikipedia.org/wiki/Variance_reduction" rel="noopener" target="_blank">en.wikipedia.org</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:220/220;"><img class="thumbnail animated" height="220" src="https://www.phylobabble.org/uploads/default/original/1X/db853b199023b240aded0a057251f82a9e88f7ea.gif" width="220"/></div>
+<h3><a href="https://en.wikipedia.org/wiki/Variance_reduction" rel="noopener" target="_blank">Variance reduction</a></h3>
+<p>In mathematics, more specifically in the theory of Monte Carlo methods, variance reduction is a procedure used to increase the precision of the estimates that can be obtained for a given simulation or computational effort.  Every output random variable from the simulation is associated with a variance which limits the precision of the simulation results. In order to make a simulation statistically efficient, i.e., to obtain a greater precision and smaller confidence intervals for the output ra Su...</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>For example, say we have two sets of taxa, one for which we have genes 1, 2, and 3, and another set for which we have only genes 1 and 2. Our alignment then will look something like this:</p>
+<pre><code>SSSSSSSSS
+&lt;etc&gt;
+SSSSSSSSS
+SSSSSS---
+&lt;etc&gt;
+SSSSSS---
+</code></pre>
+<p>where in this example the first set of taxa (with all genes) is in the top part of the alignment and the second set in in the lower part of the alignment.</p>
+<p>We then group the columns of gene 1 and 2 into a block P, and the columns of gene 3 into a block Q.</p>
+<pre><code>      P       Q
+SSSSSS  SSS
+&lt;etc&gt;
+SSSSSS  SSS
+SSSSSS  ---
+&lt;etc&gt;
+SSSSSS  ---
+</code></pre>
+<p>When we apply stratified sampling, we sample uniformly from the blocks separately such that we get the same number of columns in block P as in the original alignment, and similarly for block Q. I hope it’s clear how we would proceed in the case of many blocks.</p>
+<p>There are fast ways to do this, though that’s not such a big issue here most likely. Here’s a photo from the Doucet book on Sequential Monte Carlo:</p>
+<p><img height="" src="https://www.phylobabble.org/uploads/default/54/64ce6d141d8cd64d.jpg" width=""/></p>
+<p>It is my understanding that for the bootstrap one would like to do resampling in a way that mimics characteristics of the data were we to run “the experiment” again. In phylogenetics, the experiment is evolution, so if we think that the pattern of presence/absence is something set in advance of the experiment, then I think this is the right thing to do.</p>
+<p>However, this says nothing about how the pattern of gene presence/absence is influencing your topology. If this pattern is contributing significantly to your topology, then you will get a lovely high level of support for it! <img alt=":frowning:" class="emoji" src="https://www.phylobabble.org/images/emoji/twitter/frowning.png?v=9" title=":frowning:"/></p>
+<p>I’m curious what others think.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Ooh, that is an interesting option (although not the computationally least expensive option). Someone must have done this (resampling, while keeping the distribution of missing data constant) before, right? A wrinkle is that:</p>
+<aside class="quote" data-post="4" data-topic="187">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/ematsen/40/114_1.png" width="20"/> ematsen:</div>
+<blockquote>
+<p>In phylogenetics, the experiment is evolution, so if we think that the pattern of presence/absence is something set in advance of the experiment, then I think this is the right thing to do.</p>
+</blockquote>
+</aside>
+<p>is not valid in this situation, if I understand you correctly. These are not instances of genuine gene presence/absence, but rather the idiosyncratic sampling of taxon-genes by myriad investigators. Still, I wonder if this is a valid approach nonetheless?</p>
+<p>I too am a little concerned regarding whether the pattern of missing data is driving the topological inference (i.e. that the pattern of overlapping (decisive) data allows only a small portion of trees to be reconstructed). But what would Bayesian inference tell you in that situation? Probably the same thing. I can confirm that MCMC samplers (e.g. MrBayes) <em>do</em> sample trees that contain edges with no relevant data present (i.e. for edge ((A,B),(C,D)), there is no column/gene where all A, B, C, and D are sampled; I can elaborate on that if it is not clear), but I feel this is a negligible number of samples. Erg, I should see if I can get a number to attach to that. Thing is, once one is in the land of sparse data matrices, they are invariably dealing with a number of taxa that current Bayesian methods cannot handle. If someone could point me to a “reasonable” sparse matrix (that is, lots of genes, but not too many taxa) I have code that can crunch the numbers. Such an empirical matrix could also inform the parameters for a simulation study.</p>
+<p>It would be great to hear other thoughts on this.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<aside class="quote" data-post="5" data-topic="187">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/josephwb/40/125_1.png" width="20"/> josephwb:</div>
+<blockquote>
+<p>These are not instances of genuine gene presence/absence, but rather the idiosyncratic sampling of taxon-genes by myriad investigators. Still, I wonder if this is a valid approach nonetheless?</p>
+</blockquote>
+</aside>
+<p>One could posit a world where God (or Satan, etc) was controlling the minds of evolutionary biologists and getting them to sample certain genes, and had also determined gene repertoire and length before-hand. However, the nucleotide sequences in those genes were drawn from some random process. I realize that’s a little nuts, but that would be the model under which you would be quantifying support.</p>
+<p>I think the primary concern is presence/absence effects. The issues with that, though, are baked into doing phylogenetic analysis on a big concatenated alignment that is mostly filled with missing data. By bootstrapping uniformly from the columns and seeing a lot of randomness in the resulting trees, you have already seen first hand how modifying those patterns of presence-absence changes things.</p>
+<p>So I suppose my conclusion is that you either fix that pattern of presence-absence or you don’t. Seem reasonable?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I was just talking with <span class="mention">@vminin</span> and he pointed out that what I described is called the “block bootstrap” in the literature. <a href="http://www.jstor.org/discover/10.2307/120134?uid=2&amp;uid=4&amp;sid=21103525476301">Here</a> is an example paper describing it. From what I have seen, people are often thinking about time series data.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>Thanks <span class="mention">@ematsen</span>. I will look this over.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I’m hoping that <span class="mention">@betz</span> and <span class="mention">@susan</span>, who wrote one of the important early papers on the use of the bootstrap in phylogenetics, will be able to comment here. Short of getting insight from someone like them, I suspect that the best course forward would be through simulation!</p>
+<p>This really is an important problem practically that I hope someone addresses.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/65_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">vminin</div>
+          <div class="post_content">
+<p>One way to think about this problem is to view loci and and sites within each locus as two levels of hierarchies. So maybe hierarchical bootstrap is what is needed here.</p>
+<p>I attach a section from Davinson and Hinkley’s “Bootstrap methods and their applications.” The book also has discussions about bootstrap with missing data, but I couldn’t map their exposition on this phylogenetic problem yet.</p>
+<p><img height="446" src="https://www.phylobabble.org/uploads/default/67/5534cf0244ab4eab.jpg" width="690"/> </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">aroger</div>
+          <div class="post_content">
+<p>Not to get off the bootstrapping topic, but a totally different measure of support could be used in this case.  You could map 1-p-values from a likelihood ratio test under the null that the split has a 0 length edge.  The appropriate null distribution is half chi-squared (df=1) and half chi-squared (df=0).  This has the advantage of not suffering from the greater/lesser sparseness of the bootstrap replicate datasets as discussed above.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

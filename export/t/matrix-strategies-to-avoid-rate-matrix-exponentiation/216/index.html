@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Matrix strategies to avoid rate matrix exponentiation</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Matrix strategies to avoid rate matrix exponentiation</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Continuing the discussion from <a href="http://phylobabble.org/t/paper-phylogenetic-stochastic-mapping-without-matrix-exponentiation/214/11">[Paper] Phylogenetic Stochastic Mapping without Matrix Exponentiation</a>:</p>
+<aside class="quote" data-full="true" data-post="11" data-topic="214">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/nicolas_lartill/40/16_1.png" width="20"/><a href="//www.phylobabble.org/t/paper-phylogenetic-stochastic-mapping-without-matrix-exponentiation/214/11">[Paper] Phylogenetic Stochastic Mapping without Matrix Exponentiation</a>
+</div>
+<blockquote>
+<p>Incidentally, I would like to point out that PhyloBayes never calculates matrix exponentials.</p>
+<p>the trick is this: when propagating conditional likelihoods over the tree, you need to do something like:</p>
+<p>L_up = exp( t Q) L_down =  P  exp( t D)  P^{-1} L_down</p>
+<p>where L_up and L_down are the conditional likelihood vectors, D is the diagonal matrix containing the eigenvalues and P the eigenvector matrix.</p>
+<p>now, if you essentially do:
+L_up = P [ exp( t D) [ P^{-1} L_down] ]</p>
+<p>instead of
+L_up = [P [ exp( t D)  P^{-1}] L_down</p>
+<p>then you do not need to compute the exponential. On the other hand, you have two matrix-vector products to do, instead of 1 (above it looks like three of them, but exp(t D) is diagonal so it is in fact a vector-vector product, term by term).</p>
+<p>on the other hand, you still need to diagonalize the matrix.</p>
+<p>this trick is useful when you have many matrix/length configurations. Even with one single matrix, if you have a continuous gamma distribution or a dirichlet process for describing rates across sites, instead of a discretized gamma distribution, then this is very useful: because, then, you don’t have to cope with the fact that you basically have a different exp(t Q) for each branch and for each site (or each category of the dirichlet process).</p>
+<p>so, “technically”, for me, the main contribution of Irvahn and <span class="mention">@vminin</span> is not so much “exponentiation-free” than “diagonalization-free” stochastic mapping-- which is also very nice, though. I like very much the idea.</p>
+</blockquote>
+</aside>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jgsumner</div>
+          <div class="post_content">
+<p>Correct me if I’m wrong but I don’t think it’s right to say that you are not computing a matrix exponential because you are doing it via diagonalisation. This is just one way (of many) of calculating a matrix exp. There is a semi-famous paper on this: <a href="http://www.cs.cornell.edu/cv/researchpdf/19ways+.pdf" rel="nofollow noopener">http://www.cs.cornell.edu/cv/researchpdf/19ways+.pdf</a></p>
+<p>It would be a different story if P was the same for all rate matrices (as it is for the K3ST model where P=H , the Hadamard matrix), but in general P changes as the rate matrix changes. I’m interested in generalisations of this situation to models more complicated then K3ST. That’s essentially what I mean by “explicit formulas”.</p>
+<p>I see what uniformization is now. Actually a bit of a coincidence because we were considering exactly of this over our summer break (southern hemisphere) but of course have done nothing about it. It’s a very interesting way of thinking about a CTMC.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/16_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">nicolas_lartill</div>
+          <div class="post_content">
+<p>Maybe we can quibble on the exact wording, but in any case, I want to emphasize that there are important algorithmic differences here, depending on how you do it:</p>
+<p>if you do:</p>
+<p>(1) L_up = [P [ exp( t D) P^{-1}] L_down</p>
+<p>then it is in O(n^3), whereas if you do</p>
+<p>(2) L_up = P [ exp( t D) [ P^{-1} L_down] ]</p>
+<p>it is O(n^2)</p>
+<p>More importantly, if you have a large tree and the same rate matrix for all branches of the tree, and if you use (1), then you have to compute exp(tQ) for all branches. Whereas you have to compute the diagonalization only once for all branches.</p>
+<p>So, there is indeed an important difference in terms of computational complexity.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jgsumner</div>
+          <div class="post_content">
+<p>As you point out, the important thing is that, for each Q, P only needs to be computed once for the whole tree, so the computation of P itself is not included in the (per branch) complexity. This only works if Q is fixed over the whole tree though. What if Q (and hence D) is changing over the tree though? Then the complexity of computing P has to be included for every branch. That’s why I point to the K3ST example. In that case P=H, no matter what Q is.</p>
+<p>I think my interest in this is fairly idiosyncratic. I don’t want to distract from the main point of discussion.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p><span class="mention">@jgsumner</span> and <span class="mention">@nicolas_lartill</span> I moved this discussion here. I know <span class="mention">@Alexis_RAxML</span> has some nice strategies along these lines.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/16_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">nicolas_lartill</div>
+          <div class="post_content">
+<p>yes exactly: it all depends on the exact situation. It is just a question of the relative cost of matrix diagonalization, exponentiation, and likelihood computation. The relative weights of those things really depend on the model.</p>
+<p>In this respect, the work of <span class="mention">@vminin</span> is particularly interesting when you have different rate matrices for each site and/or each branch</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/16_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">nicolas_lartill</div>
+          <div class="post_content">
+<p>yes, you are right. This is kind of a side track, in the other topic</p>
+<p>thanks</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/65_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">vminin</div>
+          <div class="post_content">
+<aside class="quote" data-post="6" data-topic="216">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" class="avatar" height="20" src="//www.phylobabble.org/user_avatar/www.phylobabble.org/nicolas_lartill/40/16_1.png" width="20"/> nicolas_lartill:</div>
+<blockquote>
+<p>In this respect, the work of <span class="mention">@vminin</span> is particularly interesting when you have different rate matrices for each site and/or each branch</p>
+</blockquote>
+</aside>
+<p>The fact that <span class="mention">@nicolas_lartill</span> finds our work interesting makes the outcome of the formal peer-review totally irrelevant for me, seriously!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jgsumner</div>
+          <div class="post_content">
+<p>By the way, thanks for pointing this out (option (1) vs. (2) that is). It’s a very nice subtle thing I’d never fully appreciated before.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

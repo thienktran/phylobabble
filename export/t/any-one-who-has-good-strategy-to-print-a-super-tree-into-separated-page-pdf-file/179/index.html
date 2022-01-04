@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Any one who has good strategy to print a super-tree into separated-page pdf file</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Any one who has good strategy to print a super-tree into separated-page pdf file</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Everybody knows that it’s impossible to check a super-tree in one single page, so we need to check it branch by branch, so far as I known, current software seems unable to print the tree into separated-page pdf file except Mega, However Mega is very strict with tree format, sometimes it will treat “1.0” (which is for describing tree length) mistakenly as BS value, giving 100% to all the branches.</p>
+<p>So Any one who has good strategy to print a super-tree into separated-page pdf file?
+Gratitude for sharing your knowledge and experiences!</p>
+<p>Thanks!</p>
+<p>Miao</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>Sorry, I don’t have the solution yet.  But I am VERY interested if you do get the answer.  I wrote
+to Andrew Rambaut a few years ago, asking for this feature to be added to his FigTree program.
+I think his reply was that it would be fairly easy to add to FigTree but he would wait until he got
+requests from a few more people.  Please to not SPAM Andrew with these requests individually.
+Instead, we could either get a few more people to chime in here and then point Andrew to
+this discussion to show there is interest, or we could make some kind of online “petition” thing
+and then mail the result to Andrew.<br/>
+<a class="onebox" href="http://tree.bio.ed.ac.uk/software/figtree/" rel="nofollow noopener" target="_blank">http://tree.bio.ed.ac.uk/software/figtree/</a></p>
+<p>In addition to being kind to the people who are very kind to us by providing FREE and
+extremely elegant and useful software like FigTree, by joining forces here and sending
+them one link rather than a lot of SPAM, another advantage of gathering data here is
+that we could also forward it to other software authors such as the Dendroscope group.
+<a class="onebox" href="http://dendroscope.org/" rel="nofollow noopener" target="_blank">http://dendroscope.org/</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Thanks for sharing! I have not got any answers yet, and I really think this need to be done and very necessary!</p>
+<p>Well, I just don’t know which author turn to, it seems to me any of them able to fix it in their codes.</p>
+<p>if you generate a Major Rule tree from 100 boostrap trees via RaxmL, it will give tree with all branches = 1.0 [BS value], but Mega only recognize 1.0 as BS value. From here, I think</p>
+<ol>
+<li>RaxML can revise the format of output trees.</li>
+<li>or Mega can change the code for capturing BS value.</li>
+<li>Figtree or Dendroscope gain function that printing one single in separated pages?</li>
+<li>or I ask help for Abobe?</li>
+</ol>
+<p>Well, we need more experienced people to convince the authors that although it’s a mosquito  bit, it’s pain, itchy and noisy!</p>
+<p>Miao</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/390_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">champost</div>
+          <div class="post_content">
+<p><span class="mention">@Cactus</span> While I personally haven’t used it, Rick Ree’s <a href="http://www.reelab.net/home/software/" rel="nofollow noopener">Tred</a> (<a href="http://www.reelab.net/tred" rel="nofollow noopener">there’s also an on-line version</a>) seems to have been written with this in mind. I don’t know if it contains any limits on the tree size.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Thanks champost!</p>
+<p>I tried this web-site, but failed with “Internal error”. Maybe my tree is too big, which containing ten thousand taxa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>Here’s what I use. Should work on mac (with Tiler or Adobe reader) or Windows (just adobe reader).</p>
+<ol>
+<li>Open the tree in Figtree</li>
+<li>Use the ‘expansion’ slider to make it look the way you want (plus all the other usual adjustments)</li>
+<li>Export as PDF (you’ll get a very tall, thin, PDF).</li>
+<li>Either: get Tiler for mac (currently $4.99 from the app store, worth it for simplicity in my opinion) or Adobe Reader. If you use Tiler, just open up the pdf in tiler, and click the ‘+’ to add vertical pages until you’re happy with the layout. Then print. If you’re using Adobe Reader, use the ‘print as poster’ option to print over multiple pages.</li>
+</ol>
+<p>Hope that helps,</p>
+<p>Rob</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Thank you so much, sounds a good strategy!</p>
+<p>Miao</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>At step 4 in Rob Lanfear’s method, when you go to PRINT the pdf file from ADOBE ACROBAT, select “Tile Large Pages”.
+On the right side of the printer dialog box, you’ll see a preview of how many pages it will print onto.  The tree I am looking at right now would print onto 18 pages, 2 pages wide by 9 pages deep/long.  But I can scale it to 50% size and make a more reasonable 5 page output.  I have 220 taxa at a 12 point font, and at half size (50% scale) the font is still very readable.</p>
+<p>You can then of course print to a pdf file instead of to paper, and then anyone who opens this new file can read it and simply print it, without having to know any PRINT setting tricks.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jhcepas</div>
+          <div class="post_content">
+<p>Take a look at <a href="http://etetoolkit.org" rel="nofollow noopener">ETE</a>.  With some python coding you can try to adapt the figure to your needs. I added some basic examples to the <a href="http://pythonhosted.org/ete2/tutorial/tutorial_drawing.html" rel="nofollow noopener">tutorial</a>.</p>
+<p>You can export as PDF using the tree.render() function, and specify the dimensions of page. Depending on the size of the tree, fitting it in A4 can be tricky or even impossible. Just play with the TreeStyle object, scale, etc.</p>
+<p>Also, in ETE every node of a tree is an independent tree object, so you can even export different parts of the tree as independent pdf images. And you can do it programatically.  For instance:</p>
+<pre><code>from ete2 import Tree
+t = Tree("((a,b), (c,d));");  # many newick formats supported 
+t.children[0].render('subtree1.pdf')
+t.children[1].render('subtree2.pdf')
+</code></pre>
+<p>hope it helps</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Thanks! Smart guys are really all around, I hope we have a change to grab a bottle of beer and talking about such things, sharing the experiences!</p>
+<p>Thanks jhcepas!</p>
+<p>Miao</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/389_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">tgvaughan</div>
+          <div class="post_content">
+<p>Hi <span class="mention">@Cactus</span>, I’m not sure if this helps, but my little browser-based tree viewer <a href="http://tgvaughan.github.io/icytree" rel="nofollow noopener">IcyTree</a> allows you save a single tree split vertically among an arbitrary number of SVG files.  It works under recent versions of Chrome and Firefox (and perhaps bleeding-edge versions of Safari), but is fastest under Chrome.  It’s not flashy, but can handle reasonably big trees (10-20k tips in a pinch).</p>
+<p>The tree-splitting option is under File-&gt;export-&gt;split SVG.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Thanks@tgvaughan! Now it seems that I have more than one way to catch a fish!</p>
+<p>I love this phylobabble!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>For the tall, thin PDF file mentioned by Rob Lanfear above, I find that very large files do not render with Adobe Reader Pro 9.0, but can be viewed with Adobe Reader Pro 9.5.  However, In Adobe Reader Pro 9.5 I can only print the file to paper, I cannot print to PDF nor save as a multi-page PDF.   So Tiler might be worth getting.   Another option is <a href="https://pypi.python.org/pypi/pdftools.pdfposter/0.6.0" rel="nofollow noopener">pdfposter</a> (python pdftools) which works quite well to re-scale a PDF into a multi-page PDF file.</p>
+<p>Hat tips to Andrew Rambaut and Will Fischer for help with this.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Hi,</p>
+<p>No matter how many days past, I return and try you option with failure:</p>
+<p>Proxy Error</p>
+<p>The proxy server received an invalid response from an upstream server.
+The proxy server could not handle the request GET /tred/default/printer.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Hi,</p>
+<p>I also tried your option, I can read my tree, when came across export-&gt; -&gt;split SVG step, it stucked.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Paul_Farmer</div>
+          <div class="post_content">
+<p>NJplot is a free download and allows one to set the number of pages for a tree.  It is not perfect because it messes up the top and bottom of pages with headers/footers.  However, it may be satisfactory for evaluating a tree. I too wish FigTree allowed for multiple page printing since it is so helpful in highlighting aspects of a tree.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/48_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Cactus</div>
+          <div class="post_content">
+<p>Thanks and Merry Christmas!</p>
+<p>I’ll keep you posted after use.</p>
+<p>Miao</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/315_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">simonara</div>
+          <div class="post_content">
+<p>Hey Miao (<span class="mention">@Cactus</span>),</p>
+<p>what did you end up using to create the multipage pdf file? I have a 25,000 tip tree and nothing in this thread worked for me!</p>
+<p>Thanks,
+Simon</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

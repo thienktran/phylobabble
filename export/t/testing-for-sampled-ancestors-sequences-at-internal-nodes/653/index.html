@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Testing for &lsquo;sampled ancestors&rsquo;/sequences at internal nodes</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Testing for &lsquo;sampled ancestors&rsquo;/sequences at internal nodes</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">sdwfrost</div>
+          <div class="post_content">
+<p>Dear All (and esp. <span class="mention">@Alexis_RAxML</span> )</p>
+<p>I’m working on a presentation for a meeting on <a href="http://whoinfectedwhom.org" rel="nofollow noopener">microbial source attribution using genomic data</a>, in which I am looking at datasets where sampled taxa are (or should be) located at internal nodes of the phylogeny. I’ve looked into <a href="http://arxiv.org/abs/1602.06893" rel="nofollow noopener">family joining</a>, and I know about the sampled ancestors work in BEAST (though I’ve been struggling with getting BEAST to fit the data), but I was wondering whether anyone had any experience with the -f C option in RAxML? The help said that it didn’t really work for real data, and I’m wondering whether anyone knows why, or has just tested it anyway.</p>
+<p>Are there any other software packages that will collapse taxa to internal nodes?</p>
+<p>Best
+Simon</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Dear <span class="mention">@sdwfrost</span></p>
+<p>This was a quick and dirty implementation to test an idea one of my PhD students had. I think we were looking at viral evolution issues. Unfortunately, this is so long ago that I don’t recall any more why it didn’t work. If I recall correctly, what this option does is a statistical significance test: For each candidate taxon in the list I set the branch length to the minimum allowed branch length in RAxML (so essentially collapsing it to a node) and if the likelihood doesn’t change significantly by this operation I assume that it belongs to the node.</p>
+<p>Sorry if this is not that helpful,</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">sdwfrost</div>
+          <div class="post_content">
+<p>Thanks <span class="mention">@Alexis_RAxML</span></p>
+<p>I just wanted to check - I get an error when I run the test in RAxML, and I wanted to see if there were any issues about real data that prevented it from working before looking at it more myself e.g. with the zero branch length tests in IQTREE etc.</p>
+<p>Best
+Simon</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

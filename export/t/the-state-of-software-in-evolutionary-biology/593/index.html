@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>The State of Software in Evolutionary Biology</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">The State of Software in Evolutionary Biology</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/381_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">josephwb</div>
+          <div class="post_content">
+<p>New paper from <span class="mention">@Alexis_RAxML</span>: <a href="http://biorxiv.org/content/early/2015/11/16/031930.article-info" rel="nofollow noopener">The State of Software in Evolutionary Biology</a></p>
+<blockquote>
+<p>With Next Generation Sequencing Data (NGS) coming off age and being
+routinely used, evolutionary biology is transforming into a
+data-driven science. As a consequence, researchers have to rely on a
+growing number of increasingly complex software. All widely used tools
+in our field have grown considerably, in terms of the number of
+features as well as lines of code. In addition, analysis pipelines now
+include substantially more components than 5-10 years ago. A topic
+that has received little attention in this context is the code quality
+of widely used codes. Unfortunately, the majority of users tend to
+blindly trust software and the results it produces. To this end, we
+assessed the code quality of 15 highly cited tools (e.g., MrBayes,
+MAFFT, SweepFinder etc.) from the broader area of evolutionary biology
+that are used in current data analysis pipelines. We also discuss
+widely unknown problems associated with floating point arithmetics for
+representing real numbers on computer systems. Since, the software
+quality of the tools we analyzed is rather mediocre, we provide a list
+of best practices for improving the quality of existing tools, but
+also list techniques that can be deployed for developing reliable,
+high quality scientific software from scratch. Finally, we also
+discuss journal and science policy as well as funding issues that need
+to be addressed for improving software quality as well as ensuring
+support for developing new and maintaining existing software. Our
+intention is to raise the awareness of the community regarding
+software quality issues and to emphasize the substantial lack of
+funding for scientific software development.</p>
+</blockquote>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Thanks for posting this <img alt=":smile:" class="emoji" src="//www.phylobabble.org/images/emoji/twitter/smile.png?v=5" title=":smile:"/> We have uploaded another rather critical paper recently that deals with global pair-wise sequence alignment: <a href="http://biorxiv.org/content/early/2015/11/12/031500" rel="nofollow noopener">http://biorxiv.org/content/early/2015/11/12/031500</a> it might be of interest to those that regularly teach bioinformatics courses.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">GrahamJones</div>
+          <div class="post_content">
+<p>A timely article. It prompted me to try FindBugs on my java code. I was pleasantly surprised at how easy it was to install and use. It didn’t find anything ‘scary’ but several things that could easily be made more robust. It made me feel a bit silly for not getting round to doing it earlier.</p>
+<p>I noticed you use gcc -Wall. -Wall does not turn on all warnings as its name suggests. I usually use gcc -Wall -Wextra -pedantic.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Hi Graham,</p>
+<p>Great that this was useful to you. Regarding gcc, you are right and that is what we use fro RAxML etc. However, for new codes we develop from scratch we use the clang compiler, it does yield substantially more warnings and finds type issues that gcc doesn’t. So for C/C++ in the future clang is definitely the compiler to use for development.</p>
+<p>All the best,</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

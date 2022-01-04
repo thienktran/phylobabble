@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Geophylogenies using GeoJSON</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Geophylogenies using GeoJSON</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p>I’ve been experimenting with drawing “geophylogenies” on web maps and have created a live demo at <a class="inline-onebox" href="http://iphylo.org/~rpage/geojson-phylogeny-demo/" rel="noopener nofollow ugc">GeoJSON phylogeny demo</a> All a bit crude, but the idea is to take either a NEXUS tree file with added geographical coordinates, or query the BOLD database of DNA barcodes (most of which are geotagged) and create an interactive phylogeny on a map. The demo uses OpenStreeMap, I’ve code for Google Maps as well (hope to add this to the demo shortly). The layout borrows from GenGIS (see <a class="inline-onebox" href="http://dx.doi.org/10.1101/gr.095612.109" rel="noopener nofollow ugc">GenGIS: A geospatial information system for genomic data</a> and <a class="inline-onebox" href="http://kiwi.cs.dal.ca/GenGIS/Main_Page" rel="noopener nofollow ugc">The GenGIS wiki</a> ) but doesn’t need a standalone program. There are some other advantages to using GeoJSON, such as storage in document databases like CouchDB, but I’ll blog about these.</p>
+<p>To give you a sense of the visualisation, below is the classic <em>Banza</em> example that I used in 2007 when I started playing with trees on Google Earth <a class="inline-onebox" href="http://iphylo.blogspot.co.uk/2007/06/google-earth-phylogenies.html" rel="noopener nofollow ugc">iPhylo: Google Earth phylogenies</a>, inspired by Bill Piel’s pioneering experiments.</p>
+<p><img height="500" src="https://www.phylobabble.org/uploads/default/213/8cabc32f4a6dd03d.png" width="439"/></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_beiko</div>
+          <div class="post_content">
+<p>Looks good! We’ve been asked a few times to put together a Web version of GenGIS, but have never been able to prioritize this idea. Ditto for BOLD, although we’ve had lots of fun with GBIF (which is not perfect of course, but has its uses)</p>
+<p>I think it would be <em>very</em> exciting if we could push data into this, or pull data down from it into GenGIS. Please keep sharing your examples!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p><span class="mention">@rob_beiko</span> The demo is all API driven. If you have NEXUS in the format shown in the demos, a POST call will return GeoJSON with some embedded CSS. So one approach is to call the API and have GenGIS render the GeoJSON. I could add other input formats, but NEXUS makes it easy to manually tweak stuff when debugging. The BOLD API is slow, and at the moment you have to step through each part via API calls until you get NEXUS with geographic coordinates. Caching results in a database would make things faster, as well as enable some fun spatial queries (find me all phylogenies from Hawaii).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_beiko</div>
+          <div class="post_content">
+<p>I think Alex reengineered the GBIF plugin to use JSON although he may not have gotten around to it yet (he’s having fun with cartogram algorithms these days) but the GeoJSON element will probably pique his interest. I don’t see licensing information on your website, but is it OK with you if we potentially reuse some of your code for interfacing with BOLD? With attribution of course. You’re of course welcome to rip any code out of GenGIS should it be useful to you.</p>
+<p>NEXUS is no problem - I spent my postdoc mucking around with NEXUS files for MrBayes etc., so building and working with them will be pretty straightforward</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p>Feel free to play with the code. The BOLD API stuff is fragile, as I’ve discovered this morning. I’ll need to add some error handling code for this. I hope to add the BLAST pipeline shortly(ish).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p>I’ve added some background to this project on iPhylo <a href="http://iphylo.blogspot.co.uk/2015/01/geojson-and-geophylogenies.html" rel="nofollow noopener">http://iphylo.blogspot.co.uk/2015/01/geojson-and-geophylogenies.html</a></p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

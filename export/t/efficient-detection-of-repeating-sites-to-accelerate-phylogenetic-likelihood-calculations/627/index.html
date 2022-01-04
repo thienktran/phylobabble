@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Efficient detection of repeating sites to accelerate phylogenetic likelihood calculations</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Efficient detection of repeating sites to accelerate phylogenetic likelihood calculations</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Here’s a nice paper from <span class="mention">@Alexis_RAxML</span>’s lab:</p>
+<blockquote>
+<p><em>Efficient detection of repeating sites to accelerate phylogenetic likelihood calculations</em>
+Kassian Kobert, Alexandros Stamatakis, Tomáš Flouri
+doi: <a href="http://dx.doi.org/10.1101/035873" rel="nofollow noopener">http://dx.doi.org/10.1101/035873</a></p>
+<p>The phylogenetic likelihood function is the major computational bottleneck in several applications of evolutionary biology such as phylogenetic inference, species delimitation, model selection and divergence times estimation. Given the alignment, a tree and the evolutionary model parameters, the likelihood function computes the conditional likelihood vectors for every node of the tree. Vector entries for which all input data are identical result in redundant likelihood operations which, in turn, yield identical conditional values. Such operations can be omitted for improving run-time and, using appropriate data structures, reducing memory usage. We present a fast, novel method for identifying and omitting such redundant operations in phylogenetic likelihood calculations, and assess the performance improvement and memory saving attained by our method. Using empirical and simulated data sets, we show that a prototype implementation of our method yields up to 10-fold speedups and uses up to 78% less memory than one of the fastest and most highly tuned implementations of the phylogenetic likelihood function currently available. Our method is generic and can seamlessly be integrated into any phylogenetic likelihood implementation.</p>
+</blockquote>
+<p>It’s quite common for software packages to collapse identical site patterns. The novelty (well, new to me) is to find identical site patterns <em>at every internal node</em>, and to think hard about smart algorithms to do that efficiently.</p>
+<p><img height="388" src="https://www.phylobabble.org/uploads/default/original/1X/6ee8dd39bbd794905eafcddcf077c6e470b07b87.png" width="649"/></p>
+<p>Alexis, is this going to be folded into the LLPLL?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Dear <span class="mention">@ematsen</span> thanks for posting this. Yes, we do plan to integrate this into the LLPLL.  Also, we further optimized the site repeats code at a technical level (stupidly enough after submitting the paper) and the speedups are even better than reported there.</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

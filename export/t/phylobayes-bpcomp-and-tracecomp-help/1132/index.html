@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Phylobayes: bpcomp and tracecomp help</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Phylobayes: bpcomp and tracecomp help</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">kmateos</div>
+          <div class="post_content">
+<p>Hi Phylobabblers,</p>
+<p>I’m using Phylobayes 4.1 to do some phylogenetic molecular dating. I am running two chains in parallel and then attempting to measure convergence.</p>
+<p>I would like to use the bpcomp command to do this but for some reason, regardless of the chain maxdiff = 0 and meandiff = 0. I know that this is not true because tracecomp using the same parameters gives non-zero differences between chains. I have tried this on a variety of sets of chains and always get zero from bpcomp. Has anyone else ever run into this problem or have any troubleshooting tips?</p>
+<p>Otherwise, does anyone have any tips for interpreting the tracecomp output? Per the manual, I am looking for effective sizes &gt;50 and relative differences &lt;0.3. Does this apply to all parameters (loglik, length, sigma, mu, meanrates, scale, alpha, nmode, stat, statalpha, kappa, and allocent)? Are some more important than others? I’ve noticed that effective sizes grow much faster for some parameters than others.</p>
+<p>Thanks in advance for any help/guidance!</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

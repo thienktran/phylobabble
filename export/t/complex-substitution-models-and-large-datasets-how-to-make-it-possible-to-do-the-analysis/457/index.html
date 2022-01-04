@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Complex substitution models and large datasets &ndash; how to make it possible to do the analysis</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Complex substitution models and large datasets &ndash; how to make it possible to do the analysis</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">aroger</div>
+          <div class="post_content">
+<p>I’m wondering if those of you developing phylogenetic software tools have thought much about the problem of how we will develop software tools that are able to handle both large numbers of taxa (&gt;100) and large numbers of sites (super-matrices of 50,000 positions and more) but at the same time implement complex substitution models. I think the problem is especially acute for complex ‘site-heterogeneous’ mixture models such as Lartillot’s CAT models or even ones with a set number of classes (e.g. 10-60 as in Lartillot and Gascuel’s C-series models) or models that involve large matrices such as codon models or the covarion-type models.  Additional computational complexity is introduced by partitioned models where different parameters are allowed to be estimated for different partitions (e.g. edgelengths for different genes in a super-matrix).  My concern is that currently large complex data sets cannot be analyzed with the best substitution models currently because the the computational time required to evaluate the likelihoods are prohibitive even with relatively small data sets.  Tree-searching becomes nearly impossible under these conditions because of the time required.<br/>
+Does anyone have good ideas of how to get around these problems with large data sets?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">funwithwords26</div>
+          <div class="post_content">
+<p>For the site-heterogeneous models, my intuition is that once you have a over a hundred sequences, there is very little actual uncertainty as to which class a site belongs to. Furthermore, small changes to the tree topology rarely affect which class each site is assigned to. If my intuition is correct, then it would be straightforward to implement fast and accurate approximations for site-heterogeneous models for large data sets.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">aroger</div>
+          <div class="post_content">
+<p>That is a good point actually, although I think it depends a lot on how ‘diverse’ those sequences are…If they are very very similar then they are not adding much new information that would provide more certainty as to the site class at a site.  However, even if sequences are diverse, there is still the problem that as you add sites you are adding ‘parameters’ (assigning a site class to a site is essentially a kind of estimation of a discrete parameter) and this is something that we want to avoid if we want statistical methods to behave themselves (i.e. we want to have more and more data for a given parameter ideally rather than have the number of parameters grow with the number of observations).  Even so, I wonder if it would be a problem in practice.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">aroger</div>
+          <div class="post_content">
+<p>I can even think of simple strategies where instead of evaluating each of the components of a mixture model, we do an initial full mixture model analysis on a starting tree (obtained by NJ or parsimony) and then basically restrict attention to the two best components for every site from the mixture for the subsequent tree searching analysis.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>I think it’s safe to say that this remains an open problem. We have been working on solving some of these issues in partitioned models (and implementing them in PartitionFinder as we go), but even then we only explore a very very limited part of the space of possible partitioned models. As it stands, we can deal with pretty much anything that RAxML can deal with (because we use RAxML under the hood), so that’s of the order of 1000 taxa and 1 million sites.</p>
+<p>The big challenge in this area is to expand the space of possible models that we consider, and there are lots of potential avenues for this, including:</p>
+<ol>
+<li>Considering models that go beyond GTR+I+G and its submodels (e.g. codon models)</li>
+<li>Considering complex partitioning schemes in which certain parameters are shared among subsets but others are not (we already do this in a crude way with branch lengths)</li>
+<li>Moving beyond partitioning schemes that are defined from codon positions and genes (we have a paper in review on a method in this area)</li>
+</ol>
+<p>The biggest challenge is to keep things computationally feasible with large datasets and near-infinite search spaces of possible models. Even then, I suspect that all of this makes very little difference with very large datasets, and I think there may be more progress in accurate inference to be made by relaxing some of the really big assumptions we continue to make, such as constant base frequencies, reversible models, and homogeneity of the rate matrices across the tree. A more practical alternative might be to aggressively filter data to pick out the sites that best match these assumptions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>I believe that most parallelization issues have been solved now with ExaML and ExaBayes. We have also found a solutions for load balancing partitioned alignments efficiently recently: <a href="http://link.springer.com/chapter/10.1007/978-3-662-44753-6_16#page-1" rel="nofollow noopener">http://link.springer.com/chapter/10.1007/978-3-662-44753-6_16#page-1</a></p>
+<p>The problem is a different one: who will modify the codes to implement all those models? I don’t really have time and PhD students shall do research instead of implementing &amp; optimizing existing models. I believe that it is a funding problem. If there was funding available to pay a competitive (non-university) salary to a good programmer all this would be easy.</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>It seems that there are two aspects to the problem:</p>
+<ol>
+<li>
+<p>Coding all of the models (which <span class="mention">@Alexis_RAxML</span> says is easy if we could fund a programmer)</p>
+</li>
+<li>
+<p>Figuring out which models to use (the first step in this is still to get all the models coded in e.g. RAxML; the rest is just writing some suitably efficient model proposal / search / comparison algorithms).</p>
+</li>
+</ol>
+<p>If anybody knows a suitable programmer who would work for a university salary, I for one would be keen to write a collaborative grant to look for funding to pay them for 3-5 years.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">aroger</div>
+          <div class="post_content">
+<p>I tend to agree with both of you (Alexis and Rob) that a major part of the problem is sustained funding for a good programmer who can implement these methods and keep the tools (like RAxML) up to date with the latest model improvements.  Academic training programs (Ph.D. students and postdocs) are not appropriate places for this kind of work…furthermore, these kinds of people tend not to be the right kind of people to write well commented, efficient and stable code (they are doing it ‘when they can’ rather than as their job).</p>
+<p>Regarding the issue of model development…I think that the partitioned models you are describing are excellent improvements (and I"m excited to hear about these latest developments).  But in my view this advance is less important than the implementation of site-heterogeneous mixture models.  I think really the problem is (for amino acid and codon models) that the character-state alphabet at sites is effectively far smaller than what model standard phylogenetic models (e.g. LG) imply and furthermore there is great variation on the dynamics of substitution between site ‘types’ because of the biophysical/functional constraints at sites in proteins.  Informally I have noticed that the use of site-heterogeneous models (e.g. Phylobayes CAT-type models) makes a much bigger difference to topology estimation than partitioned models (where models are optimized for separate genes/proteins).  In other words I think that models that  ‘average across sites in a gene’ are more problematic that models that  ‘average across genes in a matrix’. Ideally both things should be taken into account…but I think the former is far more important than the latter.  I realize this is probably a controversial statement…but maybe this is a good forum to discuss it!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/16_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">nicolas_lartill</div>
+          <div class="post_content">
+<p>I totally agree with your perspective, Andrew: both (1) concerning the fact that variation among sites, even sites belonging to the same gene, or even the same protein domain, is much more important than variation among partitions; and (2) concerning the problem that current implementations of site-heterogeneous models do not scale up well and are just not able to deal with the large super-matrices currently considered by applied phylogeneticists.</p>
+<p>I can imagine several possible strategies to deal with this problem: not just improving the code, but exploring more radically different computational approaches, going beyond small finite mixtures (which are not rich enough to capture the true empirical complexity of site-variation) and Dirichlet processes (which will never scale reasonably with the number of positions). Also, other strategies than standard MCMC would be necessary if we really wanted to go in this direction.</p>
+<p>However, I wonder if it is worth investing time and effort in all this. This would probably require several years of work, and this, for scaling up a super-matrix paradigm which has important limitations anyway. If 10 000 sites are not sufficient to give you interesting shared derived point substitutions for your clades of interest, then, I am not sure that piling up 100 000 or 1 000 000 aligned positions will improve the situation: there will always be residual model violations, and thus, I am afraid that the only signal that will consistently accumulate across very large alignments will be contributed by the systematic errors induced by those violations.</p>
+<p>More fundamentally, now that exome-wide data are routinely produced, perhaps the super-matrix paradigm itself should be considered as obsolete, and more ambitious gene-tree/species-tree methods should instead be developed. Obviously, our field is collectively moving toward this new gene/species paradigm, and we should therefore probably recast the problem of site-heterogeneous effects in this new context. This is in fact my current strategy: trying to combine interesting substitution models at the level of single-gene sequence evolution with good gene duplication-loss-transfer models. Possibly using multi-step approaches.</p>
+<p>nicolas</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>Dear Nicolas,</p>
+<p>One problem I see with inferring per-gene trees and then using them for gene-tree species tree inference is that it is difficult to reliably infer trees for single genes with say 1000-10000 taxa because there might not be a sufficient amount of data available. So one interesting question would be how sensitive those methods are with respect to inaccurate gene trees.</p>
+<p>Regardless of the methods being used, the issue of sustainable funding for maintenance and support needs to be resolved for all of them.</p>
+<p>Alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/16_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">nicolas_lartill</div>
+          <div class="post_content">
+<p>Hi Alexis,</p>
+<p>Yes, I agree that relying on point estimates obtained separately for each gene tree would be dangerous: those estimates are way too noisy.</p>
+<p>Alternatively, however, it is possible to integrate over gene trees, for a given species tree. Either using a fully Bayesian approach, or using approximations, e.g. based on conditional clade probabilities.</p>
+<p>This approach may not scale so well with the number of taxa (you are mentioning numbers &gt; 1000), but I think there are many interesting things to do with taxon sampling of the order of one hundred OTUs.</p>
+<p>nicolas</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">aroger</div>
+          <div class="post_content">
+<p>Hi Nicolas,</p>
+<p>I see your point about moving to a different paradigm where gene tree/species tree reconciliation is explicitly dealt with.  In fact I really hope that not only lineage sorting effects will be modeled, but also gene duplication, loss and transfer as you suggest.  To my mind this makes the problem only more difficult, however since we now have additional ‘processes’ to model on top of sequence evolution.  So bringing ‘CAT-like’ sequence evolution realism into these models will be even more difficult than the super-matrix approach because we will be having to deal with much more complexity in the model already.  I guess I"m not disagreeing with you, I’m only wondering how all of this additional complexity can be handled…there is also the same difficulty that model misspecification (in sequence evolution, in DLT processes etc) could really lead to major problems with very large data sets.  On the other hand, there will be more phylogenetic information provided by duplication, transfer and loss events, so perhaps this additional injection of ‘signal’ can offset potential shortcomings of the sequence evolution models…I think its is really difficult to say at this point.  A really good aspect of these kinds of ‘full genome evolution’ models is that we will be able to estimate a background ‘speciation time tree’ (in fact we must have this framework if gene transfer is modeled) that will allow us to make more inferences about the relative timing of various events in evolutionary history (hopefully).<br/>
+Getting back to realism in sequence evolution…I’d like to add that perhaps we need to consider ‘medium sized’ mixtures of sites where the individual classes are modeled in a more idealized way – that is a kind of ‘amino acid’ version of the HKY model…so the exchangeability matrix can be expressed in simple terms of a few types of transition types and the frequencies are taken from empirical estimates (as in the C10-C60 series)…then various shortcut ways of not evaluating the likelihood of each class of the mixture for each site during tree searching could also be used. In any case, I imagine this kind of model being integrated into your DLT type model Nicolas…</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/388_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">Alexis_RAxML</div>
+          <div class="post_content">
+<p>I totally agree,</p>
+<p>alexis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/44_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">pscUtah</div>
+          <div class="post_content">
+<p>I believe it is mathematician/programmers  trained is stochastic processes who will begin to sort out the search problem. Some one needs to fund those folks.</p>
+<p>I remember in the early nineties that remarks like “currently large complex data sets cannot be analyzed with the best substitution models currently because the the computational time required to evaluate the likelihoods are prohibitive even with relatively small data sets.” This was a basic and huge problem for our lab (Utah Ryk Ward lab).</p>
+<p>At that time we had a mathematician/ programmer to think about ways of eliminating big bits of tree space right at the outset. Of course with conventional data sets, we have long had the algorithms that do exactly that. But the sorts of enormous data sets discussed here may take another level of algorithmic elegance to eliminate more impossible trees before the likelihood method is applied.</p>
+<p>I do wonder if maximizing trees with hundreds or thousands of taxa is in the first place possible because of the problem of having sufficient data to provide the necessary power. Is there enough signal compared to noise in any set of genomes to resolve relationships among so many taxa. So the problem seems - as with saturation - an epistemological problem.</p>
+<p>I’d be happy to have models for maximization that work for on the order of a hundred or fewer taxa. And by observation, I’m pretty sure that restricting the parameters to those that really matter will help. For that across site rate heterogeneity seems miles more effective for increasing likelihoods than say substitution types.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>Morgan–</p>
+<p>I’m not sure if you are aware, or if you care, but your intuition has been formalized and proven by Mossel and Roch:</p>
+<p><img height="166" src="https://www.phylobabble.org/uploads/default/215/0035f5af31417d30.png" width="690"/> </p>
+<aside class="onebox allowlistedgeneric" data-onebox-src="https://pubmed.ncbi.nlm.nih.gov/22875145/">
+<header class="source">
+<img class="site-icon" height="64" src="https://cdn.ncbi.nlm.nih.gov/coreutils/nwds/img/favicons/favicon.ico" width="64"/>
+<a href="https://pubmed.ncbi.nlm.nih.gov/22875145/" rel="noopener" target="_blank">PubMed</a>
+</header>
+<article class="onebox-body">
+<img class="thumbnail onebox-avatar" data-small-upload="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_10x10.png" height="500" src="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_500x500.png" srcset="https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_500x500.png, https://www.phylobabble.org/uploads/default/optimized/1X/663a2ec8b6b28f6362f65026ac415550ee304255_2_750x750.png 1.5x" width="500"/>
+<h3><a href="https://pubmed.ncbi.nlm.nih.gov/22875145/" rel="noopener" target="_blank">Identifiability and inference of non-parametric rates-across-sites models on...</a></h3>
+<p>Mutation rate variation across loci is well known to cause difficulties, notably identifiability issues, in the reconstruction of evolutionary trees from molecular sequences. Here we introduce a new approach for estimating general rates-across-sites...</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+<p>They have to work fairly hard to construct a clustering algorithm that satisfies the criteria of their theory. Here’s what their clustering algorithm looks like:</p>
+<p><img height="498" src="https://www.phylobabble.org/uploads/default/217/556dc3108b9eef99.png" width="690"/> </p>
+<p>As far as I can tell, you would have to make up values for the ω’s, but it would still be interesting to see if this is a good way of clustering sites in practice.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

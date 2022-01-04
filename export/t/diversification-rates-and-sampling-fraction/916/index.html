@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Diversification rates and sampling fraction</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Diversification rates and sampling fraction</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ewostl</div>
+          <div class="post_content">
+<p>Hello All,
+I work on a genus of frogs that is distributed across several islands and thought it would be interesting to compare rates of diversification between landmasses (using TESS, RPanda etc…). However, all of the methods I have come across require before hand knowledge of the number of species in the clade (i.e a sampling fraction). The genus is poorly characterized, and this information is not available. Pybus et al. 2002 used their gamma distribution to estimate the number of flavivirus under a Yule model, which would be a start. I <em>think</em> they needed a diversification rate (which is what I am ultimately looking for) and I cannot find a package or program that implements their methods.</p>
+<p>So…are there methods for inferring diversification rates without a sampling fraction? Absent that, are there methods for inferring clade size based on time, a tree model, sample size, and the distribution of nodes?</p>
+<p>Any and all input would be appreciated…including “don’t bother”</p>
+<p>Cheers</p>
+<p>Elijah</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">afmagee</div>
+          <div class="post_content">
+<p>Hi Elijah,</p>
+<p>What you have to keep in mind is that however fancy the diversification-through-time model is, at it’s core, you’re still estimating speciation and extinction rates. To estimate a rate, you need a number of things that happened (speciation events), and the amount of time in which they happened (the duration of the clade). This applies whether we are using RevBayes or BEAST to estimate a time tree and diversification rates (from constant-rate models or fancier models) at the same time, or taking clade ages and species counts to get simple constant-rate estimates.</p>
+<p>Incomplete sampling is important, because although my phylogeny may have <em>n</em> species in it, the size, <em>m</em> of the clade may be much larger then <em>n</em>, so any rate based off <em>n</em> will be wrong. Imagine we wanted to ask which has a greater speciation rate, birds or mammals. From mammals, which are ~435 million years old, we have sampled 2000 species. From birds, which are ~111 million years old, our grant money ran out and we only got 10 species. Following <a href="http://www.ibiologia.unam.mx/pdf/directorio/m/magallon/publicacion/Magallon2AngioDiv.pdf" rel="nofollow noopener">Magallon and Sanderson</a> (2001), we estimate the net diversification rate as <em>r</em> = ln(<em>n</em> / 2) / <em>t</em>. So we estimate that mammals have a diversification rate of <em>r</em> = 0.0158799, while birds have a net diversification rate of <em>r</em> = 0.01449944, and we conclude that mammals speciate faster. But, there are really ~5400 mammals and ~10000 birds, so the rates are really something like <em>r</em> = 0.01816323 for mammals and <em>r</em> = 0.07673147 for birds. By missing samples, we not only estimated wildly incorrect rates, we flipped the direction of the result. Now, obviously it’s a bit hard to get the wrong result when one group is diversifying over 4x as fast as the other, but that’s a rather large difference, we can’t expect any groups we go study to display such a clear difference. That’s why <em>m</em> matters.</p>
+<p>Now, how to get <em>m</em>? As you say, taxonomy gives us some answer. But you also mention using a diversification rate. But now we’re caught in a circle, because we use need <em>r</em> to get <em>m</em>, but we can’t get <em>r</em> without <em>m</em>. Anything we do, any assumption we make about how this group is diversifying, will completely color our results, as our results <em>will be</em> the assumption we made.</p>
+<p>The other thing to keep in mind is that comparing diversification rates across land masses is probably either invalid, or requires a more complicated model. Unless the landmasses all have reciprocally monophyletic clades in them, you cannot split apart the tree by island, because the groups on those islands share a tree, and thus they are non-independent. It would be possible to do a joint reconstruction of island and diversification rate, as in a <a href="http://onlinelibrary.wiley.com/doi/10.1111/j.2041-210X.2012.00234.x/full" rel="nofollow noopener">MuSSE model</a>. Now, for a BiSSE model, you need something like a few hundred species to get a good estimate of the effect of the binary trait on speciation and extinction rates, one imagines that even more species are required for MuSSE. Even if they are reciprocally monophyletic, confidence intervals on speciation parameters are not small, and you may have a hard time saying anything about diversification rates.</p>
+<p>The bottom line is this:</p>
+<ol>
+<li>
+<p>If the islands don’t have monophyletic clades:
+a) If you don’t have samples for &gt;100 species in the genus, there’s absolutely no way.
+b) If you do, and you only care about the differences between the islands, you may not have to worry too much about the sampling fraction (unless sampling is biased).</p>
+</li>
+<li>
+<p>If the islands have monophyletic clades:
+a) If you have some idea about the range of species missing, you could run multiple analyses of each clade through the range of possible. Then you have some idea of whether one group is diversifying faster, but between the uncertainty inherent in estimating diversification rates, and the uncertainty in what the true number of species is, unless there is a rather large effect, you probably couldn’t say anything remotely conclusive.
+b) If you really don’t have any idea, there’s absolutely no way to say anything.</p>
+</li>
+</ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ewostl</div>
+          <div class="post_content">
+<p>Thank you!</p>
+<p>I should have mentioned that each island is inhabited by a reciprocally monophyletic clade.</p>
+<p>this…</p>
+<p>“… because we use need r to get m, but we can’t get r without m. Anything we do, any assumption we make about how this group is diversifying, will completely color our results, as our results will be the assumption we made.”</p>
+<p>…is the exact problem.</p>
+<p>I was checking to see if there have been any work on deriving r or m independently from the other, or if there were any ideas about how to go about it. I hadn’t found any.</p>
+<p>How sensitive are analyses to mischaracterization of m? I imagine that the number of clades for which there is a known number of species is relatively small.</p>
+<p>cheers,</p>
+<p>Elijah</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">afmagee</div>
+          <div class="post_content">
+<p>Yeah, the only way to derive <em>r</em> or <em>m</em> independently would be if there were a general rule of speciation rates, but no such evidence for a general relationship between clade age and species number.</p>
+<p>What you have to realize about diversification analyses is that they are by nature sensitive fickle. They’re sensitive to the time frame (certain patterns, like slowdowns, are erased after enough time), to unmodeled factors (variation in rates, mass extinctions, etc.) and even to assumptions that go into the tree-making process (two-step analyses are especially iffy, but even in joint analyses of the divergence times and the diversification model, a bad clock model could ruin inference). Heck, they can even be sensitive to <a href="https://academic.oup.com/mbe/article/28/9/2577/1013496/Inferring-Speciation-and-Extinction-Rates-under" rel="nofollow noopener"><em>how</em> we model the way missing species are missing</a>.</p>
+<p>When we have <em>n</em> and <em>m</em>, we can calculate <em>rho</em>, the sampling fraction. As it turns out, <em>rho</em> behaves a bit like extinction. And sure, we have some information about rates since we have data, but we also have the following non-identifiability issue. Do we have some small <em>n</em> species in some long time <em>t</em> because <em>r</em> is low and extinction is low and <em>rho</em> is high? because <em>r</em> is high and extinction is high and <em>rho</em> is high? because <em>r</em> is quite large and <em>rho</em> is low and extinction is low? some other combination of <em>rho</em>, speciation, and extinction rates?</p>
+<p>My best advice to you would be the following:</p>
+<ol>
+<li>
+<p>Plug your sequence data into RevBayes (you can probably do this in BEAST as well) and do analyses separately for each clade.</p>
+</li>
+<li>
+<p>Figure out what your best guess on the range of <em>m</em> is and use this to figure out what the range of <em>rho</em> is. Put this as a uniform prior on <em>rho</em>, uniform(low_guess, high_guess).</p>
+</li>
+<li>
+<p>Estimate the divergence times (and the tree, preferably, but at least the times) and speciation/extinction under this model.</p>
+</li>
+<li>
+<p>Now you have posterior distributions that capture the full uncertainty for each clade, compare the posterior distributions on the diversification parameters between the clades and draw conclusions(if anything can be concluded decisively).</p>
+</li>
+</ol>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

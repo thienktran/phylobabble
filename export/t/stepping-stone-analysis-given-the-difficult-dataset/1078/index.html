@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Stepping stone analysis given the difficult dataset</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Stepping stone analysis given the difficult dataset</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">dracus</div>
+          <div class="post_content">
+<p>Hello everyone!</p>
+<p>I want to do a stepping stone analysis to test the monophyly of a particular clade. The clade appears to be monophyletic following the usual MCMC run, with PP=98. The problem is, the dataset is very difficult, I had to modify the topology proposals to get it going somewhere and nevertheless the analysis reached stationarity only after about 40 million generations (out of 70 total).</p>
+<p>Unfortunately, there aren’t many tutorials on SS, and I feel I do not have enough understanding of how to design an efficient analysis. From my understanding, each step is equivalent to a standart MCMC chain sampling from a probability distribution, which in this case is a power posterior distribution in each step. That implies that in each step the chain will have to burn-in before it reaches stationarity with respect to this step’s power posterior distribution. If my burn-in leading to stationarity with respect to an actual posterior distribution was in fact 40 millions generations, does it mean that the SS chain will require the same amount to settle on a power posterior in each step?</p>
+<p>My other questions are:</p>
+<ol>
+<li>
+<p>How many generations in total (all steps combined) should I run the chain for? And how many samples from each power posterior are sufficient for a reliable estimate of marginal likelihood?</p>
+</li>
+<li>
+<p>Considering the SS chain starts to sample from the posterior (or rather the next closest power posterior) and moves to the prior during the course of a run, can I use the last parameters’ values sampled from the actual posterior by my chain during the standart MCMC run as a starting values for the SS chain?</p>
+</li>
+</ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">afmagee</div>
+          <div class="post_content">
+<p>It’s true, power posteriors can be a pain to run. In addition to the points you bring up, a run can also fail because there aren’t enough steps or the steps aren’t calibrated properly (in BEAST, this means adjusting the Beta distribution on the stones). To try to answer your questions,</p>
+<ol start="0">
+<li>
+<p>No, the power posterior should settle faster than the actual posterior. As each stone is more diffuse than the last, it’s not so much that you’re starting with parameters that are really out-of-whack for your model (the usual burnin problem), but rather that you’re starting with a more concentrated distribution than you want. So burnin should not be nearly as much of an issue for an individual chain as it is for starting the run, but there will still be some early samples to discard.</p>
+</li>
+<li>
+<p>It’s hard to give general advice here. Your best bet is to run reasonably long stones with decent thinning and to run a large number of stones (more like 100 than 20). You want a decent ESS of the heated posterior for each stone if it’s going to work well. Two post-hoc ways to see if your analysis worked: run multiple chains and use multiple calculators of the marginal likelihood. Power posteriors can be used to calculate both the Path Sampling and Stepping Stone estimators, which work differently but estimate the same quantity. They should produce similar results if everything is working. And when you run more than one power posterior analysis, the Path Sampling estimator from one chain should be similar to the Path Sampling estimator from another chain.</p>
+</li>
+<li>
+<p>I don’t see that it would be a problem to start the run from sane parameter values, with the exception being if you run convergence diagnostics like the Potential Scale Reduction Factor they will not necessarily be valid in this case.</p>
+</li>
+</ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">dracus</div>
+          <div class="post_content">
+<p>Thank you so much for the input! This almost clears the questions I had. I guess, the only way to ensure a successful analysis is to run one and then do post-analysis diagnostics. Nevertheless, can one somehow identify the “reasonable length” of a stone before running the whole analysis? E.g. maybe from ESS/Pseudo-ESS estimates from the main run (this many post-burnin generations plus this sampling frequency gives ESS of this size, something like that)?</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Inline phylogeny from Newick description</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Inline phylogeny from Newick description</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/124_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rdmpage</div>
+          <div class="post_content">
+<p>Having just typed something like (a,(b,(c,d))); into a phylobabble post  it occurs to me it would be cool if that was automagically converted into a little picture of the corresponding tree. I’ve Javascript code that makes trees from Newick descriptions and outputs SVG, but I’ve no idea how easy it is to incorporate something like that into the Discource platform.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>This would, of course, be lovely.</p>
+<p>I did this for pubmed, and you can make whatever you want happen by extending <a href="https://github.com/discourse/onebox">onebox</a>.</p>
+<p>I don’t know Ruby, and bungled my way through with a little help. Let me know if you have questions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/379_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">metasoarous</div>
+          <div class="post_content">
+<p>Seems like there are a couple of ways you could go here.</p>
+<p>You could probably do a server-side thing with ruby/onebox. In that case you might want to look at <a href="https://github.com/jhbadger/Newick-ruby/blob/master/bin/newickDraw" rel="nofollow noopener">Newick-ruby</a> (take a quick peek at the bottom of the page there). Unfortunately, that seems to only output PDF though, so you would probably have to call out to inkscape for SVG conversion.</p>
+<p>Since you already have the javascript renderer though, it might be easier to take a note from the <a href="https://github.com/kasperpeulen/discourse-mathjax" rel="nofollow noopener">discourse-mathjax</a> plugin. The code there looks pretty straight forward, so you might have better luck this way.</p>
+<p>Chris</p>
+<p><strong>EDIT:</strong> Just remembered that onebox does render out to mustache/js templates, so you might be able to use that together with your js code, but it’s not clear that would be so straightforward. I’m guessing the route of the mathjax plugin might be a more natural fit.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Fitch algorithm for non-binary trees</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Fitch algorithm for non-binary trees</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">db60</div>
+          <div class="post_content">
+<p>Would someone be able to point me to a generalisation of the Fitch algorithm to calculate parsimonious length for a topology, but which works for non-binary trees?</p>
+<p>Actually our goal is to calculate consistency index correctly, in the face of (possibly) ambiguous DNA base symbols (R, Y, S, V, M, etc).</p>
+<p>Getting consistency index involves knowing the minimum conceivable length of a tree, calculated for each character individually.</p>
+<p>This part of the problem seems equivalent to calculating tree length, for each character separately, for a ‘bush’ topology in which all terminals are connected directly to the root.</p>
+<p>I’m just not quite sure how to do that. But I’m sure it is known, in general.</p>
+<p>Thanks a lot,</p>
+<p>Daniel</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/15_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">mathmomike</div>
+          <div class="post_content">
+<p>Hi Daniel,</p>
+<p>An algorithm for computing the parsimony score for a discrete character on ANY tree (binary or not) was described in this early paper:
+Hartigan, J. A. (1973). Minimum mutation fits to a given tree. Biometrics, 29,
+53–65.
+It’s a dynamic-programming style approach and runs quickly (not quite as fast as the Fitch algorithm).</p>
+<p>But if your tree is actually a star tree, with all leaves attached to the root, it’s quite a bit simpler —  if there are n leaves, then the most parsimonious assignment(s) are precisely the one(s) that  assign the root  any state x that occurs most often (say k times) at the leaves; in which case the parsimony score for this assignment will be n-k (I.e. one change is needed on each edge leading to one of the other leaves).
+hope that helps.
+best,
+Mike</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>[Query] Explain rate matrix in Phylogenetic analysis</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">[Query] Explain rate matrix in Phylogenetic analysis</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ss107</div>
+          <div class="post_content">
+<p>The rate matrix (Q) for Jukes-Cantor generally is expressed as
+described here: <a href="https://en.wikipedia.org/wiki/Models_of_DNA_evolution#Most_common_models_of_DNA_evolution" rel="nofollow noopener">https://en.wikipedia.org/wiki/Models_of_DNA_evolution#Most_common_models_of_DNA_evolution</a></p>
+<p>The factor (1/4) comes because the base frequency is 0.25 in
+Jukes-Cantor analysis and μ is the rate of substitution.</p>
+<p>The transition/probability matrix [P(t)] for any branch
+length (t) is the exponentiation of Q multiplied by t.</p>
+<p>What I understand is: The matrix P will be entirely different if the substitution
+rate μ have two different values (say 0.25 and 1).</p>
+<p>The question I have: <strong>Is there any</strong>
+<strong>restriction on the value of μ?</strong></p>
+<p>Related software packages like SeqGen/MrBayes expresses the rate matrix in terms
+of six rates {AC, AG, AT, CG, CT, GT} which all equals μ in this discussion.</p>
+<p>From the examples from the related manuals, I think they normalize the rates
+such that their sum would be 1. That means, for JC, 6 μ = 1 always!</p>
+<p>Generally, the substitution rates are taken as input either as percentages of the rate sum
+or they are scaled to the GT rate. I believe this information is not enough to decide
+the actual rate.</p>
+<p>In simple terms, for JC, saying,</p>
+<p>AC = AG = AT = CG = CT = GT</p>
+<p>is not enough. You have to explicitly tell what the value is. Based on that
+value, the transition/probability matrix can change drastically.</p>
+<p>If I always normalize the values then rate matrix for JC reduces to a matrix with static values.</p>
+<p>I know some of my understanding is wrong. <strong>Where am I wrong?</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">GrahamJones</div>
+          <div class="post_content">
+<aside class="onebox wikipedia" data-onebox-src="https://en.m.wikipedia.org/wiki/Models_of_DNA_evolution#Most_common_models_of_DNA_evolutio">
+<header class="source">
+<a href="https://en.m.wikipedia.org/wiki/Models_of_DNA_evolution#Most_common_models_of_DNA_evolutio" rel="noopener nofollow ugc" target="_blank">en.m.wikipedia.org</a>
+</header>
+<article class="onebox-body">
+<div class="aspect-image" style="--aspect-ratio:300/300;"><img class="thumbnail" height="300" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Jukes_and_Cantor_%281969%29_JC69_Pij_Pii.jpg/300px-Jukes_and_Cantor_%281969%29_JC69_Pij_Pii.jpg" width="300"/></div>
+<h3><a href="https://en.m.wikipedia.org/wiki/Models_of_DNA_evolution#Most_common_models_of_DNA_evolutio" rel="noopener nofollow ugc" target="_blank">Models of DNA evolution</a></h3>
+<p>A number of different Markov models of DNA sequence evolution have been proposed.  These substitution models differ in terms of the parameters used to describe the rates at which one nucleotide replaces another during evolution. These models are frequently used in molecular phylogenetic analyses. In particular, they are used during the calculation of likelihood of a tree (in Bayesian and maximum likelihood approaches to tree estimation) and they are used to estimate the evolutionary distance betw...</p>
+</article>
+<div class="onebox-metadata">
+</div>
+<div style="clear: both"></div>
+</aside>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">GrahamJones</div>
+          <div class="post_content">
+<p>Ignore my last comment, I was trying to post from my new tablet.</p>
+<p>I wanted to point you to this bit in the Wikipedia page:</p>
+<blockquote>
+<p>It is worth noticing that  v=(3/4)tu=…, [which is the]
+expected number of substitutions in time t (branch duration) for each
+particular site (per site) when the rate of substitution equals u.</p>
+</blockquote>
+<p>Usually in phylogenetics software, v is normalised to 1.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

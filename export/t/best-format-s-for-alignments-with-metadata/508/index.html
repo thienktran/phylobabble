@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Best format(s) for alignments with metadata</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Best format(s) for alignments with metadata</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/138_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">rob_lanfear</div>
+          <div class="post_content">
+<p>Hi All,</p>
+<p>I am putting together a collection of alignments with metadata (<a href="https://github.com/roblanf/PartitionedAlignments" rel="nofollow noopener">https://github.com/roblanf/PartitionedAlignments</a>), and I’m looking for advice on file formats. The point of the collection is to make it simpler to test software and compare methods, by providing a well-annotated, tested set of published alignments that are all CC0.</p>
+<p>The problem is formats. Each dataset has an alignment, various definitions of sites (i.e. which locus and genome each site comes from), taxon sets (e.g. outgroups), and other metadata (e.g. DOIs for the original study and data set, estimate of the age of the root of the tree, etc). Alignment formats are notoriously varied, so I’d like to stick with one of the standard formats (Nexus, phylip, FASTA), plus at most one more file for metadata (e.g. YAML, CSV).</p>
+<p>I’d be happy to hear anyone’s thoughts on the various pros and cons of any options.</p>
+<p>Cheers,</p>
+<p>Rob</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/379_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">metasoarous</div>
+          <div class="post_content">
+<p>I typically stick with FASTA; I’ve found that it tends to be the best default for stuff I’ve done.</p>
+<p>If your data is pretty tabular, CSV may be the best bet, again since it’s so ubiquitous. However, If you’ve got more structured data, I’d go with JSON. YAML is nice for being a little more pleasant on the eyes, but I think the tooling around JSON is better.</p>
+<p>It all depends on what things are going to be plugged into though.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/223_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">francois</div>
+          <div class="post_content">
+<p>Hi Rob,</p>
+<p>FASTA files are very convenient because they require little formatting, but for archival and interoperability purposes I would suggest you use NEXUS. NEXUS has the advantage of coming with its own metadata (e.g., how ambiguities and gaps are coded). The Nexus Class Library  <a href="https://github.com/mtholder/ncl" rel="nofollow noopener">NCL</a> from Paul Lewis and Mark Holder  will allow you to check that the files are valid (many software produce non-valid NEXUS files) and can be exported in a variety of other formats.</p>
+<p>Alternatively, you could use <a href="https://github.com/OpenTreeOfLife/phylesystem-api/wiki/Annotations-in-NexSON" rel="nofollow noopener">NexSON</a> that would allow you to also store the metadata about the study directly in the file.</p>
+<p>Cheers!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/127_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">jeetsukumaran</div>
+          <div class="post_content">
+<p>Obvious bias here, but I would suggest NeXML. Converters to and from NEXUS, FASTA, PHYLIP etc. are available for a variety of languages, and converters to are available in a wider variety of languages, and some languages even have multiple independent libraries for parsing. The format is also formally described and documented in a peer-reviewed publication, and is used by, e.g. TreeBASE and other projects. It is rich and expressive enough to communicate most things.</p>
+<p>Downside: it is not the most economical or space-efficient format …</p>
+<p>Both FASTA and Nexus are also formally described, and certainly have orders of magnitude more widespread usage and adoption. Both are EXCELLENT formats for their intended purposes, but, to be honest, support for metadata is horrendous! Horrendous, I tell you! Made MUCH, MUCH, MUCH worse by every new project that adopts these as their archival/data “standards” introducing idiosyncratic, poorly or completely undocumented, and often rapidly-changing/unstable  “extension” that quickly slip beneath the noise levels of all the variants that are out there in the wild. Assuming your project/service/database maintains facilities to export data in Nexus/FASTA formats, then the popularity of the either format should not be an issue.</p>
+<p>If you <em>do</em> decide to go with Nexus, I would suggest that you definitely document the conventions used, if nothing to save your future programmers tons of headaches! Unfortunately, given the crazy explosion of idiosyncratic “standards” that are not actually standard, you will probably need to re-document the entire standard from scratch. For example, even “vanilla” Nexus/Newick (i.e., with no metadata annotations beyond gaps and ambiguities) have issues, e.g.: do you translate unprotected/unquoted underscores in taxon and other labels to spaces or not? The Nexus standard dictates you do. Some programs follow this, many do not. Worse, many users are not aware of this, and when exporting data into FASTA from programs that <em>do</em> actually do the correct thing, are confused and frustrated when their taxon labels suddenly pick up spaces where there were underscores before. Other programs go the opposite way, and unconditionally quote their taxon labels, which means that underscores that were (correctly) interpreted as spaces before now become “hard” underscores. So, if you are a NEXUS-standard savvy user who has carefully been curating taxon labels across a variety of formats, one of these over-enthusiastic quote-addition programs really screw up your pipeline and you need to take steps to convert things back again.</p>
+<p>I consider Nexus/Newick/FASTA as absolutely ideal formats for day-to-day operational use, for their widespread support in a variety of applications and services in our domain. But for archival/curation, <em>especially</em> if metadata is involved, I would infinitely prefer NeXML (or NexSON). So the ideal setup would be everything stored/curated/managed in NeXML/NexSON, but integral/organic support for exporting to FASTA/Nexus. If you are worried about longevity, then the database can store a “snapshot” Nexus/FASTA version of the data in a supplementary field.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

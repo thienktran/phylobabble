@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Several burning questions</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Several burning questions</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/420_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">dylan_marshall</div>
+          <div class="post_content">
+<p>Hi,</p>
+<p>It is unclear if this forum is frequented as much as it used to be. Let’s see if this post goes off echoing into the abyss. Is anyone out there knowledgeable and / or working on the following topics?</p>
+<ol>
+<li>
+<p><strong>Accounting for co-evolution in phylogenetic models.</strong> It is my (naive) understanding that phylogenetic models are built on the core assumption of mutational independence. Recent work built on the assumption that some mutations are co-dependent (co-evolution) has resulted in significant progress in protein structure modeling from sequences alone (<a href="https://science.sciencemag.org/content/355/6322/294.abstract" rel="nofollow noopener">https://science.sciencemag.org/content/355/6322/294.abstract</a>). Said differently, how is co-evolution (within a protein family, between protein families, between nucleotides / amino acids / codons / etc) being taken into consideration in phylogenetic models nowadays?</p>
+</li>
+<li>
+<p><strong>VAE hyperbolic Poincaré embeddings via VAE for phylogeny.</strong> Surely, some of you in this crowd encountered this recent paper from DeepMind (<a href="https://deepmind.com/research/publications/hierarchical-representations-poincare-variational-auto-encoders" rel="nofollow noopener">https://deepmind.com/research/publications/hierarchical-representations-poincare-variational-auto-encoders</a>). I attended NeurIPs recently and was informed that as enticing as Figure 1 is, it is apparently only applicable to phylogenetic tree construction if the ancestral nodes are part of the dataset as well… Anybody else thinking about this!?</p>
+</li>
+<li>
+<p><strong>"Ground truths" for phylogenetic trees.</strong> As a newcomer to this field - please forgive me if this is already an obvious answer… - but it is unclear if there exist empirical benchmarks by which phylogenetic tree models can be compared against. I imagine there are sub-topic and / or niche “positive controls” for phylogenetic tree construction but unlike the protein world, which has a biannual protein structure prediction competition (CASP), a field-wide benchmark / metric / competition for phylogeny seems to be absent…</p>
+</li>
+</ol>
+<p>Dylan (email: dylan_marshall@fas.harvard.edu)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/{size}.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">adamr</div>
+          <div class="post_content">
+<p>Hi Dylan. Interesting questions. I won’t claim to be an expert on these topics (relative to the other people in this forum), but I can give a few thoughts for the sake of discussion:</p>
+<ol>
+<li>I’m not aware of co-evolution being built into existing mainstream phylogenetic algorithms. It would be cool to be able to test that hypothesis with phylogenetic models. For bacteria, it might be tricky to distinguish co-evolution from horizontal gene transfer (assuming the sites are close together on the genome).</li>
+<li>Not familiar with it.</li>
+<li>Simulations are often used to test tree models, but I’m not aware of any empirical benchmark. I can think of two big differences between phylogenetic algorithms and protein folding algorithms.</li>
+</ol>
+<p>a) Protein folding algorithms were pretty bad when these benchmarks were established. Phylogenetic algorithms are pretty good. I think an empirical dataset would be best if it illustrated a specific, important problems for which there currently is no good solution.</p>
+<p>b) Protein folding algorithms are predictive, while phylogenetic algorithms are usually historical inferences. I can’t think of many scenarios where we’d have good ground truths, aside from bacterial long term evolution experiments (where we could sequenced several isolates from the population at several time points, then see how well an algorithm could recreate the properties of that population based on isolates from the final timepoint) – but I don’t know if this would actually be challenging.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/114_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">ematsen</div>
+          <div class="post_content">
+<p>I agree with <span class="mention">@adamr</span> on the points he addressed.</p>
+<p>Regarding point 2, my impression was that the Poincare VAE does not reconstruct a phylogenetic tree. It is a VAE that does a good job of respecting hierarchical structure when it exists. Note that in figures like this one:</p>
+<p><img alt="image" height="327" src="https://www.phylobabble.org/uploads/default/original/1X/bd23c51542210a8f3e0bc44472cee861068ea95d.png" width="564"/></p>
+<p>the blue is the true underlying tree.</p>
+<p>If you had ancestral sequences then I guess you could join together sequences in the latent space, but I don’t see this being more accurate than just joining sequences by sequence similarity.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/420_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">dylan_marshall</div>
+          <div class="post_content">
+<p>Hi Adam, thanks for the response.</p>
+<ol>
+<li>
+<p><strong>Co-evolution:</strong> Interesting! My understanding is that co-variation between sequences can confound the co-variation that we currently assume to be co-evolution. At this point, some colleagues and I believe we could test our ability to disentangle these two phenomena by seeing how well phylogeny-resolved co-evolution models improves our protein structure prediction capacity as compared against phylogeny-unresolved co-evolution models. TBD, maybe you’ll hear about it sometime soon <img alt=":slight_smile:" class="emoji" src="https://www.phylobabble.org/images/emoji/twitter/slight_smile.png?v=6" title=":slight_smile:"/>. On the flip side, co-evolution-resolved phylogeny models could <em>also</em> be something we could show… Though it is unclear what case studies (molecular clock proteins???) would be good to try this on. If you have an idea - or anyone else out there - please reach out! <img alt=":smiley:" class="emoji" src="https://www.phylobabble.org/images/emoji/twitter/smiley.png?v=6" title=":smiley:"/></p>
+</li>
+<li>
+<p><strong>Empirical benchmarking phylogeny models.</strong> While I am more comfortable in domains where there exist explicit pos/neg controls, I guess phylogeny is a branch of science where the truth is more elusive… Forgive me if this is extra pedantic, but you state that “phylogenetic algorithms are pretty good”. How do we <em><strong>know</strong></em> this? Whereas with protein structure determination, where our predictions can be evaluated against a physical structure, it is unclear how we can evaluate a phylogeny model improvement. I guess that was my overarching question. How do we know our phylogeny models are good models?</p>
+</li>
+</ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/420_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">dylan_marshall</div>
+          <div class="post_content">
+<p>Hi, yes, that makes sense. I think what makes this work especially exciting to think about is that VAEs can also be thought of as generative models. To me, the ultimate generative model is evolution itself (quoting Dana Pe’er at NeurIPS 2019 here). Unlike some of the current generative model applications, e.g: celebrity faces, creating such a generative model with appropriate biological constraints is quite philosophically appealing. Showing however, that such a model models evolution well, would be challenging.</p>
+<p>In general, these latent embeddings / manifold approaches (UMAP, for instance) come across as promising alternative approaches for constructing phylogenetic relationships. Again, I am somewhat of a newcomer to the field so forgive me if this all sounds like wild speculation…</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

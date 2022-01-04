@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Distances are important. Arthropods vs Mammals for example</title>
+    <link rel="stylesheet" href="../../../archived.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="title-span">
+        <a href="../../../">
+          <img src="../../../images/site-logo.png" height="40" alt="phylobabble" id="site-logo" />
+        </a>
+      </div>
+    </header>
+
+    <div class="main">
+    <div class="archive-span">Archive 04/01/2022.</div>
+    <h1 class="topic-title">Distances are important. Arthropods vs Mammals for example</h1>
+            <div class="post_container">
+        <div class="avatar_container">
+          <img src="../../../images/375_2.png" class="avatar" />
+        </div>
+        <div class="post">
+          <div class="user_name">BrianFoley</div>
+          <div class="post_content">
+<p>I am working with the Arthropod data (80 taxa, 62 nuclear genes, 41,985 DNA base columns in the alignment) which has been the subject of papers by Regier and Zwick.</p>
+<p>Regier JC, Zwick A. Sources of signal in 62 protein-coding nuclear genes for
+higher-level phylogenetics of arthropods. PLoS One. 2011;6(8):e23408. doi:
+10.1371/journal.pone.0023408. Epub 2011 Aug 4. PubMed PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/21829732" rel="nofollow noopener">21829732</a> PubMed
+Central PMCID: PMC3150433.</p>
+<p>Regier JC, Shultz JW, Zwick A, Hussey A, Ball B, Wetzer R, Martin JW,
+Cunningham CW. Arthropod relationships revealed by phylogenomic analysis of
+nuclear protein-coding sequences. Nature. 2010 Feb 25;463(7284):1079-83. doi:
+10.1038/nature08742. Epub 2010 Feb 10. PubMed PMID: <a href="https://www.ncbi.nlm.nih.gov/pubmed/20147900" rel="nofollow noopener">20147900</a></p>
+<p>They discuss a lot of data partitioning options, such as analyzing gene which evolve faster or slower, first second or third codon position, using amino acid translation rather than DNA etc.  My experience with data from viruses, bacteria, mammals, vertebrates and other organisms is that there is no “best answer” for how to partition data that fits all problems.  When the taxa being studied are very closely related such as populations of modern humans, we must use a lot of single nucleotide polymorphisms.  When the taxa being studied are highly diverged such as retroviruses or all vertebrates or the arthropods, the more divergent sites are beyond saturation with mutations and we need to focus on more conserved sites.</p>
+<p>The data set contains a lot of missing data, some of which is coded as strings of NNNNNNNN and some of which is coded as strings of ---------- characters.  Some programs will treat the two characters the same, but some will treat an N differently from a dash.</p>
+<p>In almost all papers I read like this, the authors are very interested in the data, and how to make the best use of it by using various partitioning schemes etc. but they don’t use a second data set with a better known fossil record (such as vertebrates) for comparison.  In the vertebrates we may not be confident of which lineage of mammals is most ancestral (most data suggests elephants branch off most ancestrally) but it is very solid that marsupials and monotremes predated mammals, and that amphibians and other tetrapods preceded them.</p>
+<p>It is relatively easy to add more data, either more genes to a 60 taxa set or more taxa to a 60 gene set.  But I suspect that more data is not always better and we want to make careful choices about which taxa or genes to add.  But the most common question I see on phylogenetic discussions is “how do I work on my data set” and almost never “how do I gather a good data set to work on”.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>
